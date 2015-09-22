@@ -1,12 +1,14 @@
-﻿	<style type="text/css">
-	#nav {
-		width:300px;
-		height:1000px;
-		float:left;
-		background-color:#DCDAD9;
-	}
-	</style>
-	
-	<nav id="nav">
-	nav
-	</nav>
+﻿<nav id="nav">
+	<table>
+		<thead>
+			<tr>
+				<th scope="col">드래그 레이서</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row"><a href="/banned_word">- 금칙어 관리</a></th>
+			</tr>
+		</tbody>
+	</table>
+</nav>

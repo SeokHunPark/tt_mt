@@ -6,7 +6,7 @@ class Main extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
+		$this->load->database('gamedb');
 		$this->load->model('user_info_m');
 		$this->load->helper(array('url', 'date'));
 	}

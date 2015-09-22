@@ -8,13 +8,33 @@
 <script src="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></script>
 <style type="text/css">
 #header {
-	height:100px;
+	border: 1px solid #555;
+	height: 100px;
 	background-color:#908886;
+}
+#nav {
+	border: 1px solid #555;
+	width: 150px;
+	height:1000px;
+	float: left;
+	background-color:#DCDAD9;
+}
+#content {
+	border: 1px solid #555;
+	height:1000px;	
+	background-color:#FFFFFF;
+}
+#footer {
+	border: 1px solid #555;
+	clear:both;
+	height:100px;
+	background-color:#555555;
 }
 </style>
 <title>드래그 레이서 운영 툴</title>
 </head>
 <body>
 	<header id="header">
-		<p>Header</p>
+		<h5>Header</h5>
 	</header>
+	
