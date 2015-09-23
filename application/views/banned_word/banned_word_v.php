@@ -1,4 +1,23 @@
-﻿<script>
+﻿<style type="text/css">
+table.words_reg_table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+.words_reg_table th, .words_reg_table td {
+	border: 1px solid black;
+	border-spacing: 0px;
+ }
+ 
+ .words_reg_table .word_col {
+	width: 200px;
+ }
+ .words_reg_table .button_col {
+	width: 100px;
+ }
+</style>
+
+<script>
 	$(document).ready(function() {
 		$("#search_button").click(function() {
 			if ($("#_word_text").val() == '') {
@@ -15,8 +34,6 @@
 		var keycode = window.event.keyCode;
 		if (keycode == 13) $("#search_button").click();
 	}
-	
-	
 </script>
 
 <section id="content">
@@ -27,6 +44,32 @@
 			<input type="button" value="조회" id="search_button" />
 		</div>
 	</fieldset>
+	</form>
+	
+	<form id="reg_word" method="post" action="banned_word/reg_word">
+	<table class="words_reg_table">
+		<thead>
+			<tr>
+				<th scope="col" colspan="2">금칙어 등록</th>
+			</tr>
+		</thead>
+		<thead>
+			<tr>
+				<th scope="col" class="word_col">금칙어</th>
+				<th scope="col" class="button_col"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">
+					<input type="text" name="word_reg_text" />
+				</th>
+				<td>
+					<input type="submit" value="등록" name="reg_button" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
 	</form>
 	
 	<table id="banned_word_table">
@@ -40,7 +83,6 @@
 		<tbody>
 			<?php
 			foreach ($word_list as $word_list_item)
-			#for ($i = 0; $i < count($word_list); $i++)
 			{
 			?>
 				<form id="delete_word" method="post" action="banned_word/delete_word">

@@ -45,7 +45,6 @@ class Banned_words_m extends CI_Model
 	
 	function delete_word($word_index)
 	{
-		print "delete_word";
 		$this->db->where('word_idx', $word_index);
 		$this->db->delete('banned_words');
 	}

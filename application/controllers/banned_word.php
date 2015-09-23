@@ -7,7 +7,7 @@ class Banned_word extends CI_Controller
 		parent::__construct();
 		$this->load->database('globaldb');
 		$this->load->model('banned_words_m');
-		$this->load->helper(array('url', 'date'));
+		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
 	public function index()
@@ -23,7 +23,6 @@ class Banned_word extends CI_Controller
 		// nav include.
 		$this->load->view('nav_v');
 		
-		// nav include.
 		if (method_exists($this, $method))
 		{
 			$this->{"{$method}"}();
@@ -54,6 +53,30 @@ class Banned_word extends CI_Controller
 		}
 	}
 	
+	public function reg_word()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		print_R($_POST);
+		
+		if (isset($_POST['reg_button']))
+		{	
+			$word_reg_text = $this->input->post('word_reg_text');
+			if ($word_reg_text == "")
+			{
+				print "공백";
+				alert_only("입력하십시오.");
+				return;
+			}
+			
+			$this->banned_words_m->insert_word($word_reg_text);
+			
+			redirect('/banned_word/index', 'refresh');
+			#$data['word_list'] = $data['word_list'] = $this->banned_words_m->get_word_list();
+			#$this->load->view('banned_word/banned_word_v', $data);
+		}
+	}
+	
 	public function delete_word()
 	{
 		$this->output->enable_profiler(TRUE);
@@ -65,9 +88,9 @@ class Banned_word extends CI_Controller
 			$word_index = $this->input->post('word_index');
 			$this->banned_words_m->delete_word($word_index);
 			
-			#redirect('/banned_word/index', 'refresh');
-			$data['word_list'] = $data['word_list'] = $this->banned_words_m->get_word_list();
-			$this->load->view('banned_word/banned_word_v', $data);
+			redirect('/banned_word/index', 'refresh');
+			#$data['word_list'] = $data['word_list'] = $this->banned_words_m->get_word_list();
+			#$this->load->view('banned_word/banned_word_v', $data);
 		}
 	}
 }
