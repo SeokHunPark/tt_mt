@@ -18,7 +18,7 @@ class User_info_m extends CI_Model
 		return $result;
 	}
 	
-	function find_user($user_id)
+	function find_user_with_user_id($user_id)
 	{
 		$this->db->select('*');
 		$this->db->from('user_info');

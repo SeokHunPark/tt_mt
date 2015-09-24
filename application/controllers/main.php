@@ -51,7 +51,7 @@ class Main extends CI_Controller
 			if ($this->uri->segment(3))
 				$user_id = $this->uri->segment(3);
 			
-			$data['list'] = $this->user_info_m->find_user($user_id);
+			$data['list'] = $this->user_info_m->find_user_with_user_id($user_id);
 		
 			$this->load->view('main_v', $data);
 		}
@@ -75,19 +75,6 @@ class Main extends CI_Controller
 			$coin = $this->input->post('coin_text', TRUE);
 			
 			$this->user_info_m->update_user($user_id, $nickname, $gas, $coin);
-		}
-	}
-	
-	function find_user()
-	{
-		if ($_POST)
-		{
-			
-		}
-		else
-		{
-			$data['list'] = $this->user_info_m->get_lists();
-			$this->load->view('main_v', $data);
 		}
 	}
 	

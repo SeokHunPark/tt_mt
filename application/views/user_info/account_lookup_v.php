@@ -20,6 +20,7 @@ table.account_info_table {
 </script>
 
 <section id="content">
+	<form id="search_user" method="post" action="account_lookup/load_account_info">
 	<fieldset>
 		<div>
 			카카오톡 ID
@@ -28,9 +29,10 @@ table.account_info_table {
 			<input type="text" name="game_account_id_text" />
 			닉네임
 			<input type="text" name="nickname_text" />
-			<input type="button" value="조회" id="search_button" />
+			<input type="submit" value="조회" id="search_user_button" />
 		</div>		
 	</fieldset>
+	</form>
 	
 	<table class="account_info_table">
 		<tbody>
@@ -39,13 +41,13 @@ table.account_info_table {
 				카카오톡ID
 				</th>
 				<td>
-				99999999999999999999
+				<?php echo $account_info['kakao_id']; ?>
 				</td>
 				<th>
 				캐릭터 명
 				</th>
 				<td>
-				데굴데굴
+				<?php echo $account_info['kakao_id']; ?>
 				<input type="submit" value="변경" name="button" />
 				</td>
 				<td>
@@ -57,13 +59,13 @@ table.account_info_table {
 				게임 회원번호
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				가입일자
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 				<td>
 				</td>
@@ -73,13 +75,13 @@ table.account_info_table {
 				연료
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				코인
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 				<td rowspan="2">
 					<input type="submit" value="재화수정" name="button" />
@@ -90,13 +92,13 @@ table.account_info_table {
 				다이아(유료/무료)
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				트로피
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 			</tr>
 			<tr>
@@ -140,13 +142,13 @@ table.account_info_table {
 				탈퇴여부
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				탈퇴일자
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 				<td>
 					<input type="submit" value="탈퇴복구" name="button" />
@@ -157,7 +159,7 @@ table.account_info_table {
 				최근 로그인
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				접속여부
@@ -171,13 +173,13 @@ table.account_info_table {
 				이용 제한 타입
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th rowspan="2">
 				계정 블록
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 				<td>
 					<input type="submit" value="제재" name="button" />
@@ -188,7 +190,7 @@ table.account_info_table {
 				제재일
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<td>
 				블록 해제
@@ -202,13 +204,13 @@ table.account_info_table {
 				해제일
 				</th>
 				<td>
-				99999999999999999999
+				
 				</td>
 				<th>
 				친구 초대 횟수
 				</th>
 				<td>
-				데굴데굴
+				
 				</td>
 				<td>
 				</td>
