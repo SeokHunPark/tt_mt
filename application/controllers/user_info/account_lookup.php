@@ -115,12 +115,12 @@ class Account_lookup extends CI_Controller
 		$account_info['current_stage'] = $current_stage;
 		
 		$account_info['account_level'] = "";
-		if ($user_info['unreg_date'] == "")
+		if ($user_info['status'] == "R")
 		{
 			$account_info['secession'] = "이용중";
 			$account_info['secession_date'] = "-";
 		}
-		else
+		else if ($user_info['status'] == "U")
 		{
 			$account_info['secession'] = "탈퇴";
 			$account_info['secession_date'] = $user_info['unreg_date'];
@@ -174,6 +174,21 @@ class Account_lookup extends CI_Controller
 			$unreg_date = mdate($date_string, $time);
 			
 			$this->user_info_m->leave_game($user_id, $unreg_date);
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function secession_recovery()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('secession_recovery_user_id_text', TRUE);
+			
+			$this->user_info_m->leave_recovery_game($user_id);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('user_info/account_lookup_v', $data);

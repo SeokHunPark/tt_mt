@@ -45,6 +45,14 @@ class User_info_m extends CI_Model
 		return $this->db->update('drag_gamedb.user_info');
 	}
 	
+	function leave_recovery_game($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('status', 'R');
+		$this->db->set('unreg_date', null);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
 	function modify_money($user_id, $gas, $coin, $gold, $vgold, $chip)
 	{
 		$this->db->where('user_id', $user_id);

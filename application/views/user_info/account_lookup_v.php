@@ -58,6 +58,25 @@ function open_secession_popup(user_id){
 	var user_id_text = document.getElementById("_secession_user_id_text");
 	user_id_text.value = user_id;
 }
+function open_secession_recovery_popup(user_id){
+
+	var temp = $('#_secession_recovery_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_secession_recovery_user_id_text");
+	user_id_text.value = user_id;
+}
 function open_modify_money_popup(user_id, gas, coin, gold, vgold, chip){
 
 	var temp = $('#_modify_money_popup');		//레이어의 id를 temp변수에 저장
@@ -284,7 +303,8 @@ function open_modify_straight_status_popup(user_id, mission, stage){
 				<?php echo $account_info['secession_date']; ?>
 				</td>
 				<td>
-					<input type="submit" value="탈퇴복구" name="button" />
+					<input type="submit" value="탈퇴복구" name="button" 
+							onclick="open_secession_recovery_popup('<?php echo $account_info['user_id']; ?>'); return false;"/>
 				</td>
 			</tr>
 			<tr>

@@ -85,12 +85,30 @@ a.pop-btn:hover {
 	<div class="pop-container">
 		<div class="pop-conts">
 			<!--content //-->
-			<p class="ctxt mb20">탈퇴 하시겠습니까</p>
+			<p class="ctxt mb20">탈퇴 하시겠습니까?</p>
 			
 			<form id="_secession" method="post" action="/user_info/account_lookup/secession">
 			<input type="hidden" id="_secession_user_id_text" name="secession_user_id_text" />
 			<div class="btn-r">
 				<input type="submit" value="탈퇴" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>
+
+<div id="_secession_recovery_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">탈퇴 복구를 진행 하시겠습니까?</p>
+			
+			<form id="_secession_recovery" method="post" action="/user_info/account_lookup/secession_recovery">
+			<input type="hidden" id="_secession_recovery_user_id_text" name="secession_recovery_user_id_text" />
+			<div class="btn-r">
+				<input type="submit" value="확인" name="button" />
 				<input type="button" id="cancel_btn" value="취소" />
 			</div>
 			</form>
