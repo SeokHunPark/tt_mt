@@ -17,6 +17,20 @@
 	width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:center;
 }
 
+table.info_table {
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+}
+.info_table th {
+	border: 1px solid black;
+	border-spacing: 0px;
+ }
+.info_table td {
+	border: 1px solid black;
+	border-spacing: 0px;
+ }
+
 a.pop-btn {
 	display:inline-block; height:25px; padding:0 14px 0; border:1px solid #304a8a; background-color:#3f5a9d; font-size:13px; color:#fff; line-height:25px;
 }	
@@ -34,7 +48,7 @@ a.pop-btn:hover {
 			
 			<form id="modify_nickname" method="post" action="/user_info/account_lookup/modify_nickname">
 			<input type="hidden" id="_user_id_text" name="user_id_text" />
-			<table id="popup-table" class="table table-striped" border="1px" cellspacing="0" cellpadding="10">
+			<table class="table table-striped" border="1px" cellspacing="0" cellpadding="10">
 				<thead>
 					<tr>
 						<th scope="col">
@@ -59,7 +73,141 @@ a.pop-btn:hover {
 
 			<div class="btn-r">
 				<input type="submit" value="변경" name="button" />
-				<input type="button" id="cancel_btn" value="취소" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>
+
+<div id="_secession_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">탈퇴 하시겠습니까</p>
+			
+			<form id="_secession" method="post" action="/user_info/account_lookup/secession">
+			<input type="hidden" id="_secession_user_id_text" name="secession_user_id_text" />
+			<div class="btn-r">
+				<input type="submit" value="탈퇴" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>
+
+<div id="_modify_money_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">재화 변경</p>
+			
+			<form id="modify_money" method="post" action="/user_info/account_lookup/modify_money">
+			<input type="hidden" id="_modify_money_user_id_text" name="modify_money_user_id_text" />
+			<table class="info_table">
+				<tbody>
+					<tr>
+						<td scope="row">
+							연료
+						</td>
+						<td>
+							<input type="text" id="_gas_text" name="gas_text" readonly="readonly" style="width:100%;" />
+						</td>
+						<td>
+							코인
+						</td>
+						<td>
+							<input type="text" id="_coin_text" name="coin_text" readonly="readonly" style="width:100%;" />
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr>
+						<td scope="row" colspan="2">
+							<input type="text" id="_new_gas_count_text" name="new_gas_count_text" />
+						</td>
+						<td colspan="2">
+							<input type="text" id="_new_coin_count_text" name="new_coin_count_text" />
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr>
+						<td scope="row">
+							다이아(유료/무료)
+						</td>
+						<td>
+							<input type="text" id="_gold_text" name="gold_text" readonly="readonly" style="width:40%;" />
+							/
+							<input type="text" id="_vgold_text" name="vgold_text" readonly="readonly" style="width:40%;" />
+						</td>
+						<td>
+							트로피
+						</td>
+						<td>
+							<input type="text" id="_chip_text" name="chip_text" readonly="readonly" style="width:100%;" />
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+					<tr>
+						<td scope="row" colspan="2">
+							<input type="text" id="_new_gold_count_text" name="new_gold_count_text" />
+							/
+							<input type="text" id="_new_vgold_count_text" name="new_vgold_count_text" />
+						</td>
+						<td colspan="2">
+							<input type="text" id="_new_chip_count_text" name="new_chip_count_text" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="btn-r">
+				<input type="submit" value="변경" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>
+
+<div id="_straight_wins_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">대결 모드 연승을 변경 하시겠습니까?</p>
+			
+			<form id="_straight_wins" method="post" action="/user_info/account_lookup/modify_straight_wins">
+			<input type="hidden" id="_straight_wins_user_id_text" name="straight_wins_user_id_text" />
+			<input type="text" id="_winning_count_text" name="winning_count_text" />
+			<div class="btn-r">
+				<input type="submit" value="확인" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>
+
+<div id="_mission_status_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">미션 모드 스테이지 변경 하시겠습니까?</p>
+			
+			<form id="_modify_mission_status" method="post" action="/user_info/account_lookup/modify_mission_status">
+			<input type="hidden" id="_mission_status_user_id_text" name="mission_status_user_id_text" />
+			<input type="text" id="_mission_text" name="mission_text" />
+			<input type="text" id="_stage_text" name="stage_text" />
+			<div class="btn-r">
+				<input type="submit" value="확인" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
 			</div>
 			</form>
 			<!--// content-->

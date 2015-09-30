@@ -33,4 +33,11 @@ class User_action_m extends CI_Model
 		$this->db->where('user_id', $user_id);
 		return $this->db->update('user_action');
 	}
+	
+	function modify_straight_wins($user_id, $winning_count)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('winning_streak', $winning_count);
+		return $this->db->update('drag_gamedb.user_action');
+	}
 }

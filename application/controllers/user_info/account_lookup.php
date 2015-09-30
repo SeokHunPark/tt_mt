@@ -144,10 +144,115 @@ class Account_lookup extends CI_Controller
 		
 		if ($_POST)
 		{
-			print "POST Action!!!!";
 			$user_id = $this->input->post('user_id_text', TRUE);
 			$new_nickname = $this->input->post('new_nickname_text', TRUE);
-			$this->user_info_m->modify_nickname($user_id, $new_nickname);
+			
+			if ($new_nickname == "")
+			{
+				alert("닉네임을 입력하십시오");
+			}
+			else
+			{
+				$this->user_info_m->modify_nickname($user_id, $new_nickname);
+			}
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function secession()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('secession_user_id_text', TRUE);
+			
+			$time = time();
+			$date_string = "%Y-%m-%d %h:%i:%s";
+			$unreg_date = mdate($date_string, $time);
+			
+			$this->user_info_m->leave_game($user_id, $unreg_date);
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function modify_money()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('modify_money_user_id_text', TRUE);
+			$gas = $this->input->post('gas_text', TRUE);
+			$coin = $this->input->post('coin_text', TRUE);
+			$gold = $this->input->post('gold_text', TRUE);
+			$vgold = $this->input->post('vgold_text', TRUE);
+			$chip = $this->input->post('chip_text', TRUE);
+			
+			if ($this->input->post('new_gas_count_text', TRUE) != "")
+				$gas = $this->input->post('new_gas_count_text', TRUE);
+			if ($this->input->post('new_coin_count_text', TRUE) != "")
+				$coin = $this->input->post('new_coin_count_text', TRUE);
+			if ($this->input->post('new_gold_count_text', TRUE) != "")
+				$gold = $this->input->post('new_gold_count_text', TRUE);
+			if ($this->input->post('new_vgold_count_text', TRUE) != "")
+				$vgold = $this->input->post('new_vgold_count_text', TRUE);
+			if ($this->input->post('new_chip_count_text', TRUE) != "")
+				$chip = $this->input->post('new_chip_count_text', TRUE);
+			
+			$this->user_info_m->modify_money($user_id, $gas, $coin, $gold, $vgold, $chip);
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function modify_straight_wins()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('straight_wins_user_id_text', TRUE);
+			$winning_count = $this->input->post('winning_count_text', TRUE);
+			
+			if ($winning_count == "")
+			{
+				alert("숫자를 입력하세요.");
+			}
+			else
+			{
+				$this->user_action_m->modify_straight_wins($user_id, $winning_count);
+			}
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function modify_mission_status()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('mission_status_user_id_text', TRUE);
+			$mission = $this->input->post('mission_text', TRUE);
+			$stage = $this->input->post('stage_text', TRUE);
+			
+			$mission_stage = "";
+			for ($i = 0; $i < (int)$mission - 1; $i++)
+			{
+				$mission_stage .= "05";
+			}
+			$mission_stage .= $stage;
+			#print "mission_stage : $mission_stage";
+			
+			$this->user_challenges_m->modify_stage($user_id, $mission_stage);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('user_info/account_lookup_v', $data);

@@ -33,4 +33,11 @@ class User_challenges_m extends CI_Model
 		$this->db->where('user_id', $user_id);
 		return $this->db->update('user_action');
 	}
+	
+	function modify_stage($user_id, $stage)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('stage', $stage);
+		$this->db->update('drag_gamedb.user_challenges');
+	}
 }

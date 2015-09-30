@@ -14,14 +14,13 @@ table.account_info_table {
 	border: 1px solid black;
 	border-spacing: 0px;
  }
- 
 
 </style>
 
 <script type="text/javascript">
-function open_modify_nickname_popup(el, user_id, nickname){
+function open_modify_nickname_popup(user_id, nickname){
 
-	var temp = $('#' + el);		//레이어의 id를 temp변수에 저장
+	var temp = $('#modify_nickname_popup');		//레이어의 id를 temp변수에 저장
 	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
 
 	// 화면의 중앙에 레이어를 띄운다.
@@ -40,6 +39,107 @@ function open_modify_nickname_popup(el, user_id, nickname){
 	var current_nickname = document.getElementById("_nickname_text");
 	current_nickname.value = nickname;
 }
+function open_secession_popup(user_id){
+
+	var temp = $('#_secession_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_secession_user_id_text");
+	user_id_text.value = user_id;
+}
+function open_modify_money_popup(user_id, gas, coin, gold, vgold, chip){
+
+	var temp = $('#_modify_money_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+		
+		var gas_text = document.getElementById("_new_gas_count_text");
+		gas_text.value = "";
+		var coin_text = document.getElementById("_new_coin_count_text");
+		coin_text.value = "";
+		var gold_text = document.getElementById("_new_gold_count_text");
+		gold_text.value = "";
+		var vgold_text = document.getElementById("_new_vgold_count_text");
+		vgold_text.value = "";
+		var chip_text = document.getElementById("_new_chip_count_text");
+		chip_text.value = "";
+	});
+	
+	var user_id_text = document.getElementById("_modify_money_user_id_text");
+	user_id_text.value = user_id;
+	var gas_text = document.getElementById("_gas_text");
+	gas_text.value = gas;
+	var coin_text = document.getElementById("_coin_text");
+	coin_text.value = coin;
+	var gold_text = document.getElementById("_gold_text");
+	gold_text.value = gold;
+	var vgold_text = document.getElementById("_vgold_text");
+	vgold_text.value = vgold;
+	var chip_text = document.getElementById("_chip_text");
+	chip_text.value = chip;
+}
+function open_straight_wins_popup(user_id){
+
+	var temp = $('#_straight_wins_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_straight_wins_user_id_text");
+	user_id_text.value = user_id;
+}
+function open_modify_straight_status_popup(user_id, mission, stage){
+
+	var temp = $('#_mission_status_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_mission_status_user_id_text");
+	user_id_text.value = user_id;
+	var mission_text = document.getElementById("_mission_text");
+	mission_text.value = mission;
+	var stage_text = document.getElementById("_stage_text");
+	stage_text.value = stage;
+}
 </script>
 
 <section id="content">
@@ -47,7 +147,7 @@ function open_modify_nickname_popup(el, user_id, nickname){
 	<fieldset>
 		<div>
 			카카오톡 ID
-			<input type="text" name="kakao_id_text" />
+			<input type="text" name="kakao_id_text" style="text-align:center;"/>
 			게임 회원번호
 			<input type="text" name="game_account_id_text" />
 			닉네임
@@ -70,14 +170,14 @@ function open_modify_nickname_popup(el, user_id, nickname){
 				캐릭터 명
 				</th>
 				<td>
-				<?php echo $account_info['nickname']; ?>
-				<input type="button" value="수정" id="modify_btn" 
-						onclick="open_modify_nickname_popup('modify_nickname_popup', 
-															'<?php echo $account_info['user_id']; ?>', 
-															'<?php echo $account_info['nickname']; ?>'); return false;" />
+					<?php echo $account_info['nickname']; ?>
+					<input type="button" value="수정" id="modify_btn" 
+							onclick="open_modify_nickname_popup('<?php echo $account_info['user_id']; ?>', 
+																'<?php echo $account_info['nickname']; ?>'); return false;" />
 				</td>
 				<td>
-					<input type="submit" value="탈퇴" name="button" />
+					<input type="button" id="_secession_button" value="탈퇴" 
+							onclick="open_secession_popup('<?php echo $account_info['user_id']; ?>'); return false;" />
 				</td>
 			</tr>
 			<tr>
@@ -110,7 +210,13 @@ function open_modify_nickname_popup(el, user_id, nickname){
 				<?php echo $account_info['coin']; ?>
 				</td>
 				<td rowspan="2">
-					<input type="submit" value="재화수정" name="button" />
+					<input type="submit" id="_modify_money_button" value="재화수정" 
+							onclick="open_modify_money_popup('<?php echo $account_info['user_id']; ?>',
+																'<?php echo $account_info['gas']; ?>',
+																'<?php echo $account_info['coin']; ?>',
+																'<?php echo $account_info['gold']; ?>', 
+																'<?php echo $account_info['vgold']; ?>',
+																'<?php echo $account_info['chip']; ?>'); return false;" />
 				</td>
 			</tr>
 			<tr>
@@ -133,14 +239,18 @@ function open_modify_nickname_popup(el, user_id, nickname){
 				</th>
 				<td>
 				<?php echo $account_info['straight_wins']; ?>
-				<input type="submit" value="변경" name="button" />
+				<input type="submit" value="변경" name="button"
+						onclick="open_straight_wins_popup('<?php echo $account_info['user_id']; ?>'); return false;"/>
 				</td>
 				<th>
 				미션모드 진행도
 				</th>
 				<td>
 				<?php echo $account_info['current_challenge'], " - ", $account_info['current_stage']; ?>
-				<input type="submit" value="변경" name="button" />
+				<input type="submit" value="변경" name="button" 
+						onclick="open_modify_straight_status_popup('<?php echo $account_info['user_id']; ?>',
+																	'<?php echo $account_info['current_challenge']; ?>',
+																	'<?php echo $account_info['current_stage']; ?>'); return false"/>
 				</td>
 				<td>
 				</td>
