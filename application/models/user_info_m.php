@@ -18,14 +18,23 @@ class User_info_m extends CI_Model
 		return $result;
 	}
 	
-	function find_user_with_user_id($user_id)
+	function find_with_user_id($user_id)
 	{
 		$this->db->select('*');
 		$this->db->from('user_info');
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get();
-		#return $query->row_array();
-		return $query->result();
+		return $query->row_array();
+		#return $query->result();
+	}
+	
+	function modify_nickname($user_id, $nickname)
+	{
+		#print "modify_nickname()";
+		#print "nickname : $nickname";
+		$this->db->where('user_id', $user_id);
+		$this->db->set('nickname', $nickname);
+		return $this->db->update('drag_gamedb.user_info');
 	}
 	
 	function update_user($user_id, $nickname, $gas, $coin)
@@ -34,6 +43,6 @@ class User_info_m extends CI_Model
 		$this->db->set('nickname', $nickname);
 		$this->db->set('gas', $gas);
 		$this->db->set('coin', $coin);
-		return $this->db->update('user_info');
+		return $this->db->update('drag_gamedb.user_info');
 	}
 }

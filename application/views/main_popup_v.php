@@ -14,7 +14,7 @@
 	color: #666; line-height: 25px;
 }
 .pop-layer .btn-r {
-	width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:right;
+	width: 100%; margin:10px 0 20px; padding-top: 10px; border-top: 1px solid #DDD; text-align:center;
 }
 
 a.cbtn {

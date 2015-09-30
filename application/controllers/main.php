@@ -43,7 +43,7 @@ class Main extends CI_Controller
 		
 		if ($_POST)
 		{
-			#print "POST Action!!!!";
+			print "POST Action!!!!";
 			$page = $this->uri->segment(3);
 			print "Segment : $page";
 			
@@ -51,7 +51,7 @@ class Main extends CI_Controller
 			if ($this->uri->segment(3))
 				$user_id = $this->uri->segment(3);
 			
-			$data['list'] = $this->user_info_m->find_user_with_user_id($user_id);
+			$data['list'] = $this->user_info_m->find_with_user_id($user_id);
 		
 			$this->load->view('main_v', $data);
 		}
