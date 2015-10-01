@@ -9,6 +9,7 @@ class Account_lookup extends CI_Controller
 		$this->load->model('user_info_m');
 		$this->load->model('user_action_m');
 		$this->load->model('user_challenges_m');
+		$this->load->model('sanction_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -62,9 +63,7 @@ class Account_lookup extends CI_Controller
 		$account_info['secession_date'] = "";
 		$account_info['reacently_login'] = "";
 		$account_info['is_connected'] = "";
-		$account_info['restriction_type'] = "";
-		$account_info['account_block'] = "";
-		$account_info['block_off'] = "";
+		$account_info['sanction_type'] = "";
 		$account_info['sanction_date'] = "";
 		$account_info['release_date'] = "";
 		$account_info['invite_count'] = "";
@@ -114,8 +113,12 @@ class Account_lookup extends CI_Controller
 		$account_info['current_challenge'] = $current_mission;
 		$account_info['current_stage'] = $current_stage;
 		
-		$account_info['account_level'] = "";
-		if ($user_info['status'] == "R")
+		$exp = $user_info['exp'];
+		$level = (int)sqrt((int)$exp / 4);
+		$account_info['account_level'] = $level;
+		
+		#N:정상, U:탈퇴, E:영구제재, P:기간제재\n',
+		if ($user_info['status'] == "N")
 		{
 			$account_info['secession'] = "이용중";
 			$account_info['secession_date'] = "-";
@@ -125,14 +128,32 @@ class Account_lookup extends CI_Controller
 			$account_info['secession'] = "탈퇴";
 			$account_info['secession_date'] = $user_info['unreg_date'];
 		}
+		else if ($user_info['status'] == "E")
+		{
+			$account_info['secession'] = "영구제재";
+		}
+		else if ($user_info['status'] == "P")
+		{
+			$account_info['secession'] = "기간제재";
+		}
 		
 		$account_info['reacently_login'] = $user_action['recent_date'];
 		$account_info['is_connected'] = "";
-		$account_info['restriction_type'] = "";
-		$account_info['account_block'] = "";
-		$account_info['block_off'] = "";
-		$account_info['sanction_date'] = "";
-		$account_info['release_date'] = "";
+		
+		$sanctions_user = $this->sanction_m->find_with_user_id($user_id);
+		print_r($sanctions_user);
+		if (count($sanctions_user) == 0)
+		{
+			$account_info['sanction_type'] = "";
+			$account_info['sanction_date'] = "";
+			$account_info['release_date'] = "";
+		}
+		else
+		{
+			$account_info['sanction_type'] = $sanctions_user['sanction_type'];
+			$account_info['sanction_date'] = $sanctions_user['s_date'];
+			$account_info['release_date'] = $sanctions_user['e_date'];
+		}
 		$account_info['invite_count'] = $user_action['invite_count'];
 		
 		return $account_info;
@@ -271,6 +292,45 @@ class Account_lookup extends CI_Controller
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function modify_level()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			print_r($_POST);
+			$user_id = $this->input->post('level_user_id_text', TRUE);
+			$new_level = $this->input->post('level_text', TRUE);
+			
+			if ($new_level == "")
+			{
+				alert("레벨을 입력하세요.");
+			}
+			else
+			{
+				$exp = ((int)$new_level * (int)$new_level) * 4;
+				$this->load->user_info_m->modify_exp($user_id, $exp);
+			}
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function user_sanctions()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			print_r($_POST);
+			$user_id = $this->input->post('sanction_user_id_text', TRUE);
+			$sanctions_days = $this->input->post('sanctions_days');
+			
+			reg_user($user_id, $sanction_type, $s_date, $e_date, $subject, $reason, $memo, $reg_user, $reg_date);
 		}
 	}
 }

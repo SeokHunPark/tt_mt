@@ -64,6 +64,13 @@ class User_info_m extends CI_Model
 		return $this->db->update('drag_gamedb.user_info');
 	}
 	
+	function modify_exp($user_id, $exp)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('exp', $exp);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
 	function update_user($user_id, $nickname, $gas, $coin)
 	{
 		$this->db->where('user_id', $user_id);
