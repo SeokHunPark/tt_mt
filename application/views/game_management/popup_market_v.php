@@ -1,14 +1,14 @@
 ﻿<style type="text/css">
-table.promotion_list_table {
+table.promotion_table {
 	border: 1px solid black;
 	border-collapse: collapse;
 	text-align: center;
 }
-.promotion_list_table th {
+.promotion_table th {
 	border: 1px solid black;
 	border-spacing: 0px;
  }
-.promotion_list_table td {
+.promotion_table td {
 	border: 1px solid black;
 	border-spacing: 0px;
  }
@@ -21,12 +21,16 @@ table.promotion_list_table {
 
 <section id="content">
 	<fieldset>
-		<input type="button" value="프로모션 관리" id="" />
-		<input type="button" value="패키지 관리" id="" />
+		<form id="_management_promotion" method="post" action="/game_management/popup_market">
+		<input type="submit" value="프로모션 관리" />
+		</form>
+		<form id="_management_pakcage" method="post" action="/game_management/package">
+		<input type="submit" value="패키지 관리" />
+		</form>
 	</fieldset>
 	
 	<p>
-	<table class="promotion_list_table">
+	<table class="promotion_table">
 		<thead>
 			<tr>
 				<th scope="col" colspan="8">
@@ -63,36 +67,38 @@ table.promotion_list_table {
 		</thead>
 		<tbody>
 			<tr>
+				<form id="_save_promotion" method="post" action="/game_management/popup_market/save_promotion">
 				<td scope="row">
-					<input type="text" id="" name="promo_no_new_text" readonly="readonly" />
+					<input type="text" id="" name="promotion_no_new_text" value="<?php echo $target_promo['promotion_no']; ?>" readonly="readonly" />
 				</td>
 				<td>
-					<input type="text" id="" name="promo_name_new_text" />
+					<input type="text" id="" name="title_new_text" value="<?php echo $target_promo['title']; ?>" />
 				</td>
 				<td>
-					<input type="text" id="" name="package_no_new_text" />
+					<input type="text" id="" name="package_new_text" value="<?php echo $target_promo['package']; ?>" />
 				</td>
 				<td>
-					<input type="text" id="" name="expose_int_new_text" />
+					<input type="text" id="" name="expose_int_new_text" value="<?php echo $target_promo['expose_int']; ?>" />
 				</td>
 				<td>
-					<input type="text" id="" name="reexpose_buy_new_text" />
+					<input type="text" id="" name="reexpose_buy_new_text" value="<?php echo $target_promo['reexpose_buy']; ?>" />
 				</td>
 				<td>
-					<input type="text" id="" name="expose_limit_new_text" />
+					<input type="text" id="" name="expose_limit_new_text" value="<?php echo $target_promo['expose_limit']; ?>" />
 				</td>
 				<td>
-					<input type="text" id="" name="expose_prob_new_text" />
+					<input type="text" id="" name="expose_prob_new_text" value="<?php echo $target_promo['expose_prob']; ?>" />
 				</td>
 				<td>
 					<input type="submit" value="저장" action="/game_manegement/popup_market/modify_promotion" />
 				</td>
+				</form>
 			</tr>
 		</tbody>
 	</table>
 	</p>
 	
-	<table class="promotion_list_table">
+	<table class="promotion_table">
 		<thead>
 			<tr>
 				<th scope="col">프로모션 번호</th>

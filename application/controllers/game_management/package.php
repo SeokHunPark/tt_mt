@@ -1,18 +1,18 @@
 ﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Popup_market extends CI_Controller
+class Package extends CI_Controller
 {
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->database('globaldb');
-		$this->load->model('shop_promotion_m');
+		$this->load->model('shop_package_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
 	public function index()
 	{
-		$this->load_current_promotion();
+		$this->load_current_package();
 	}
 	
 	public function _remap($method)
@@ -35,21 +35,48 @@ class Popup_market extends CI_Controller
 		$this->load->view('footer_v');
 	}
 	
-	public function load_current_promotion()
+	public function load_current_package()
 	{
-		$target_promo['promotion_no'] = "";
-		$target_promo['title'] = "";
-		$target_promo['package'] = "";
-		$target_promo['expose_int'] = "";
-		$target_promo['reexpose_buy'] = "";
-		$target_promo['expose_limit'] = "";
-		$target_promo['expose_prob'] = "";
-		$data['target_promo'] = $target_promo;
+		$target_package['package_no'] = "";
+		$target_package['price'] = "";
+		$target_package['image_url'] = "";
+		$target_package['gold'] = "";
+		$target_package['gas'] = "";
+		$target_package['coin'] = "";
+		$target_package['item1'] = "";
+		$target_package['item2'] = "";
+		$target_package['item3'] = "";
+		$target_package['item4'] = "";
+		$target_package['item5'] = "";
+		$data['target_package'] = $target_package;
 		
-		$promotion_list = $this->shop_promotion_m->get_promotion_list();
-		#print_r($promotion_list);
-		$data['promotion_list'] = $promotion_list;
-		$this->load->view('game_management/popup_market_v', $data);
+		$_package_list = $this->shop_package_m->get_package_list();
+		foreach ($_package_list as $pkg)
+		{
+			
+		}
+		$package_list = [];
+		for ($i = 0; $i < count($_package_list); $i++)
+		{
+			$package_list[$i]['package_no'] = $_package_list[$i]->package_no;
+			$package_list[$i]['price'] = $_package_list[$i]->price;
+			$package_list[$i]['image_url'] = $_package_list[$i]->image_url;
+			$package_list[$i]['gold'] = $_package_list[$i]->gold;
+			$package_list[$i]['gas'] = $_package_list[$i]->gas;
+			$package_list[$i]['coin'] = $_package_list[$i]->coin;
+			$package_list[$i]['item_string'] = $_package_list[$i]->item_string;
+			$item_string = $_package_list[$i]->item_string;
+			
+			$item_string = preg_replace("/\s+/", "", $item_string);
+			$item_list = explode(',', $item_string);
+			for ($j = 0; $j < count($item_list); $j++)
+			{
+				$package_list[$i]['item' + $j] = $item_list[$j];
+			}
+		}
+		#print_r($package_list);
+		$data['package_list'] = $_package_list;
+		$this->load->view('game_management/package_v', $data);
 	}
 	
 	public function modify_promotion()
@@ -67,9 +94,9 @@ class Popup_market extends CI_Controller
 			$target_promo['expose_prob'] = $this->input->post('expose_prob', TRUE);
 			$data['target_promo'] = $target_promo;
 			
-			$promotion_list = $this->shop_promotion_m->get_promotion_list();
+			$promotion_list = $this->shop_package_m->get_promotion_list();
 			$data['promotion_list'] = $promotion_list;
-			$this->load->view('game_management/popup_market_v', $data);
+			$this->load->view('game_management/shop_package_m', $data);
 		}
 	}
 	
@@ -87,7 +114,7 @@ class Popup_market extends CI_Controller
 			$expose_limit = $this->input->post('expose_limit_new_text', TRUE);
 			$expose_prob = $this->input->post('expose_prob_new_text', TRUE);
 			
-			$this->shop_promotion_m->save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob);
+			$this->shop_package_m->save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob);
 			
 			$this->index();
 		}
