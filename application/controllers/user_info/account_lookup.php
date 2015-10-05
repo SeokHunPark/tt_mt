@@ -92,7 +92,6 @@ class Account_lookup extends CI_Controller
 			}
 		}
 		
-		
 		print "user info \n<br>";
 		$data['account_info'] = $account_info;
 		$this->load->view('user_info/account_lookup_v', $data);
@@ -123,7 +122,7 @@ class Account_lookup extends CI_Controller
 		
 		$exp = $user_info['exp'];
 		$level = (int)sqrt((int)$exp / 4);
-		$account_info['account_level'] = $level;
+		$account_info['account_level'] = $exp;
 		
 		#N:정상, U:탈퇴, E:영구제재, P:기간제재\n',
 		if ($user_info['status'] == "N")
@@ -319,7 +318,8 @@ class Account_lookup extends CI_Controller
 			}
 			else
 			{
-				$exp = ((int)$new_level * (int)$new_level) * 4;
+				$exp = $new_level;
+				#$exp = ((int)$new_level * (int)$new_level) * 4;
 				$this->load->user_info_m->modify_exp($user_id, $exp);
 			}
 			

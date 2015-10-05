@@ -237,7 +237,7 @@ a.pop-btn:hover {
 	<div class="pop-container">
 		<div class="pop-conts">
 			<!--content //-->
-			<p class="ctxt mb20">계정 레벨을 변경 하시겠습니까?</p>
+			<p class="ctxt mb20">계정 경험치를 변경 하시겠습니까?</p>
 			
 			<form id="_modify_level" method="post" action="/user_info/account_lookup/modify_level">
 			<input type="hidden" id="_level_user_id_text" name="level_user_id_text" />

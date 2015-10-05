@@ -299,7 +299,7 @@ function open_modify_level_popup(user_id){
 				<td>
 				</td>
 				<th>
-					계정 레벨
+					계정 경험치
 				</th>
 				<td>
 					<?php echo $account_info['account_level']; ?>
