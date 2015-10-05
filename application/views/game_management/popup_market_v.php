@@ -58,27 +58,34 @@ table.promotion_list_table {
 					노출 확률 (%)
 				</th>
 				<th scope="col">
-					<input type="submit" value="수정" action="/game_manegement/popup_market/modify_promotion" />
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td scope="row">
+					<input type="text" id="" name="promo_no_new_text" readonly="readonly" />
 				</td>
 				<td>
+					<input type="text" id="" name="promo_name_new_text" />
 				</td>
 				<td>
+					<input type="text" id="" name="package_no_new_text" />
 				</td>
 				<td>
+					<input type="text" id="" name="expose_int_new_text" />
 				</td>
 				<td>
+					<input type="text" id="" name="reexpose_buy_new_text" />
 				</td>
 				<td>
+					<input type="text" id="" name="expose_limit_new_text" />
 				</td>
 				<td>
+					<input type="text" id="" name="expose_prob_new_text" />
 				</td>
 				<td>
+					<input type="submit" value="저장" action="/game_manegement/popup_market/modify_promotion" />
 				</td>
 			</tr>
 		</tbody>
@@ -106,25 +113,25 @@ table.promotion_list_table {
 				<tr>
 					<form id="_modify_promotion" method="post" action="/game_management/popup_market/modify_promotion">
 					<th scope="row">
-						<?php echo $promo->promotion_no; ?>
+						<input type="text" id="" name="promotion_no" readonly="readonly" value="<?php echo $promo->promotion_no; ?>" />
 					</th>
 					<td>
-						<?php echo $promo->title; ?>
+						<input type="text" id="" name="title" readonly="readonly" value="<?php echo $promo->title; ?>" />
 					</td>
 					<td>
-						<?php echo $promo->package; ?>
+						<input type="text" id="" name="package" readonly="readonly" value="<?php echo $promo->package; ?>" />
 					</td>
 					<td>
-						<?php echo $promo->expose_int; ?>
+						<input type="text" id="" name="expose_int" readonly="readonly" value="<?php echo $promo->expose_int; ?>" />
 					</td>
 					<td>
-						<?php echo $promo->reexpose_buy; ?>
+						<input type="text" id="" name="reexpose_buy" readonly="readonly" value="<?php echo $promo->reexpose_buy; ?>" />
 					</td>
 					<td>
-						<?php echo $promo->expose_limit; ?>
+						<input type="text" id="" name="expose_limit" readonly="readonly" value="<?php echo $promo->expose_limit; ?>" />
 					</td>
 					<td>
-						<?php echo $promo->expose_prob; ?>
+						<input type="text" id="" name="expose_prob" readonly="readonly" value="<?php echo $promo->expose_prob; ?>" />
 					</td>
 					<td>
 						<input type="submit" value="수정" />

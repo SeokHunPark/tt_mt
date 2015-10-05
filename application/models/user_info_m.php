@@ -28,6 +28,15 @@ class User_info_m extends CI_Model
 		#return $query->result();
 	}
 	
+	function get_user_id_with_nickname($nickname)
+	{
+		$this->db->select('user_id');
+		$this->db->from('drag_gamedb.user_info');
+		$this->db->where('nickname', $nickname);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+	
 	function modify_nickname($user_id, $nickname)
 	{
 		#print "modify_nickname()";

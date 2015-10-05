@@ -70,24 +70,32 @@ class Account_lookup extends CI_Controller
 		
 		$user_id = "";
 		
-		if (isset($_POST['game_account_id_text']))
+		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
-			print "user info post \n<br>";
-			$user_id = $this->input->post('game_account_id_text', TRUE);
+			if ($_POST['game_account_id_text'] != "")
+			{
+				$user_id = $this->input->post('game_account_id_text', TRUE);
+				$user_info = $this->user_info_m->find_with_user_id($user_id);
+				if (count($user_info) > 0)
+				{
+					$account_info = $this->get_account_info($user_id);
+				}
+			}
+			else if ($_POST['nickname_text'] != "")
+			{
+				$nickname = $this->input->post('nickname_text', TRUE);
+				$user_info = $this->user_info_m->get_user_id_with_nickname($nickname);
+				if (count($user_info) >0)
+				{
+					$account_info = $this->get_account_info($user_info['user_id']);
+				}
+			}
 		}
 		
-		#if (isset($_POST['game_account_id_text']))
-		if ($user_id != "")
-		{
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
-		}
-		else
-		{
-			print "user info \n<br>";
-			$data['account_info'] = $account_info;
-			$this->load->view('user_info/account_lookup_v', $data);
-		}
+		
+		print "user info \n<br>";
+		$data['account_info'] = $account_info;
+		$this->load->view('user_info/account_lookup_v', $data);
 	}
 	
 	public function get_account_info($user_id)
@@ -141,7 +149,7 @@ class Account_lookup extends CI_Controller
 		$account_info['is_connected'] = "";
 		
 		$sanctions_user = $this->sanction_m->find_with_user_id($user_id);
-		print_r($sanctions_user);
+		#print_r($sanctions_user);
 		if (count($sanctions_user) == 0)
 		{
 			$account_info['sanction_type'] = "";

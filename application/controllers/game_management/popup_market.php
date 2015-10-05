@@ -42,4 +42,25 @@ class Popup_market extends CI_Controller
 		$data['promotion_list'] = $promotion_list;
 		$this->load->view('game_management/popup_market_v', $data);
 	}
+	
+	public function modify_promotion()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$target_promo['promotion_no'] = $this->input->post('promotion_no', TRUE);
+			$target_promo['title'] = $this->input->post('title', TRUE);
+			$target_promo['package'] = $this->input->post('package', TRUE);
+			$target_promo['expose_int'] = $this->input->post('expose_int', TRUE);
+			$target_promo['reexpose_buy'] = $this->input->post('reexpose_buy', TRUE);
+			$target_promo['expose_limit'] = $this->input->post('expose_limit', TRUE);
+			$target_promo['expose_prob'] = $this->input->post('expose_prob', TRUE);
+			$data['target_promo'] = $target_promo;
+			
+			$promotion_list = $this->shop_promotion_m->get_promotion_list();
+			$data['promotion_list'] = $promotion_list;
+			$this->load->view('game_management/popup_market_v', $data);
+		}
+	}
 }
