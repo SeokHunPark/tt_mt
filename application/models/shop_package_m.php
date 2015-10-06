@@ -31,4 +31,15 @@ class Shop_package_m extends CI_Model
 		$this->db->set('item_string', $item_string);
 		return $this->db->update('drag_globaldb.shop_package');
 	}
+	
+	function add_package($price, $image_url, $gold, $gas, $coin, $item_string)
+	{
+		$this->db->set('price', $price);
+		$this->db->set('image_url', $image_url);
+		$this->db->set('gold', $gold);
+		$this->db->set('gas', $gas);
+		$this->db->set('coin', $coin);
+		$this->db->set('item_string', $item_string);
+		return $this->db->insert('drag_globaldb.shop_package');
+	}
 }

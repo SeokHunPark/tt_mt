@@ -9,8 +9,19 @@
 			<tr>
 				<th scope="row"><a href="/user_info/account_lookup">- 계정 조회</a></th>
 			</tr>
+			<tr>
+				<th scope="row"><a href="/user_info/mail_box">- 우편함 / 선물함</a></th>
+			</tr>
 		</tbody>
 		<tbody>
+			<tr>
+				<th scope="row"><a href="/payment/order_lookup">- 주문 조회</a></th>
+			</tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<th scope="row"><a href="/game_management/game_notice">- 게임 공지</a></th>
+			</tr>
 			<tr>
 				<th scope="row"><a href="/game_management/hottime_event">- 핫타임 이벤트 관리</a></th>
 			</tr>

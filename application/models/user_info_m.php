@@ -9,7 +9,7 @@ class User_info_m extends CI_Model
 	
 	function get_lists()
 	{
-		$sql = "select * from drag_gamedb.user_info limit 20";
+		$sql = "select * from drag_gamedb.user_info";
 		
 		$query = $this->db->query($sql);
 		

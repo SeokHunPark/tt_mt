@@ -44,9 +44,6 @@ table.package_table {
 		<thead>
 			<tr>
 				<th scope="col">
-					패키지 번호
-				</th>
-				<th scope="col">
 					아이템 가격
 				</th>
 				<th scope="col">
@@ -84,37 +81,34 @@ table.package_table {
 			<tr>
 				<form id="_add_package" method="post" action="/game_management/package/add_package">
 				<td scope="row">
-					<input type="text" name="package_no_new_text" class="input_text" />
+					<input type="text" name="price_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="price_new_text" class="input_text" />
+					<input type="text" name="image_url_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="image_url_new_text" class="input_text" />
+					<input type="text" name="gold_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="gold_new_text" class="input_text" />
+					<input type="text" name="gas_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="gas_new_text" class="input_text" />
+					<input type="text" name="coin_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="coin_new_text" class="input_text" />
+					<input type="text" name="item1_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="item1_new_text" class="input_text" />
+					<input type="text" name="item2_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="item2_new_text" class="input_text" />
+					<input type="text" name="item3_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="item3_new_text" class="input_text" />
+					<input type="text" name="item4_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="item4_new_text" class="input_text" />
-				</td>
-				<td>
-					<input type="text" name="item5_new_text" class="input_text" />
+					<input type="text" name="item5_text" class="input_text" />
 				</td>
 				<td>
 					<input type="submit" value="추가" />

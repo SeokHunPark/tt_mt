@@ -32,7 +32,7 @@ class Account_lookup extends CI_Controller
 		}
 		
 		// popup include.
-		$this->load->view('user_info/account_lookup_popup_v');
+		$this->load->view('/user_info/account_lookup_popup_v');
 		
 		// footer include.
 		$this->load->view('footer_v');
@@ -94,7 +94,7 @@ class Account_lookup extends CI_Controller
 		
 		print "user info \n<br>";
 		$data['account_info'] = $account_info;
-		$this->load->view('user_info/account_lookup_v', $data);
+		$this->load->view('/user_info/account_lookup_v', $data);
 	}
 	
 	public function get_account_info($user_id)
@@ -185,7 +185,7 @@ class Account_lookup extends CI_Controller
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -204,7 +204,7 @@ class Account_lookup extends CI_Controller
 			$this->user_info_m->leave_game($user_id, $unreg_date);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -219,7 +219,7 @@ class Account_lookup extends CI_Controller
 			$this->user_info_m->leave_recovery_game($user_id);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -250,7 +250,7 @@ class Account_lookup extends CI_Controller
 			$this->user_info_m->modify_money($user_id, $gas, $coin, $gold, $vgold, $chip);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -273,7 +273,7 @@ class Account_lookup extends CI_Controller
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -298,7 +298,7 @@ class Account_lookup extends CI_Controller
 			$this->user_challenges_m->modify_stage($user_id, $mission_stage);
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -324,7 +324,7 @@ class Account_lookup extends CI_Controller
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('user_info/account_lookup_v', $data);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	

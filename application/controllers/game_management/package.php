@@ -28,7 +28,7 @@ class Package extends CI_Controller
 			$this->{"{$method}"}();
 		}
 		
-		// popup include.
+		// package include.
 		//$this->load->view('game_management/popup_market_popup_v');
 		
 		// footer include.
@@ -58,7 +58,6 @@ class Package extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
-		print "modify package";
 		if ($_POST)
 		{
 			$target_package['package_no'] = $this->input->post('package_no', TRUE);
@@ -132,6 +131,31 @@ class Package extends CI_Controller
 			$item_string = $item1 . $item2 . $item3 . $item4 . $item5;
 			
 			$this->shop_package_m->save_package($package_no, $price, $image_url, $gold, $gas, $coin, $item_string);
+			
+			$this->index();
+			#redirect('/game_management/package/index', 'refresh');
+		}
+	}
+	
+	public function add_package()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$price = $this->input->post('price_text', TRUE);
+			$image_url = $this->input->post('image_url_text', TRUE);
+			$gold = $this->input->post('gold_text', TRUE);
+			$gas = $this->input->post('gas_text', TRUE);
+			$coin = $this->input->post('coin_text', TRUE);
+			$item1 = $this->input->post('item1_text', TRUE);
+			$item2 = $this->input->post('item2_text', TRUE);
+			$item3 = $this->input->post('item3_text', TRUE);
+			$item4 = $this->input->post('item4_text', TRUE);
+			$item5 = $this->input->post('item5_text', TRUE);
+			$item_string = $item1 . $item2 . $item3 . $item4 . $item5;
+			
+			$this->shop_package_m->add_package($price, $image_url, $gold, $gas, $coin, $item_string);
 			
 			$this->index();
 		}
