@@ -9,7 +9,7 @@ class Banned_words_m extends CI_Model
 	
 	function get_word_list()
 	{
-		$sql = "select * from drag_globaldb.banned_words limit 20";
+		$sql = "select * from drag_globaldb.banned_words";
 		
 		$query = $this->db->query($sql);
 		

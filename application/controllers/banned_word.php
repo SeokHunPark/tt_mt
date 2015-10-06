@@ -64,7 +64,6 @@ class Banned_word extends CI_Controller
 			$word_reg_text = $this->input->post('word_reg_text');
 			if ($word_reg_text == "")
 			{
-				print "공백";
 				alert_only("입력하십시오.");
 				return;
 			}

@@ -46,7 +46,7 @@ table.words_reg_table {
 	</fieldset>
 	</form>
 	
-	<form id="reg_word" method="post" action="banned_word/reg_word">
+	<form id="reg_word" method="post" action="/banned_word/reg_word">
 	<table class="words_reg_table">
 		<thead>
 			<tr>
@@ -85,7 +85,7 @@ table.words_reg_table {
 			foreach ($word_list as $word_list_item)
 			{
 			?>
-				<form id="delete_word" method="post" action="banned_word/delete_word">
+				<form id="delete_word" method="post" action="/banned_word/delete_word">
 				<tr>
 					<th scope="row">
 						<?php echo $word_list_item->word_idx; ?>
