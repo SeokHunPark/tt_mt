@@ -20,15 +20,15 @@ class Shop_package_m extends CI_Model
 		return $query->result();
 	}
 	
-	function save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob)
+	function save_package($package_no, $price, $image_url, $gold, $gas, $coin, $item_string)
 	{
-		$this->db->where('promotion_no', $promotion_no);
-		$this->db->set('title', $title);
-		$this->db->set('package', $package);
-		$this->db->set('expose_int', $expose_int);
-		$this->db->set('reexpose_buy', $reexpose_buy);
-		$this->db->set('expose_limit', $expose_limit);
-		$this->db->set('expose_prob', $expose_prob);
-		return $this->db->update('drag_globaldb.shop_promotion');
+		$this->db->where('package_no', $package_no);
+		$this->db->set('price', $price);
+		$this->db->set('image_url', $image_url);
+		$this->db->set('gold', $gold);
+		$this->db->set('gas', $gas);
+		$this->db->set('coin', $coin);
+		$this->db->set('item_string', $item_string);
+		return $this->db->update('drag_globaldb.shop_package');
 	}
 }

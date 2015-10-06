@@ -50,11 +50,40 @@ class Package extends CI_Controller
 		$target_package['item5'] = "";
 		$data['target_package'] = $target_package;
 		
-		$_package_list = $this->shop_package_m->get_package_list();
-		foreach ($_package_list as $pkg)
+		$data['package_list'] = $this->get_package_list();
+		$this->load->view('game_management/package_v', $data);
+	}
+	
+	public function modify_package()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		print "modify package";
+		if ($_POST)
 		{
+			$target_package['package_no'] = $this->input->post('package_no', TRUE);
+			$target_package['price'] = $this->input->post('price', TRUE);
+			$target_package['image_url'] = $this->input->post('image_url', TRUE);
+			$target_package['gold'] = $this->input->post('gold', TRUE);
+			$target_package['gas'] = $this->input->post('gas', TRUE);
+			$target_package['coin'] = $this->input->post('coin', TRUE);
+			$target_package['item1'] = $this->input->post('item1', TRUE);
+			$target_package['item2'] = $this->input->post('item2', TRUE);
+			$target_package['item3'] = $this->input->post('item3', TRUE);
+			$target_package['item4'] = $this->input->post('item4', TRUE);
+			$target_package['item5'] = $this->input->post('item5', TRUE);
+			$data['target_package'] = $target_package;
+			#print_r($target_package);
 			
+			$package_list = $this->get_package_list();
+			$data['package_list'] = $package_list;
+			$this->load->view('game_management/package_v', $data);
 		}
+	}
+	
+	public function get_package_list()
+	{
+		$_package_list = $this->shop_package_m->get_package_list();
 		$package_list = [];
 		for ($i = 0; $i < count($_package_list); $i++)
 		{
@@ -67,54 +96,42 @@ class Package extends CI_Controller
 			$package_list[$i]['item_string'] = $_package_list[$i]->item_string;
 			$item_string = $_package_list[$i]->item_string;
 			
-			$item_string = preg_replace("/\s+/", "", $item_string);
+			#$item_string = preg_replace("/\s+/", "", $item_string);
 			$item_list = explode(',', $item_string);
-			for ($j = 0; $j < count($item_list); $j++)
+			for ($j = 1; $j <= 5; $j++)
 			{
-				$package_list[$i]['item' + $j] = $item_list[$j];
+				$key = 'item' . $j;
+				$package_list[$i][$key] = "";
+			}
+			for ($j = 1; $j <= count($item_list); $j++)
+			{
+				$key = 'item' . $j;
+				$package_list[$i][$key] = $item_list[$j - 1];
 			}
 		}
-		#print_r($package_list);
-		$data['package_list'] = $_package_list;
-		$this->load->view('game_management/package_v', $data);
+		return $package_list;
 	}
 	
-	public function modify_promotion()
+	public function save_package()
 	{
 		$this->output->enable_profiler(TRUE);
 		
 		if ($_POST)
 		{
-			$target_promo['promotion_no'] = $this->input->post('promotion_no', TRUE);
-			$target_promo['title'] = $this->input->post('title', TRUE);
-			$target_promo['package'] = $this->input->post('package', TRUE);
-			$target_promo['expose_int'] = $this->input->post('expose_int', TRUE);
-			$target_promo['reexpose_buy'] = $this->input->post('reexpose_buy', TRUE);
-			$target_promo['expose_limit'] = $this->input->post('expose_limit', TRUE);
-			$target_promo['expose_prob'] = $this->input->post('expose_prob', TRUE);
-			$data['target_promo'] = $target_promo;
+			$package_no = $this->input->post('package_no_new_text', TRUE);
+			$price = $this->input->post('price_new_text', TRUE);
+			$image_url = $this->input->post('image_url_new_text', TRUE);
+			$gold = $this->input->post('gold_new_text', TRUE);
+			$gas = $this->input->post('gas_new_text', TRUE);
+			$coin = $this->input->post('coin_new_text', TRUE);
+			$item1 = $this->input->post('item1_new_text', TRUE);
+			$item2 = $this->input->post('item2_new_text', TRUE);
+			$item3 = $this->input->post('item3_new_text', TRUE);
+			$item4 = $this->input->post('item4_new_text', TRUE);
+			$item5 = $this->input->post('item5_new_text', TRUE);
+			$item_string = $item1 . $item2 . $item3 . $item4 . $item5;
 			
-			$promotion_list = $this->shop_package_m->get_promotion_list();
-			$data['promotion_list'] = $promotion_list;
-			$this->load->view('game_management/shop_package_m', $data);
-		}
-	}
-	
-	public function save_promotion()
-	{
-		$this->output->enable_profiler(TRUE);
-		
-		if ($_POST)
-		{
-			$promotion_no = $this->input->post('promotion_no_new_text', TRUE);
-			$title = $this->input->post('title_new_text', TRUE);
-			$package = $this->input->post('package_new_text', TRUE);
-			$expose_int = $this->input->post('expose_int_new_text', TRUE);
-			$reexpose_buy = $this->input->post('reexpose_buy_new_text', TRUE);
-			$expose_limit = $this->input->post('expose_limit_new_text', TRUE);
-			$expose_prob = $this->input->post('expose_prob_new_text', TRUE);
-			
-			$this->shop_package_m->save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob);
+			$this->shop_package_m->save_package($package_no, $price, $image_url, $gold, $gas, $coin, $item_string);
 			
 			$this->index();
 		}

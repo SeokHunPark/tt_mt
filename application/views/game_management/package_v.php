@@ -84,40 +84,40 @@ table.package_table {
 			<tr>
 				<form id="_save_package" method="post" action="/game_management/package/save_package">
 				<td scope="row">
-					<input type="text" name="promotion_no_new_text" value="<?php echo $target_package['package_no']; ?>" class="input_text" readonly="readonly" />
+					<input type="text" name="package_no_new_text" value="<?php echo $target_package['package_no']; ?>" class="input_text" readonly="readonly" />
 				</td>
 				<td>
-					<input type="text" name="title_new_text" value="<?php echo $target_package['price']; ?>" class="input_text" />
+					<input type="text" name="price_new_text" value="<?php echo $target_package['price']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="package_new_text" value="<?php echo $target_package['image_url']; ?>" class="input_text" />
+					<input type="text" name="image_url_new_text" value="<?php echo $target_package['image_url']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_int_new_text" value="<?php echo $target_package['gold']; ?>" class="input_text" />
+					<input type="text" name="gold_new_text" value="<?php echo $target_package['gold']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="reexpose_buy_new_text" value="<?php echo $target_package['gas']; ?>" class="input_text" />
+					<input type="text" name="gas_new_text" value="<?php echo $target_package['gas']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_limit_new_text" value="<?php echo $target_package['coin']; ?>" class="input_text" />
+					<input type="text" name="coin_new_text" value="<?php echo $target_package['coin']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_prob_new_text" value="<?php echo $target_package['item1']; ?>" class="input_text" />
+					<input type="text" name="item1_new_text" value="<?php echo $target_package['item1']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_prob_new_text" value="<?php echo $target_package['item2']; ?>" class="input_text" />
+					<input type="text" name="item2_new_text" value="<?php echo $target_package['item2']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_prob_new_text" value="<?php echo $target_package['item3']; ?>" class="input_text" />
+					<input type="text" name="item3_new_text" value="<?php echo $target_package['item3']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_prob_new_text" value="<?php echo $target_package['item4']; ?>" class="input_text" />
+					<input type="text" name="item4_new_text" value="<?php echo $target_package['item4']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="expose_prob_new_text" value="<?php echo $target_package['item5']; ?>" class="input_text" />
+					<input type="text" name="item5_new_text" value="<?php echo $target_package['item5']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="submit" value="저장" action="/game_manegement/popup_market/modify_promotion" />
+					<input type="submit" value="저장" action="/game_manegement/package/save_package" />
 				</td>
 				</form>
 			</tr>
@@ -171,39 +171,39 @@ table.package_table {
 			{
 			?>
 				<tr>
-					<form id="_modify_promotion" method="post" action="/game_management/popup_market/modify_package">
+					<form id="_modify_promotion" method="post" action="/game_management/package/modify_package">
 					<th scope="row">
-						<input type="text" name="package_no" readonly="readonly" value="<?php echo $pkg->package_no; ?>" class="input_text" />
+						<input type="text" name="package_no" readonly="readonly" value="<?php echo $pkg['package_no']; ?>" class="input_text" />
 					</th>
 					<td>
-						<input type="text" name="price" readonly="readonly" value="<?php echo $pkg->price; ?>" class="input_text" />
+						<input type="text" name="price" readonly="readonly" value="<?php echo $pkg['price']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="image_url" readonly="readonly" value="<?php echo $pkg->image_url; ?>" class="" />
+						<input type="text" name="image_url" readonly="readonly" value="<?php echo $pkg['image_url']; ?>" class="" />
 					</td>
 					<td>
-						<input type="text" name="gold" readonly="readonly" value="<?php echo $pkg->gold; ?>" class="input_text" />
+						<input type="text" name="gold" readonly="readonly" value="<?php echo $pkg['gold']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="gas" readonly="readonly" value="<?php echo $pkg->gas; ?>" class="input_text" />
+						<input type="text" name="gas" readonly="readonly" value="<?php echo $pkg['gas']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="coin" readonly="readonly" value="<?php echo $pkg->coin; ?>" class="input_text" />
+						<input type="text" name="coin" readonly="readonly" value="<?php echo $pkg['coin']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="expose_prob" readonly="readonly" class="input_text" />
+						<input type="text" name="item1" readonly="readonly" value="<?php echo $pkg['item1']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="expose_prob" readonly="readonly" class="input_text" />
+						<input type="text" name="item2" readonly="readonly" value="<?php echo $pkg['item2']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="expose_prob" readonly="readonly" class="input_text" />
+						<input type="text" name="item3" readonly="readonly" value="<?php echo $pkg['item3']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="expose_prob" readonly="readonly" class="input_text" />
+						<input type="text" name="item4" readonly="readonly" value="<?php echo $pkg['item4']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="expose_prob" readonly="readonly" class="input_text" />
+						<input type="text" name="item5" readonly="readonly" value="<?php echo $pkg['item5']; ?>" class="input_text" />
 					</td>
 					<td>
 						<input type="submit" value="수정" />
