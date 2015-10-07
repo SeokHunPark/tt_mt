@@ -12,13 +12,6 @@
 	height: 100px;
 	background-color:#908886;
 }
-#nav {
-	border: 1px solid #555;
-	width: 150px;
-	height:1000px;
-	float: left;
-	background-color:#DCDAD9;
-}
 #content {
 	border: 1px solid #555;
 	height:1000px;	

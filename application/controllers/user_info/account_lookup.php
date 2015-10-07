@@ -84,10 +84,10 @@ class Account_lookup extends CI_Controller
 			else if ($_POST['nickname_text'] != "")
 			{
 				$nickname = $this->input->post('nickname_text', TRUE);
-				$user_info = $this->user_info_m->get_user_id_with_nickname($nickname);
-				if (count($user_info) >0)
+				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+				if ($user_id != "")
 				{
-					$account_info = $this->get_account_info($user_info['user_id']);
+					$account_info = $this->get_account_info($user_id);
 				}
 			}
 		}

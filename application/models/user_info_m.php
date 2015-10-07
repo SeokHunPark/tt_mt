@@ -34,7 +34,15 @@ class User_info_m extends CI_Model
 		$this->db->from('drag_gamedb.user_info');
 		$this->db->where('nickname', $nickname);
 		$query = $this->db->get();
-		return $query->row_array();
+		$result = $query->row_array();
+		if (isset($result['user_id']))
+		{
+			return $result['user_id'];
+		}
+		else
+		{
+			return "";
+		}
 	}
 	
 	function modify_nickname($user_id, $nickname)
