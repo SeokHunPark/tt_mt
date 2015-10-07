@@ -119,7 +119,7 @@ class Mail_box extends CI_Controller
 		else if (isset($_POST['week_search']))
 		{			
 			$time = time();
-			$start_date = date("Y-m-d", $time);
+			$begin_date = date("Y-m-d", $time);
 			$end_date = date("Y-m-d", $time + (60 * 60 * 24 * 7));
 			
 			$_mail_list = $this->mail_m->get_list_with_date($begin_date . " 00:00:00", $end_date . " 23:59:59");
@@ -177,7 +177,6 @@ class Mail_box extends CI_Controller
 			$mail_list[$i]['description'] = $_mail_list[$i]->title;
 			$mail_list[$i]['reg_date'] = $_mail_list[$i]->reg_date;
 			$mail_list[$i]['expire_date'] = $_mail_list[$i]->expire_date;
-			
 			$mail_list[$i]['recv_date'] = "";
 			
 			$time = time();

@@ -35,6 +35,9 @@ table.nav_table {
 			<tr>
 				<th scope="row"><a href="/user_info/mail_box">- 우편함 / 선물함</a></th>
 			</tr>
+			<tr>
+				<th scope="row"><a href="/user_info/cars">- 보유차량 / 서포터즈</a></th>
+			</tr>
 		</tbody>
 		<tbody>
 			<tr>
