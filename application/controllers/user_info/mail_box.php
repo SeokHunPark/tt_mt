@@ -31,6 +31,9 @@ class Mail_box extends CI_Controller
 			$this->{"{$method}"}();
 		}
 		
+		// popup include.
+		$this->load->view('/user_info/mail_box_popup_v');
+		
 		// footer include.
 		$this->load->view('footer_v');
 	}
@@ -45,7 +48,6 @@ class Mail_box extends CI_Controller
 		$size = 10;
 		
 		$mail_list = [];
-		$mail_log_list = [];
 		
 		$mode = $this->uri->segment(4, 0);
 		if ($mode == "date_search")
@@ -60,9 +62,8 @@ class Mail_box extends CI_Controller
 			$config['per_page'] = $size;
 			$config['uri_segment'] = 7;
 			$this->pagination->initialize($config);
-			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
 			
-			$_mail_log_list = $this->log_mail_m->get_list_with_date($begin_date, $end_date);
+			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
 		}
 		else if ($mode == "user_search")
 		{
@@ -230,39 +231,9 @@ class Mail_box extends CI_Controller
 		return $mail_list;
 	}
 	
-	public function get_mail_list($start, $size)
+	public function mail_collect()
 	{
-		$mail_list = [];
-		$_mail_list = $this->mail_m->get_mail_list($start, $size);
-		
-		for ($i = 0; $i < count($_mail_list); $i++)
-		{
-			$mail_list[$i]['mail_idx'] = $_mail_list[$i]->mail_idx;
-			$item_string = $_mail_list[$i]->item_string;
-			$item_array = explode(':', $item_string);
-			$mail_list[$i]['item_name'] = $item_array[1];
-			$mail_list[$i]['item_count'] = $item_array[2];
-			$mail_list[$i]['sender'] = "";
-			$mail_list[$i]['description'] = $_mail_list[$i]->title;
-			$mail_list[$i]['reg_date'] = $_mail_list[$i]->reg_date;
-			$mail_list[$i]['expire_date'] = $_mail_list[$i]->expire_date;
-			
-			$mail_list[$i]['recv_date'] = "";
-			
-			$time = time();
-			$date_string = "%Y-%m-%d %h:%i:%s";
-			$current_date = mdate($date_string, $time);
-			if ($mail_list[$i]['expire_date'] > $current_date)
-			{
-				$mail_list[$i]['stats'] = "대기";
-			}
-			else
-			{
-				$mail_list[$i]['stats'] = "만료";
-			}
-			
-		}
-		
-		return $mail_list;
+		$mail_idx = $this->input->post('mail_idx_text', TRUE);
+		print "$mail_idx 메일을 회수합니다.";
 	}
 }

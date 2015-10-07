@@ -18,6 +18,28 @@ table.mail_box_table {
 
 </style>
 
+<script>
+function open_collect_popup(mail_idx){
+
+	var temp = $('#_mail_collect_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var mail_idx_text = document.getElementById("_mail_idx_text");
+	mail_idx_text.value = mail_idx;
+}
+</script>
+
 <section id="content">
 	<fieldset>
 		<form id="_term_search" method="post" action="/user_info/mail_box/load_mail_box/date_search">
@@ -69,7 +91,6 @@ table.mail_box_table {
 			{
 			?>
 				<tr>
-					<form id="_collect_mail" method="post" action="/user_info/mail_box/collect_mail">
 					<th scope="row">
 						<input type="text" class="input_text" name="promotion_no" readonly="readonly" value="<?php echo $mail['mail_idx']; ?>" />
 					</th>
@@ -98,9 +119,8 @@ table.mail_box_table {
 						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['stats']; ?>" />
 					</td>
 					<td>
-						<input type="submit" value="회수" />
+						<input type="submit" value="회수" onclick="open_collect_popup('<?php echo $mail['mail_idx']; ?>'); return false"/>
 					</td>
-					</form>
 				</tr>
 			<?php
 			}
@@ -116,72 +136,5 @@ table.mail_box_table {
 	</table>
 	</p>
 	
-	<p>
-	<table class="mail_box_table">
-		<thead>
-			<tr>
-				<th scope="col">메일 번호</th>
-				<th scope="col">아이템 명</th>
-				<th scope="col">개수</th>
-				<th scope="col">보낸 사람</th>
-				<th scope="col">설명</th>
-				<th scope="col">받은 시각</th>
-				<th scope="col">만료일</th>
-				<th scope="col">수령 시간</th>
-				<th scope="col">비고</th>
-				<th scope="col">회수</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
-			foreach ($mail_log_list as $mail)
-			{
-			?>
-				<tr>
-					<form id="_collect_mail" method="post" action="/user_info/mail_box/collect_mail">
-					<th scope="row">
-						<input type="text" class="input_text" name="promotion_no" readonly="readonly" value="<?php echo $mail['mail_idx']; ?>" />
-					</th>
-					<td>
-						<input type="text" class="input_text" name="title" readonly="readonly" value="<?php echo $mail['item_name']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="package" readonly="readonly" value="<?php echo $mail['item_count']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="expose_int" readonly="readonly" value="<?php echo $mail['sender']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="reexpose_buy" readonly="readonly" value="<?php echo $mail['description']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="expose_limit" readonly="readonly" value="<?php echo $mail['reg_date']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['expire_date']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['recv_date']; ?>" />
-					</td>
-					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['stats']; ?>" />
-					</td>
-					<td>
-						<input type="submit" value="회수" />
-					</td>
-					</form>
-				</tr>
-			<?php
-			}
-			?>
-		</tbody>
-		</tfoot>
-			<tr>
-				<th colspan="10">
-					<?php echo $log_pagination; ?>
-				</th>
-			</tr>
-		<tfoot>
-	</table>
-	</p>
+	
 </section>
