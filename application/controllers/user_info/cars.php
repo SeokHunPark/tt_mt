@@ -8,6 +8,7 @@ class Cars extends CI_Controller
 		$this->load->database('gamedb');
 		$this->load->model('user_info_m');
 		$this->load->model('user_inven_m');
+		$this->load->model('user_supporters_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -54,25 +55,33 @@ class Cars extends CI_Controller
 		$data['target_car'] = $target_car;
 		
 		$user_id = "";
-		$car_list = [];
-		if (isset($_POST))
+		$data['user_id'] = $user_id;
+		
+		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
-			if (isset($_POST['game_account_id_text']))
-			{
-				$user_id = $this->input->post('game_account_id_text', TRUE);
-			}
-			else if (isset($_POST['nickname_text']))
-			{
-				$user_id = $this->input->post('nickname_text', TRUE);
-			}
+			$user_id = $this->input->post('game_account_id_text', TRUE);
+			$nickname = $this->input->post('nickname_text', TRUE);
 			
-			$_car_list = $this->user_inven_m->get_list($user_id);
-			#print_r($_car_list);
-			$car_list = $this->make_load_data($_car_list);
+			if ($nickname != "")
+			{
+				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+			}
 		}
 		
-		$data['user_id'] = $user_id;
+		$_car_list = $this->user_inven_m->get_list($user_id);
+		$car_list = $this->make_load_data($_car_list);
 		$data['car_list'] = $car_list;
+		
+		$target_sup['user_id'] = "";
+		$target_sup['model_id'] = "";
+		$target_sup['ability'] = "";
+		$target_sup['count'] = "";
+		$data['target_sup'] = $target_sup;
+		
+		$_sup_list = $this->user_supporters_m->get_list($user_id);
+		$sup_list = $this->make_load_sup_data($_sup_list);
+		$data['sup_list'] = $sup_list;
+		
 		$this->load->view('/user_info/cars_v', $data);
 	}
 	
@@ -94,6 +103,19 @@ class Cars extends CI_Controller
 			$car_list[$i]['color'] = $_car_list[$i]->sel_color;
 		}
 		return $car_list;
+	}
+	
+	public function make_load_sup_data($_sup_list)
+	{
+		$sup_list = [];
+		for ($i = 0; $i < count($_sup_list); $i++)
+		{
+			$sup_list[$i]['user_id'] = $_sup_list[$i]->user_id;
+			$sup_list[$i]['model_id'] = $_sup_list[$i]->model_id;
+			$sup_list[$i]['ability'] = "";
+			$sup_list[$i]['count'] = $_sup_list[$i]->count;
+		}
+		return $sup_list;
 	}
 	
 	public function click_modify_button()
@@ -141,6 +163,85 @@ class Cars extends CI_Controller
 			$color = $this->input->post('color_text', TRUE);
 			
 			$this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $evol, $decal, $color);
+		}
+		
+		$target_car['user_id'] = "";
+		$target_car['model_id'] = "";
+		$target_car['class'] = "";
+		$target_car['speed'] = "";
+		$target_car['accel'] = "";
+		$target_car['booster_charge'] = "";
+		$target_car['booster_power'] = "";
+		$target_car['upgrade'] = "";
+		$target_car['evol'] = "";
+		$target_car['decal'] = "";
+		$target_car['color'] = "";
+		$data['target_car'] = $target_car;
+		
+		$_car_list = $this->user_inven_m->get_list($user_id);
+		$car_list = $this->make_load_data($_car_list);
+		$data['car_list'] = $car_list;
+		
+		$target_sup['user_id'] = "";
+		$target_sup['model_id'] = "";
+		$target_sup['ability'] = "";
+		$target_sup['count'] = "";
+		$data['target_sup'] = $target_sup;
+		
+		$_sup_list = $this->user_supporters_m->get_list($user_id);
+		$sup_list = $this->make_load_sup_data($_sup_list);
+		$data['sup_list'] = $sup_list;
+		
+		$this->load->view('/user_info/cars_v', $data);
+	}
+	
+	public function click_modify_sup_button()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$target_sup['user_id'] = $this->input->post('user_id', TRUE);
+			$target_sup['model_id'] = $this->input->post('model_id', TRUE);
+			$target_sup['ability'] = $this->input->post('ability', TRUE);
+			$target_sup['count'] = $this->input->post('count', TRUE);
+			$data['target_sup'] = $target_sup;
+			
+			$target_car['user_id'] = "";
+			$target_car['model_id'] = "";
+			$target_car['class'] = "";
+			$target_car['speed'] = "";
+			$target_car['accel'] = "";
+			$target_car['booster_charge'] = "";
+			$target_car['booster_power'] = "";
+			$target_car['upgrade'] = "";
+			$target_car['evol'] = "";
+			$target_car['decal'] = "";
+			$target_car['color'] = "";
+			$data['target_car'] = $target_car;
+			
+			$_car_list = $this->user_inven_m->get_list($target_sup['user_id']);
+			$car_list = $this->make_load_data($_car_list);
+			$data['car_list'] = $car_list;
+			
+			$_sup_list = $this->user_supporters_m->get_list($target_sup['user_id']);
+			$sup_list = $this->make_load_sup_data($_sup_list);
+			$data['sup_list'] = $sup_list;
+			
+			$this->load->view('/user_info/cars_v', $data);
+		}		
+	}
+	
+	public function modify_sup()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('user_id_text', TRUE);
+			$model_id = $this->input->post('model_id_text', TRUE);
+			$count = $this->input->post('count_text', TRUE);
+			$this->user_supporters_m->modify_sup($user_id, $model_id, $count);
 			
 			$target_car['user_id'] = "";
 			$target_car['model_id'] = "";
@@ -158,6 +259,17 @@ class Cars extends CI_Controller
 			$_car_list = $this->user_inven_m->get_list($user_id);
 			$car_list = $this->make_load_data($_car_list);
 			$data['car_list'] = $car_list;
+			
+			$target_sup['user_id'] = "";
+			$target_sup['model_id'] = "";
+			$target_sup['ability'] = "";
+			$target_sup['count'] = "";
+			$data['target_sup'] = $target_sup;
+			
+			$_sup_list = $this->user_supporters_m->get_list($user_id);
+			$sup_list = $this->make_load_sup_data($_sup_list);
+			$data['sup_list'] = $sup_list;
+			
 			$this->load->view('/user_info/cars_v', $data);
 		}
 	}
