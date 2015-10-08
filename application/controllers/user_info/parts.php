@@ -69,18 +69,18 @@ class Parts extends CI_Controller
 		$this->load->view('/user_info/parts_v', $data);
 	}
 	
-	public function make_load_data($_parts_list)
-	{
-		$parts_list = [];
-		for ($i = 0; $i < count($_parts_list); $i++)
-		{
-			$data = (array)$_parts_list[$i];
-			$parts_list[$i]['user_id'] = $data['user_id'];
-			$parts_list[$i]['class'] = "";
-			$parts_list[$i]['item_code'] = $data['item_code'];
-			$parts_list[$i]['count'] = $data['count'];
-		}
+	// public function make_load_data($_parts_list)
+	// {
+		// $parts_list = [];
+		// for ($i = 0; $i < count($_parts_list); $i++)
+		// {
+			// $data = (array)$_parts_list[$i];
+			// $parts_list[$i]['user_id'] = $data['user_id'];
+			// $parts_list[$i]['class'] = "";
+			// $parts_list[$i]['item_code'] = $data['item_code'];
+			// $parts_list[$i]['count'] = $data['count'];
+		// }
 		
-		return $parts_list;
-	}
+		// return $parts_list;
+	// }
 }
