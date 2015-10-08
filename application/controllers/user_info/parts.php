@@ -66,7 +66,7 @@ class Parts extends CI_Controller
 		// }
 		// $data['parts_list'] = $parts_list;
 		
-		// $this->load->view('/user_info/parts_v', $data);
+		$this->load->view('/user_info/parts_v', $data);
 	}
 	
 	// public function make_load_data($_parts_list)
