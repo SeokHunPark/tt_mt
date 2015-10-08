@@ -51,19 +51,19 @@ class Parts extends CI_Controller
 		$data['user_id'] = $user_id;
 		
 		$parts_list = [];
-		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
-		{
-			$user_id = $this->input->post('game_account_id_text', TRUE);
-			$nickname = $this->input->post('nickname_text', TRUE);
+		// if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
+		// {
+			// $user_id = $this->input->post('game_account_id_text', TRUE);
+			// $nickname = $this->input->post('nickname_text', TRUE);
 			
-			if ($nickname != "")
-			{
-				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
-			}
+			// if ($nickname != "")
+			// {
+				// $user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+			// }
 			
 			// $_parts_list = $this->user_items_m->get_list($user_id);
 			// $parts_list = $this->make_load_data($_parts_list);
-		}
+		// }
 		$data['parts_list'] = $parts_list;
 		
 		$this->load->view('/user_info/parts_v', $data);
