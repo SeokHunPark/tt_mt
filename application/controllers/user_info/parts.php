@@ -61,25 +61,25 @@ class Parts extends CI_Controller
 			}
 		}
 		
-		$_parts_list = $this->user_items_m->get_list($user_id);
-		$parts_list = $this->make_load_data($_parts_list);
-		$data['parts_list'] = $parts_list;
+		// $_parts_list = $this->user_items_m->get_list($user_id);
+		// $parts_list = $this->make_load_data($_parts_list);
+		// $data['parts_list'] = $parts_list;
 		
-		$this->load->view('/user_info/parts_v', $data);
+		// $this->load->view('/user_info/parts_v', $data);
 	}
 	
-	public function make_load_data($_parts_list)
-	{
-		$parts_list = [];
+	// public function make_load_data($_parts_list)
+	// {
+		// $parts_list = [];
 		
-		for ($i = 0; $i < count($_parts_list); $i++)
-		{
-			$parts_list[$i]['user_id'] = $_parts_list[$i]->user_id;
-			$parts_list[$i]['class'] = "";
-			$parts_list[$i]['item_code'] = $_parts_list[$i]->item_code;
-			$parts_list[$i]['count'] = $_parts_list[$i]->count;
-		}
+		// for ($i = 0; $i < count($_parts_list); $i++)
+		// {
+			// $parts_list[$i]['user_id'] = $_parts_list[$i]->user_id;
+			// $parts_list[$i]['class'] = "";
+			// $parts_list[$i]['item_code'] = $_parts_list[$i]->item_code;
+			// $parts_list[$i]['count'] = $_parts_list[$i]->count;
+		// }
 		
-		return $parts_list;
-	}
+		// return $parts_list;
+	// }
 }
