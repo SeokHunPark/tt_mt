@@ -41,8 +41,6 @@ class Parts extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
-		$data = [];
-		
 		$target_parts['user_id'] = "";
 		$target_parts['item_code'] = "";
 		$target_parts['class'] = "";
@@ -52,7 +50,7 @@ class Parts extends CI_Controller
 		$user_id = "";
 		$data['user_id'] = $user_id;
 		
-		$parts_list = [];
+		#$parts_list = [];
 		// if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		// {
 			// $user_id = $this->input->post('game_account_id_text', TRUE);
