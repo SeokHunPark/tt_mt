@@ -41,14 +41,14 @@ class Parts extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
-		// $target_parts['user_id'] = "";
-		// $target_parts['item_code'] = "";
-		// $target_parts['class'] = "";
-		// $target_parts['count'] = "";
-		// $data['target_parts'] = $target_parts;
+		$target_parts['user_id'] = "";
+		$target_parts['item_code'] = "";
+		$target_parts['class'] = "";
+		$target_parts['count'] = "";
+		$data['target_parts'] = $target_parts;
 		
-		// $user_id = "";
-		// $data['user_id'] = $user_id;
+		$user_id = "";
+		$data['user_id'] = $user_id;
 		
 		// $parts_list = [];
 		// if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
