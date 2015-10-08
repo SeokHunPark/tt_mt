@@ -41,6 +41,8 @@ class Parts extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		$data = [];
+		
 		$target_parts['user_id'] = "";
 		$target_parts['item_code'] = "";
 		$target_parts['class'] = "";
