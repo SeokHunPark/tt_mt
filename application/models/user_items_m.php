@@ -21,7 +21,7 @@ class User_items_m extends CI_Model
 		return $query->result();
 	}
 	
-	function modify_car($user_id, $item_code, $count)
+	function modify_parts($user_id, $item_code, $count)
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('item_code', $item_code);

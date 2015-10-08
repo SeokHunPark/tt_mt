@@ -48,8 +48,6 @@ class Parts extends CI_Controller
 		$data['target_parts'] = $target_parts;
 		
 		$user_id = "";
-		$data['user_id'] = $user_id;
-		
 		$parts_list = array();
 		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
@@ -64,6 +62,7 @@ class Parts extends CI_Controller
 			$_parts_list = $this->user_items_m->get_list($user_id);
 			$parts_list = $this->make_load_data($_parts_list);
 		}
+		$data['user_id'] = $user_id;
 		$data['parts_list'] = $parts_list;
 		
 		$this->load->view('/user_info/parts_v', $data);
@@ -82,5 +81,49 @@ class Parts extends CI_Controller
 		}
 		
 		return $parts_list;
+	}
+	
+	public function click_modify_button()
+	{
+		$user_id = $this->input->post('user_id', TRUE);
+		$item_code = $this->input->post('item_code', TRUE);
+		$class = $this->input->post('class', TRUE);
+		$count = $this->input->post('count', TRUE);
+		
+		$target_parts['user_id'] = $user_id;
+		$target_parts['item_code'] = $item_code;
+		$target_parts['class'] = $class;
+		$target_parts['count'] = $count;
+		$data['target_parts'] = $target_parts;
+		
+		$_parts_list = $this->user_items_m->get_list($user_id);
+		$parts_list = $this->make_load_data($_parts_list);
+		
+		$data['user_id'] = $user_id;
+		$data['parts_list'] = $parts_list;
+		
+		$this->load->view('/user_info/parts_v', $data);
+	}
+	
+	public function modify_parts()
+	{
+		$target_parts['user_id'] = "";
+		$target_parts['item_code'] = "";
+		$target_parts['class'] = "";
+		$target_parts['count'] = "";
+		$data['target_parts'] = $target_parts;
+		
+		$user_id = $this->input->post('user_id_text', TRUE);
+		$data['user_id'] = $user_id;
+		
+		$item_code = $this->input->post('item_code_text', TRUE);
+		$count = $this->input->post('count_text', TRUE);
+		$this->user_items_m->modify_parts($user_id, $item_code, $count);
+		
+		$_parts_list = $this->user_items_m->get_list($user_id);
+		$parts_list = $this->make_load_data($_parts_list);
+		$data['parts_list'] = $parts_list;
+		
+		$this->load->view('/user_info/parts_v', $data);
 	}
 }

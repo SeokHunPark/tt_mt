@@ -5,17 +5,17 @@ class Cars extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		//$this->load->database('gamedb');
-		// $this->load->model('user_info_m');
-		// $this->load->model('user_inven_m');
-		// $this->load->model('user_supporters_m');
-		//$this->load->helper(array('url', 'date', 'alert_helper'));
+		$this->load->database('gamedb');
+		$this->load->model('user_info_m');
+		$this->load->model('user_inven_m');
+		$this->load->model('user_supporters_m');
+		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
 	public function index()
 	{
 		print "Cars index()";
-		#$this->load_car_list();
+		$this->load_car_list();
 	}
 	
 	public function _remap($method)
@@ -89,7 +89,7 @@ class Cars extends CI_Controller
 	
 	public function make_load_data($_car_list)
 	{
-		$car_list = [];
+		$car_list = array();
 		for ($i = 0; $i < count($_car_list); $i++)
 		{
 			$car_list[$i]['user_id'] = $_car_list[$i]->user_id;
@@ -110,7 +110,7 @@ class Cars extends CI_Controller
 	
 	public function make_load_sup_data($_sup_list)
 	{
-		$sup_list = [];
+		$sup_list = array();
 		for ($i = 0; $i < count($_sup_list); $i++)
 		{
 			$sup_list[$i]['user_id'] = $_sup_list[$i]->user_id;

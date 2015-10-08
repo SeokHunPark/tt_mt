@@ -63,7 +63,7 @@ table.parts_table {
 		</thead>
 		<tbody>
 			<tr>
-				<form id="_modify_parts" method="post" action="/user_info/cars/modify_parts">
+				<form id="_modify_parts" method="post" action="/user_info/parts/modify_parts">
 				<th scope="row">
 					<input type="hidden" name="user_id_text" readonly="readonly" value="<?php echo $target_parts['user_id']; ?>" class="input_text" />
 					<input type="text" name="item_code_text" readonly="readonly" value="<?php echo $target_parts['item_code']; ?>" class="input_text" />
@@ -88,13 +88,13 @@ table.parts_table {
 		<thead>
 			<tr>
 				<th scope="col">
-					서포터즈 이름
+					부품 이름
 				</th>
 				<th scope="col">
-					능력치
+					클래스
 				</th>
 				<th scope="col">
-					호감도
+					수량
 				</th>
 				<th scope="col">
 				</th>
@@ -106,7 +106,7 @@ table.parts_table {
 			{
 			?>
 				<tr>
-					<form method="post" action="/user_info/cars/click_modify_button">
+					<form method="post" action="/user_info/parts/click_modify_button">
 					<th scope="row">
 						<input type="hidden" name="user_id" readonly="readonly" value="<?php echo $parts['user_id']; ?>" class="input_text" />
 						<input type="text" name="item_code" readonly="readonly" value="<?php echo $parts['item_code']; ?>" class="input_text" />

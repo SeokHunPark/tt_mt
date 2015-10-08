@@ -47,7 +47,7 @@ class Mail_box extends CI_Controller
 		$this->load->library('pagination');
 		$size = 10;
 		
-		$mail_list = [];
+		$mail_list = array();
 		
 		$mode = $this->uri->segment(4, 0);
 		if ($mode == "date_search")
@@ -165,7 +165,7 @@ class Mail_box extends CI_Controller
 	
 	public function make_view_data($_mail_list)
 	{
-		$mail_list = [];
+		$mail_list = array();
 		for ($i = 0; $i < count($_mail_list); $i++)
 		{
 			$mail_list[$i]['mail_idx'] = $_mail_list[$i]->mail_idx;
@@ -197,7 +197,7 @@ class Mail_box extends CI_Controller
 	
 	public function get_mail_list_with_date($begin_date, $end_date, $start, $size)
 	{
-		$mail_list = [];
+		$mail_list = array();
 		$_mail_list = $this->mail_m->get_mail_list_with_date($begin_date, $end_date, $start, $size);
 		
 		for ($i = 0; $i < count($_mail_list); $i++)
