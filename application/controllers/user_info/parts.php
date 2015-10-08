@@ -24,10 +24,10 @@ class Parts extends CI_Controller
 		// nav include.
 		$this->load->view('nav_v');
 		
-		// if (method_exists($this, $method))
-		// {
-			// $this->{"{$method}"}();
-		// }
+		if (method_exists($this, $method))
+		{
+			$this->{"{$method}"}();
+		}
 		
 		// popup include.
 		#$this->load->view('/user_info/account_lookup_popup_v');
