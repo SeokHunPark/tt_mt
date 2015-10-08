@@ -50,6 +50,7 @@ class Parts extends CI_Controller
 		$user_id = "";
 		$data['user_id'] = $user_id;
 		
+		$parts_list = [];
 		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
 			$user_id = $this->input->post('game_account_id_text', TRUE);
@@ -59,27 +60,27 @@ class Parts extends CI_Controller
 			{
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
+			
+			$_parts_list = $this->user_items_m->get_list($user_id);
+			$parts_list = $this->make_load_data($_parts_list);
 		}
+		$data['parts_list'] = $parts_list;
 		
-		// $_parts_list = $this->user_items_m->get_list($user_id);
-		// $parts_list = $this->make_load_data($_parts_list);
-		// $data['parts_list'] = $parts_list;
-		
-		// $this->load->view('/user_info/parts_v', $data);
+		$this->load->view('/user_info/parts_v', $data);
 	}
 	
-	// public function make_load_data($_parts_list)
-	// {
-		// $parts_list = [];
+	public function make_load_data($_parts_list)
+	{
+		$parts_list = [];
+		for ($i = 0; $i < count($_parts_list); $i++)
+		{
+			$data = (array)$_parts_list[$i];
+			$parts_list[$i]['user_id'] = $data['user_id'];
+			$parts_list[$i]['class'] = "";
+			$parts_list[$i]['item_code'] = $data['item_code'];
+			$parts_list[$i]['count'] = $data['count'];
+		}
 		
-		// for ($i = 0; $i < count($_parts_list); $i++)
-		// {
-			// $parts_list[$i]['user_id'] = $_parts_list[$i]->user_id;
-			// $parts_list[$i]['class'] = "";
-			// $parts_list[$i]['item_code'] = $_parts_list[$i]->item_code;
-			// $parts_list[$i]['count'] = $_parts_list[$i]->count;
-		// }
-		
-		// return $parts_list;
-	// }
+		return $parts_list;
+	}
 }

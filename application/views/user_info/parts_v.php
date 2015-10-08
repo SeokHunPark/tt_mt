@@ -23,7 +23,7 @@ table.parts_table {
 </script>
 
 <section id="content">	
-	<form id="search_user" method="post" action="/user_info/cars/load_car_list">
+	<form id="search_user" method="post" action="/user_info/parts/load_parts_list">
 	<fieldset>
 		<div>
 			카카오톡 ID
