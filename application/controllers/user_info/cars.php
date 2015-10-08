@@ -5,11 +5,11 @@ class Cars extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->database('gamedb');
+		//$this->load->database('gamedb');
 		// $this->load->model('user_info_m');
 		// $this->load->model('user_inven_m');
 		// $this->load->model('user_supporters_m');
-		$this->load->helper(array('url', 'date', 'alert_helper'));
+		//$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
 	public function index()
