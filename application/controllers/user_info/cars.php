@@ -6,9 +6,9 @@ class Cars extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->database('gamedb');
-		$this->load->model('user_info_m');
-		$this->load->model('user_inven_m');
-		$this->load->model('user_supporters_m');
+		// $this->load->model('user_info_m');
+		// $this->load->model('user_inven_m');
+		// $this->load->model('user_supporters_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
