@@ -70,6 +70,9 @@ table.car_table {
 					강화 등급
 				</th>
 				<th scope="col">
+					경험치
+				</th>
+				<th scope="col">
 					진화 등급
 				</th>
 				<th scope="col">
@@ -106,6 +109,9 @@ table.car_table {
 				</td>
 				<td>
 					<input type="text" name="upgrade_text" value="<?php echo $target_car['upgrade']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="exp_text" value="<?php echo $target_car['exp']; ?>" class="input_text" />
 				</td>
 				<td>
 					<input type="text" name="evol_text" value="<?php echo $target_car['evol']; ?>" class="input_text" />
@@ -150,6 +156,9 @@ table.car_table {
 					강화 등급
 				</th>
 				<th scope="col">
+					경험치
+				</th>
+				<th scope="col">
 					진화 등급
 				</th>
 				<th scope="col">
@@ -190,6 +199,9 @@ table.car_table {
 					</td>
 					<td>
 						<input type="text" name="upgrade" readonly="readonly" value="<?php echo $car['upgrade']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="exp" readonly="readonly" value="<?php echo $car['exp']; ?>" class="input_text" />
 					</td>
 					<td>
 						<input type="text" name="evol" readonly="readonly" value="<?php echo $car['evol']; ?>" class="input_text" />

@@ -14,7 +14,8 @@ class Cars extends CI_Controller
 	
 	public function index()
 	{
-		$this->load_car_list();
+		print "Cars index()";
+		#$this->load_car_list();
 	}
 	
 	public function _remap($method)
@@ -49,6 +50,7 @@ class Cars extends CI_Controller
 		$target_car['booster_charge'] = "";
 		$target_car['booster_power'] = "";
 		$target_car['upgrade'] = "";
+		$target_car['exp'] = "";
 		$target_car['evol'] = "";
 		$target_car['decal'] = "";
 		$target_car['color'] = "";
@@ -95,9 +97,10 @@ class Cars extends CI_Controller
 			$car_list[$i]['class'] = "";
 			$car_list[$i]['speed'] = $_car_list[$i]->up_0;
 			$car_list[$i]['accel'] = $_car_list[$i]->up_1;
-			$car_list[$i]['booster_charge'] = $_car_list[$i]->up_2;
-			$car_list[$i]['booster_power'] = $_car_list[$i]->up_3;
-			$car_list[$i]['upgrade'] = "";
+			$car_list[$i]['booster_charge'] = $_car_list[$i]->up_3;
+			$car_list[$i]['booster_power'] = $_car_list[$i]->up_2;
+			$car_list[$i]['upgrade'] = $_car_list[$i]->upgrade;
+			$car_list[$i]['exp'] = $_car_list[$i]->exp;
 			$car_list[$i]['evol'] = "";
 			$car_list[$i]['decal'] = $_car_list[$i]->sel_skin;
 			$car_list[$i]['color'] = $_car_list[$i]->sel_color;
@@ -132,6 +135,7 @@ class Cars extends CI_Controller
 			$target_car['booster_charge'] = $this->input->post('booster_charge', TRUE);
 			$target_car['booster_power'] = $this->input->post('booster_power', TRUE);
 			$target_car['upgrade'] = $this->input->post('upgrade', TRUE);
+			$target_car['exp'] = $this->input->post('exp', TRUE);
 			$target_car['evol'] = $this->input->post('evol', TRUE);
 			$target_car['decal'] = $this->input->post('decal', TRUE);
 			$target_car['color'] = $this->input->post('color', TRUE);
@@ -139,7 +143,18 @@ class Cars extends CI_Controller
 			
 			$_car_list = $this->user_inven_m->get_list($target_car['user_id']);
 			$car_list = $this->make_load_data($_car_list);
-			$data['car_list'] = $car_list;
+			$data['car_list'] = $car_list;			
+			
+			$target_sup['user_id'] = "";
+			$target_sup['model_id'] = "";
+			$target_sup['ability'] = "";
+			$target_sup['count'] = "";
+			$data['target_sup'] = $target_sup;
+			
+			$_sup_list = $this->user_supporters_m->get_list($target_car['user_id']);
+			$sup_list = $this->make_load_sup_data($_sup_list);
+			$data['sup_list'] = $sup_list;
+			
 			$this->load->view('/user_info/cars_v', $data);
 		}
 	}
@@ -158,11 +173,12 @@ class Cars extends CI_Controller
 			$booster_charge = $this->input->post('booster_charge_text', TRUE);
 			$booster_power = $this->input->post('booster_power_text', TRUE);
 			$upgrade = $this->input->post('upgrade_text', TRUE);
+			$exp = $this->input->post('exp_text', TRUE);
 			$evol = $this->input->post('evol_text', TRUE);
 			$decal = $this->input->post('decal_text', TRUE);
 			$color = $this->input->post('color_text', TRUE);
 			
-			$this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $evol, $decal, $color);
+			$this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_power, $booster_charge, $upgrade, $exp, $evol, $decal, $color);
 		}
 		
 		$target_car['user_id'] = "";
@@ -173,6 +189,7 @@ class Cars extends CI_Controller
 		$target_car['booster_charge'] = "";
 		$target_car['booster_power'] = "";
 		$target_car['upgrade'] = "";
+		$target_car['exp'] = "";
 		$target_car['evol'] = "";
 		$target_car['decal'] = "";
 		$target_car['color'] = "";
@@ -215,6 +232,7 @@ class Cars extends CI_Controller
 			$target_car['booster_charge'] = "";
 			$target_car['booster_power'] = "";
 			$target_car['upgrade'] = "";
+			$target_car['exp'] = "";
 			$target_car['evol'] = "";
 			$target_car['decal'] = "";
 			$target_car['color'] = "";
@@ -251,6 +269,7 @@ class Cars extends CI_Controller
 			$target_car['booster_charge'] = "";
 			$target_car['booster_power'] = "";
 			$target_car['upgrade'] = "";
+			$target_car['exp'] = "";
 			$target_car['evol'] = "";
 			$target_car['decal'] = "";
 			$target_car['color'] = "";
