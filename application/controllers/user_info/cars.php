@@ -18,25 +18,25 @@ class Cars extends CI_Controller
 		#$this->load_car_list();
 	}
 	
-	// public function _remap($method)
-	// {
-		// // header include.
-		// $this->load->view('header_v');
+	public function _remap($method)
+	{
+		// header include.
+		$this->load->view('header_v');
 		
-		// // nav include.
-		// $this->load->view('nav_v');
+		// nav include.
+		$this->load->view('nav_v');
 		
-		// if (method_exists($this, $method))
-		// {
-			// $this->{"{$method}"}();
-		// }
+		if (method_exists($this, $method))
+		{
+			$this->{"{$method}"}();
+		}
 		
-		// // popup include.
-		// #$this->load->view('/user_info/account_lookup_popup_v');
+		// popup include.
+		#$this->load->view('/user_info/account_lookup_popup_v');
 		
-		// // footer include.
-		// $this->load->view('footer_v');
-	// }
+		// footer include.
+		$this->load->view('footer_v');
+	}
 	
 	public function load_car_list()
 	{

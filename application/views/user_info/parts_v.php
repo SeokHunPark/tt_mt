@@ -42,20 +42,20 @@ table.parts_table {
 		<thead>
 			<tr>
 				<th scope="col" colspan="4">
-					서포터즈 수정
+					부품 수정
 				</th>
 			</tr>
 		</thead>
 		<thead>
 			<tr>
 				<th scope="col">
-					서포터즈 이름
+					부품 이름
 				</th>
 				<th scope="col">
-					능력치
+					클래스
 				</th>
 				<th scope="col">
-					호감도
+					수량
 				</th>
 				<th scope="col">
 				</th>
@@ -63,16 +63,16 @@ table.parts_table {
 		</thead>
 		<tbody>
 			<tr>
-				<form id="_modify_sup" method="post" action="/user_info/cars/modify_sup">
+				<form id="_modify_parts" method="post" action="/user_info/cars/modify_parts">
 				<th scope="row">
-					<input type="hidden" name="user_id_text" readonly="readonly" value="<?php echo $target_sup['user_id']; ?>" class="input_text" />
-					<input type="text" name="model_id_text" readonly="readonly" value="<?php echo $target_sup['model_id']; ?>" class="input_text" />
+					<input type="hidden" name="user_id_text" readonly="readonly" value="<?php echo $target_parts['user_id']; ?>" class="input_text" />
+					<input type="text" name="item_code_text" readonly="readonly" value="<?php echo $target_parts['item_code']; ?>" class="input_text" />
 				</th>
 				<td>
-					<input type="text" name="ability_text" readonly="readonly" value="<?php echo $target_sup['ability']; ?>" class="input_text" />
+					<input type="text" name="class_text" readonly="readonly" value="<?php echo $target_parts['class']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="count_text" value="<?php echo $target_sup['count']; ?>" class="" />
+					<input type="text" name="count_text" value="<?php echo $target_parts['count']; ?>" class="" />
 				</td>
 				<td>
 					<input type="submit" value="저장" />
@@ -102,20 +102,20 @@ table.parts_table {
 		</thead>
 		<tbody>
 			<?php
-			foreach ($sup_list as $sup)
+			foreach ($parts_list as $parts)
 			{
 			?>
 				<tr>
-					<form id="_modify_sup" method="post" action="/user_info/cars/click_modify_sup_button">
+					<form method="post" action="/user_info/cars/click_modify_button">
 					<th scope="row">
-						<input type="hidden" name="user_id" readonly="readonly" value="<?php echo $sup['user_id']; ?>" class="input_text" />
-						<input type="text" name="model_id" readonly="readonly" value="<?php echo $sup['model_id']; ?>" class="input_text" />
+						<input type="hidden" name="user_id" readonly="readonly" value="<?php echo $parts['user_id']; ?>" class="input_text" />
+						<input type="text" name="item_code" readonly="readonly" value="<?php echo $parts['item_code']; ?>" class="input_text" />
 					</th>
 					<td>
-						<input type="text" name="ability" readonly="readonly" value="<?php echo $sup['ability']; ?>" class="input_text" />
+						<input type="text" name="class" readonly="readonly" value="<?php echo $parts['class']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="count" readonly="readonly" value="<?php echo $sup['count']; ?>" class="" />
+						<input type="text" name="count" readonly="readonly" value="<?php echo $parts['count']; ?>" class="" />
 					</td>
 					<td>
 						<input type="submit" value="수정" />
