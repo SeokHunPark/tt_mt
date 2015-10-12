@@ -83,7 +83,7 @@ class Package extends CI_Controller
 	public function get_package_list()
 	{
 		$_package_list = $this->shop_package_m->get_package_list();
-		$package_list = [];
+		$package_list = array();
 		for ($i = 0; $i < count($_package_list); $i++)
 		{
 			$package_list[$i]['package_no'] = $_package_list[$i]->package_no;
