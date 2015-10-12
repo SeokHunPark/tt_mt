@@ -1,16 +1,17 @@
-<style type="text/css">
-table.account_info_table {
+ï»¿<style type="text/css">
+.input_text {
+	width: 100%;
+}
+table.event_table {
 	border: 1px solid black;
 	border-collapse: collapse;
 	text-align: center;
 }
-.account_info_table th {
-	width: 180;
+.event_table th {
 	border: 1px solid black;
 	border-spacing: 0px;
  }
-.account_info_table td {
-	width: 250;
+.event_table td {
 	border: 1px solid black;
 	border-spacing: 0px;
  }
@@ -18,219 +19,251 @@ table.account_info_table {
 </style>
 
 <script type="text/javascript">
+
 </script>
 
-<section id="content">
-	<form id="search_user" method="post" action="/user_info/account_lookup/load_account_info">
-	<fieldset>
-		<div>
-			Ä«Ä«¿ÀÅå ID
-			<input type="text" name="kakao_id_text" style="text-align:center;"/>
-			°ÔÀÓ È¸¿ø¹øÈ£
-			<input type="text" name="game_account_id_text" />
-			´Ğ³×ÀÓ
-			<input type="text" name="nickname_text" />
-			<input type="submit" value="Á¶È¸" id="search_user_button" />
-		</div>
-	</fieldset>
-	</form>
-	
-	<table class="account_info_table">
+<section id="content">	
+	<p>
+	<table class="event_table">
+		<thead>
+			<tr>
+				<th scope="col" colspan="15">
+					 ì´ë²¤íŠ¸ ë“±ë¡
+				</th>
+			</tr>
+		</thead>
+		<thead>
+			<tr>
+				<th scope="col">
+					ì´ë²¤íŠ¸ ëª…
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ íƒ€ì…
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ ê¸°ê°„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì—°ë£Œ
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ íŠ¸ë¡œí”¼
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ë³´ì„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì½”ì¸
+				</th>
+				<th scope="col">
+				</th>
+			</tr>
+		</thead>
 		<tbody>
 			<tr>
-				<th scope="row">
-					Ä«Ä«¿ÀÅåID
-				</th>
-				<td>
-					<?php echo $account_info['kakao_id']; ?>
-				</td>
-				<th>
-					Ä³¸¯ÅÍ ¸í
-				</th>
-				<td>
-					<?php echo $account_info['nickname']; ?>
-					<input type="button" value="¼öÁ¤" id="modify_btn" 
-							onclick="open_modify_nickname_popup('<?php echo $account_info['user_id']; ?>', 
-																'<?php echo $account_info['nickname']; ?>'); return false;" />
+				<form method="post" action="/game_management/hottime_event/add_event">
+				<td scope="row">
+					<input type="text" name="event_name_text" class="input_text" />
 				</td>
 				<td>
-					<input type="button" id="_secession_button" value="Å»Åğ" 
-							onclick="open_secession_popup('<?php echo $account_info['user_id']; ?>'); return false;" />
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					°ÔÀÓ È¸¿ø¹øÈ£
-				</th>
-				<td>
-					<?php echo $account_info['user_id']; ?>
-				</td>
-				<th>
-					°¡ÀÔÀÏÀÚ
-				</th>
-				<td>
-					<?php echo $account_info['reg_date']; ?>
+					<input type="text" name="event_type_text" class="input_text" />
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					¿¬·á
-				</th>
-				<td>
-					<?php echo $account_info['gas']; ?>
-				</td>
-				<th>
-					ÄÚÀÎ
-				</th>
-				<td>
-					<?php echo $account_info['coin']; ?>
-				</td>
-				<td rowspan="2">
-					<input type="submit" id="_modify_money_button" value="ÀçÈ­¼öÁ¤" 
-							onclick="open_modify_money_popup('<?php echo $account_info['user_id']; ?>',
-																'<?php echo $account_info['gas']; ?>',
-																'<?php echo $account_info['coin']; ?>',
-																'<?php echo $account_info['gold']; ?>', 
-																'<?php echo $account_info['vgold']; ?>',
-																'<?php echo $account_info['chip']; ?>'); return false;" />
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					´ÙÀÌ¾Æ(À¯·á/¹«·á)
-				</th>
-				<td>
-					<?php echo $account_info['gold'], " / ", $account_info['vgold']; ?>
-				</td>
-				<th>
-					Æ®·ÎÇÇ
-				</th>
-				<td>
-					<?php echo $account_info['chip']; ?>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					´ë°á¸ğµå ¿¬½Â
-				</th>
-				<td>
-					<?php echo $account_info['straight_wins']; ?>
-					<input type="submit" value="º¯°æ" name="button"
-							onclick="open_straight_wins_popup('<?php echo $account_info['user_id']; ?>'); return false;"/>
-				</td>
-				<th>
-					¹Ì¼Ç¸ğµå ÁøÇàµµ
-				</th>
-				<td>
-					<?php echo $account_info['current_challenge'], " - ", $account_info['current_stage']; ?>
-					<input type="submit" value="º¯°æ" name="button" 
-							onclick="open_modify_straight_status_popup('<?php echo $account_info['user_id']; ?>',
-																		'<?php echo $account_info['current_challenge']; ?>',
-																		'<?php echo $account_info['current_stage']; ?>'); return false"/>
+					<input type="text" name="begin_day_text"  class=""/>
+					<input type="text" name="begin_time_text" class=""/>
+					~
+					<input type="text" name="end_day_text" class=""/>
+					<input type="text" name="end_time_text" class=""/>
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-				</th>
-				<td>
-				</td>
-				<th>
-					°èÁ¤ ·¹º§
-				</th>
-				<td>
-					<?php echo $account_info['account_level']; ?>
-					<input type="submit" value="º¯°æ" 
-							onclick="open_modify_level_popup('<?php echo $account_info['user_id']; ?>'); return false"/>
+					<input type="text" name="gas_text" class="input_text" />
 				</td>
 				<td>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					Å»Åğ¿©ºÎ
-				</th>
-				<td>
-					<?php echo $account_info['secession']; ?>
-				</td>
-				<th>
-					Å»ÅğÀÏÀÚ
-				</th>
-				<td>
-					<?php echo $account_info['secession_date']; ?>
+					<input type="text" name="chip_text" class="input_text" />
 				</td>
 				<td>
-					<input type="submit" value="Å»Åğº¹±¸" 
-							onclick="open_secession_recovery_popup('<?php echo $account_info['user_id']; ?>'); return false;"/>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					ÃÖ±Ù ·Î±×ÀÎ
-				</th>
-				<td>
-					<?php echo $account_info['reacently_login']; ?>
-				</td>
-				<th>
-					Á¢¼Ó¿©ºÎ
-				</th>
-				<td colspan="2">
-					<?php echo $account_info['is_connected']; ?>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">
-					ÀÌ¿ë Á¦ÇÑ Å¸ÀÔ
-				</th>
-				<td>
-					<?php echo $account_info['sanction_type']; ?>
-				</td>
-				<th rowspan="2">
-					°èÁ¤ ºí·Ï
-				</th>
-				<form id="_user_sanctions" method="post" action="/user_info/account_lookup/user_sanctions">
-				<td>
-					<input type="text" id="_sanctions_days" name="sanctions_days" />
+					<input type="text" name="gold_text" class="input_text" />
 				</td>
 				<td>
-					<input type="hidden" name="sanction_user_id_text" value="<?php echo $account_info['user_id'] ?>" />
-					<input type="submit" value="Á¦Àç" />
+					<input type="text" name="coin_text" class="input_text" />
+				</td>
+				<td>
+					<input type="submit" name="add_event" value="ë“±ë¡" />
 				</td>
 				</form>
 			</tr>
+		</tbody>
+	</table>
+	</p>
+	
+	<p>
+	<table class="event_table">
+		<thead>
 			<tr>
-				<th scope="row">
-					Á¦ÀçÀÏ
+				<th scope="col" colspan="15">
+					íŒ¨í‚¤ì§€ ìˆ˜ì •
 				</th>
-				<td>
-					<?php echo $account_info['sanction_date']; ?>
-				</td>
-				<td>
-					ºí·Ï ÇØÁ¦
-				</td>
-				<td>
-					<input type="submit" value="ÇØÁ¦" name="button" />
-				</td>
 			</tr>
+		</thead>
+		<thead>
 			<tr>
-				<th scope="row">
-				ÇØÁ¦ÀÏ
+				<th scope="col">
+					NO.
 				</th>
-				<td>
-				<?php echo $account_info['release_date']; ?>
-				</td>
-				<th>
-				Ä£±¸ ÃÊ´ë È½¼ö
+				<th scope="col">
+					ì´ë²¤íŠ¸ ëª…
 				</th>
-				<td>
-				<?php echo $account_info['invite_count']; ?>
-				</td>
-				<td>
-				</td>
+				<th scope="col">
+					ì´ë²¤íŠ¸ íƒ€ì…
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ ê¸°ê°„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì—°ë£Œ
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ íŠ¸ë¡œí”¼
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ë³´ì„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì½”ì¸
+				</th>
+				<th scope="col">
+				</th>
 			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<form method="post" action="/game_management/hottime_event/modify_event">
+				<td scope="row">
+					<input type="text" name="event_no_text" value="<?php echo $target_event['event_no']; ?>" class="input_text" readonly="readonly" />
+				</td>
+				<td >
+					<input type="text" name="event_name_text" value="<?php echo $target_event['event_name']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="event_type_text" value="<?php echo $target_event['event_type']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="begin_day_text" value="<?php echo $target_event['begin_day']; ?>" class=""/>
+					<input type="text" name="begin_time_text" value="<?php echo $target_event['begin_time']; ?>" class=""/>
+					~
+					<input type="text" name="end_day_text" value="<?php echo $target_event['end_day']; ?>" class=""/>
+					<input type="text" name="end_time_text" value="<?php echo $target_event['end_time']; ?>" class=""/>
+				</td>
+				<td>
+					<input type="text" name="gas_text" value="<?php echo $target_event['gas']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="chip_text" value="<?php echo $target_event['chip']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="gold_text" value="<?php echo $target_event['gold']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="coin_text" value="<?php echo $target_event['coin']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="submit" name="modify" value="ì ìš©" />
+				</td>
+				</form>
+			</tr>
+		</tbody>
+	</table>
+	</p>
+	
+	<table class="event_table">
+		<thead>
+			<tr>
+				<th scope="col">
+					NO.
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ ëª…
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ íƒ€ì…
+				</th>
+				<th scope="col">
+					ì´ë²¤íŠ¸ ê¸°ê°„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì—°ë£Œ
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ íŠ¸ë¡œí”¼
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ë³´ì„
+				</th>
+				<th scope="col">
+					ë¦¬ì›Œë“œ ì½”ì¸
+				</th>
+				<th scope="col">
+					ì‚¬ìš© ìœ ë¬´
+				</th>
+				<th scope="col">
+					ìˆ˜ì •
+				</th>
+				<th scope="col">
+					ìƒíƒœ ë³€ê²½
+				</th>
+				<th scope="col">
+					ì°¸ì—¬ì ìˆ˜
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			foreach ($event_list as $event)
+			{
+			?>
+				<tr>
+					<form method="post" action="/game_management/hottime_event/button_event">
+					<th scope="row">
+						<input type="text" name="event_no" readonly="readonly" value="<?php echo $event['event_no']; ?>" class="input_text" />
+					</th>
+					<td>
+						<input type="text" name="event_name" readonly="readonly" value="<?php echo $event['event_name']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="event_type" readonly="readonly" value="<?php echo $event['event_type']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="event_term" readonly="readonly" value="<?php echo $event['event_term']; ?>" class=""/>
+					</td>
+					<td>
+						<input type="text" name="gas" readonly="readonly" value="<?php echo $event['gas']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="chip" readonly="readonly" value="<?php echo $event['chip']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="gold" readonly="readonly" value="<?php echo $event['gold']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="coin" readonly="readonly" value="<?php echo $event['coin']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="is_used" readonly="readonly" value="<?php echo $event['is_used']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="submit" name="modify" value="ìˆ˜ì •" />
+					</td>
+					<td>
+						<input type="submit" name="status" value="Y" />
+					</td>
+					<td>
+						<input type="submit" name="participant" value="ì¡°íšŒ" />
+					</td>
+					</form>
+				</tr>
+			<?php
+			}
+			?>
 		</tbody>
 	</table>
 </section>
