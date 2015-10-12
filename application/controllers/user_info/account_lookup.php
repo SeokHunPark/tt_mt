@@ -337,8 +337,72 @@ class Account_lookup extends CI_Controller
 			print_r($_POST);
 			$user_id = $this->input->post('sanction_user_id_text', TRUE);
 			$sanctions_days = $this->input->post('sanctions_days');
+			$sanction_type = "";
 			
-			reg_user($user_id, $sanction_type, $s_date, $e_date, $subject, $reason, $memo, $reg_user, $reg_date);
+			$time = time();
+			$date_string = "Y-m-d h:i:s";
+			$s_date = date($date_string, $time);
+			$e_date = "";
+			
+			if ($sanctions_days == '1')
+			{
+				$sanction_type = "1";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 1));
+			}
+			else if ($sanctions_days == '3')
+			{
+				$sanction_type = "3";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 3));
+			}
+			else if ($sanctions_days == '5')
+			{
+				$sanction_type = "5";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 5));
+			}
+			else if ($sanctions_days == '7')
+			{
+				$sanction_type = "7";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 7));
+			}
+			else if ($sanctions_days == '15')
+			{
+				$sanction_type = "15";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 15));
+			}
+			else if ($sanctions_days == '30')
+			{
+				$sanction_type = "30";
+				$e_date = date($date_string, $time + (60 * 60 * 24 * 30));
+			}
+			else if ($sanctions_days == 'inf')
+			{
+				$sanction_type = "1000";
+				$e_date = "INF";
+			}
+			
+			$subject = "test";
+			$reason = "abusing";
+			$memo = "";
+			$reg_user = "1";
+			$reg_date = $s_date;
+			
+			$this->sanction_m->reg_user($user_id, $sanction_type, $s_date, $e_date, $subject, $reason, $memo, $reg_user, $reg_date);
+			
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('/user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function off_sanctions()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('sanction_user_id_text', TRUE);
+			$this->sanction_m->delete_user($user_id);
+			$data['account_info'] = $this->get_account_info($user_id);
+			$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 }

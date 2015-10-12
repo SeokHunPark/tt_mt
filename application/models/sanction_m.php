@@ -44,4 +44,10 @@ class Sanction_m extends CI_Model
 		$this->db->set('stage', $stage);
 		$this->db->update('drag_gamedb.user_challenges');
 	}
+	
+	function delete_user($user_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->delete('drag_gamedb.sanction');
+	}
 }

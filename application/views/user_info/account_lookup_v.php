@@ -372,7 +372,10 @@ function open_modify_level_popup(user_id){
 					블록 해제
 				</td>
 				<td>
+					<form id="_user_sanctions" method="post" action="/user_info/account_lookup/off_sanctions">
+					<input type="hidden" name="sanction_user_id_text" value="<?php echo $account_info['user_id'] ?>" />
 					<input type="submit" value="해제" name="button" />
+					</form>
 				</td>
 			</tr>
 			<tr>
