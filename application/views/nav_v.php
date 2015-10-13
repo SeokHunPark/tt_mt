@@ -55,6 +55,9 @@ table.nav_table {
 				<th scope="row"><a href="/game_management/hottime_event">- 핫타임 이벤트 관리</a></th>
 			</tr>
 			<tr>
+				<th scope="row"><a href="/game_management/ingame_event">- 인게임 이벤트 관리</a></th>
+			</tr>
+			<tr>
 				<th scope="row"><a href="/game_management/popup_market">- 팝업 상점 관리</a></th>
 			</tr>
 		</tbody>
