@@ -182,7 +182,7 @@ class Hottime_event extends CI_Controller
 			$event_name = $this->input->post('event_name_text', TRUE);
 			$event_type = $this->input->post('event_type_text', TRUE);
 			
-			$date_array = explode(' ~ ', $this->input->post('event_term', TRUE));
+			#$date_array = explode(' ~ ', $this->input->post('event_term', TRUE));
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' ' . $this->input->post('end_time_text', TRUE);
 			
@@ -251,7 +251,7 @@ class Hottime_event extends CI_Controller
 			$event_name = $this->input->post('event_name_text', TRUE);
 			$event_type = $this->input->post('event_type_text', TRUE);
 			
-			$date_array = explode(' ~ ', $this->input->post('event_term', TRUE));
+			#$date_array = explode(' ~ ', $this->input->post('event_term', TRUE));
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' ' . $this->input->post('end_time_text', TRUE);
 			

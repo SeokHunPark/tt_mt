@@ -16,6 +16,7 @@ class Shop_package_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_globaldb.shop_package');
+		$this->db->order_by("package_no", "desc");
 		$query = $this->db->get();
 		return $query->result();
 	}

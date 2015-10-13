@@ -16,7 +16,7 @@ class Event_hottime_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_globaldb.event_hottime');
-		$this->db->order_by("event_no", "desc"); 
+		$this->db->order_by("event_no", "desc");
 		$query = $this->db->get();
 		return $query->result();
 	}
