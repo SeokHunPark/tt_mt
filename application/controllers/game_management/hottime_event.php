@@ -230,14 +230,25 @@ class Hottime_event extends CI_Controller
 				$item_string .= $coin_string;
 			}
 			
-			$this->event_hottime_m->modify_event($event_no, $event_name, $event_type, $begin_date, $end_date, $item_string);
+			$return = $this->event_hottime_m->modify_event($event_no, $event_name, $event_type, $begin_date, $end_date, $item_string);
+			
+			if ($return)
+			{
+				alert('수정되었습니다.', '/game_management/hottime_event');
+			}
+			else
+			{
+				alert('수정에 실패 하였습니다.', '/game_management/hottime_event');
+			}
 		}
 		
-		$_event_list = array();
-		$_event_list = $this->event_hottime_m->get_event_list();
-		$event_list = $this->make_view_data($_event_list);
-		$data['event_list'] = $this->make_view_data($_event_list);
-		$this->load->view('game_management/hottime_event_v', $data);
+		// $_event_list = array();
+		// $_event_list = $this->event_hottime_m->get_event_list();
+		// $event_list = $this->make_view_data($_event_list);
+		// $data['event_list'] = $this->make_view_data($_event_list);
+		// $this->load->view('game_management/hottime_event_v', $data);
+		
+		#$this->load_event();
 	}
 	
 	public function add_event()
@@ -299,14 +310,24 @@ class Hottime_event extends CI_Controller
 				$item_string .= $coin_string;
 			}
 			
-			$this->event_hottime_m->add_event($event_name, $event_type, $begin_date, $end_date, $item_string);
+			$return = $this->event_hottime_m->add_event($event_name, $event_type, $begin_date, $end_date, $item_string);
+			
+			if ($return)
+			{
+				alert('등록 되었습니다.', '/game_management/hottime_event');
+			}
+			else
+			{
+				alert('등록에 실패 하였습니다.', '/game_management/hottime_event');
+			}
 		}
 		
-		$_event_list = array();
-		$_event_list = $this->event_hottime_m->get_event_list();
-		$event_list = $this->make_view_data($_event_list);
-		$data['event_list'] = $this->make_view_data($_event_list);
-		$this->load->view('game_management/hottime_event_v', $data);
+		// $_event_list = array();
+		// $_event_list = $this->event_hottime_m->get_event_list();
+		// $event_list = $this->make_view_data($_event_list);
+		// $data['event_list'] = $this->make_view_data($_event_list);
+		// $this->load->view('game_management/hottime_event_v', $data);
+		#$this->load_event();
 	}
 	
 	public function publish()

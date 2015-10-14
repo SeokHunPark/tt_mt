@@ -41,6 +41,8 @@ class Ingame_event extends CI_Controller
 	
 	public function load_event()
 	{
+		$this->output->enable_profiler(TRUE);
+		
 		$_event_list = $this->event_ingame_m->get_event_list();
 		$data['event_list'] = $this->make_view_data($_event_list);
 		$this->load->view('/game_management/ingame_event_v', $data);
