@@ -1,5 +1,8 @@
 ﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require 'Predis/Autoloader.php';
+Predis\Autoloader::register();
+
 class Popup_market extends CI_Controller
 {
 	function __construct()
@@ -91,5 +94,20 @@ class Popup_market extends CI_Controller
 			
 			$this->index();
 		}
+	}
+	
+	public function publish()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		$channel = "pubsub_contents";
+		$message = "package";
+		
+		$redis_host =  $this->config->item('redis_host');
+		
+		$redis = new Predis\Client('tcp://' . $redis_host);
+		$redis->publish($channel, $message);
+		
+		$this->load_event();
 	}
 }

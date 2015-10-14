@@ -1,5 +1,8 @@
 ﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require 'Predis/Autoloader.php';
+Predis\Autoloader::register();
+
 class Hottime_event extends CI_Controller
 {
 	function __construct()
@@ -143,8 +146,19 @@ class Hottime_event extends CI_Controller
 			$target_event['coin'] = $this->input->post('coin', TRUE);
 			$data['target_event'] = $target_event;
 		}
-		else if (isset($_POST['status']))
+		else if (isset($_POST['state']))
 		{
+			$event_no = $this->input->post('event_no', TRUE);
+			$is_used = $this->input->post('is_used', TRUE);
+			if ($is_used == 'N')
+			{
+				$is_used = 'Y';
+			}
+			else
+			{
+				$is_used = 'N';
+			}
+			$this->event_hottime_m->change_state($event_no, $is_used);
 		}
 		else if (isset($_POST['participant']))
 		{
@@ -285,9 +299,7 @@ class Hottime_event extends CI_Controller
 				$item_string .= $coin_string;
 			}
 			
-			$is_used = 'Y';
-			
-			$this->event_hottime_m->add_event($event_name, $event_type, $begin_date, $end_date, $item_string, $is_used);
+			$this->event_hottime_m->add_event($event_name, $event_type, $begin_date, $end_date, $item_string);
 		}
 		
 		$_event_list = array();
@@ -295,5 +307,20 @@ class Hottime_event extends CI_Controller
 		$event_list = $this->make_view_data($_event_list);
 		$data['event_list'] = $this->make_view_data($_event_list);
 		$this->load->view('game_management/hottime_event_v', $data);
+	}
+	
+	public function publish()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		$channel = "pubsub_contents";
+		$message = "hottime";
+		
+		$redis_host =  $this->config->item('redis_host');
+		
+		$redis = new Predis\Client('tcp://' . $redis_host);
+		$redis->publish($channel, $message);
+		
+		$this->load_event();
 	}
 }

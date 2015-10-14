@@ -32,14 +32,20 @@ class Event_hottime_m extends CI_Model
 		return $this->db->update('drag_globaldb.event_hottime');
 	}
 	
-	function add_event($title, $type, $begin_date, $end_date, $item_string, $is_used)
+	function add_event($title, $type, $begin_date, $end_date, $item_string)
 	{
 		$this->db->set('title', $title);
 		$this->db->set('type', $type);
 		$this->db->set('begin_date', $begin_date);
 		$this->db->set('end_date', $end_date);
 		$this->db->set('item_string', $item_string);
-		$this->db->set('is_used', $is_used);
 		return $this->db->insert('drag_globaldb.event_hottime');
+	}
+	
+	function change_state($event_no, $is_used)
+	{
+		$this->db->where('event_no', $event_no);
+		$this->db->set('used', $is_used);
+		return $this->db->update('drag_globaldb.event_hottime');
 	}
 }

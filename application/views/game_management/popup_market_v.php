@@ -101,6 +101,7 @@ table.promotion_table {
 	</table>
 	</p>
 	
+	<p>
 	<table class="promotion_table">
 		<thead>
 			<tr>
@@ -152,4 +153,11 @@ table.promotion_table {
 			?>
 		</tbody>
 	</table>
+	</p>
+	
+	<p>
+	<form method="post" action="/game_management/popup_market/publish">
+	<input type="submit" name="publish" value="변경 사항 적용" />
+	</form>
+	</p>
 </section>

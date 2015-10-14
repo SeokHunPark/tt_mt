@@ -24,7 +24,7 @@ table.event_table {
 
 <section id="content">	
 	<p>
-	<form method="post" action="/game_management/ingame_event/add_event">
+	<form method="post" action="/game_management/ingame_event/reg_event">
 	<table class="event_table">
 		<thead>
 			<tr>
@@ -80,7 +80,7 @@ table.event_table {
 				</td>
 			</tr>
 			<tr>
-				<th scope="row" rowspan="8">
+				<th scope="row" rowspan="6">
 					 이벤트 내용 설정
 				</th>
 				<td>
@@ -119,13 +119,13 @@ table.event_table {
 					고급 부품 카드 뽑기 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_gacha_0_text" class="" />
+					<input type="text" name="sale_gacha_1_text" class="" />
 				</td>
 				<td>
 					일반 부품 카드 뽑기 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_gacha_1_text" class="" />
+					<input type="text" name="sale_gacha_0_text" class="" />
 				</td>
 				<td>
 					차량 할인(%)
@@ -145,22 +145,20 @@ table.event_table {
 					플레이
 				</td>
 				<td>
-					미션 코인 획득량 증가(%)
+					코인 획득량 증가(%)
 				</td>
 				<td>
 					<input type="text" name="gain_coin_text" class="" />
 				</td>
 				<td>
-					미션 경험치 획득량 증가(%)
+					경험치 획득량 증가(%)
 				</td>
 				<td>
 					<input type="text" name="gain_exp_text" class="" />
 				</td>
 				<td>
-					미견 드랍 카드 확귤 증가(%)
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
 				</td>
 				<td>
 					
@@ -171,22 +169,22 @@ table.event_table {
 			</tr>
 			<tr>
 				<td>
-					대전 코인 획득량 증가(%)
+					트로피 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
+					<input type="text" name="gain_chip_text" class="" />
 				</td>
 				<td>
-					대전 경험치 획득량 증가(%)
+					다이아 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
+					<input type="text" name="gain_gold_text" class="" />
 				</td>
 				<td>
-					
+					다이아 획득 확률 증가(%)
 				</td>
 				<td>
-					
+					<input type="text" name="gain_gold_prob_text" class="" />
 				</td>
 				<td>
 					
@@ -197,94 +195,261 @@ table.event_table {
 			</tr>
 			<tr>
 				<td colspan="8">
-					미션 이벤트 적용 스테이지 선택
+					이벤트 적용 게임 모드, 플레이어 수, 스테이지 선택
 				</td>
 			</tr>
 			<tr>
 				<td>
-					전체
+					게임 모드
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
+					<input type="text" name="game_mode_text" class="" />
 				</td>
 				<td>
-					스테이지 1
+					플레이어 수
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
+					<input type="text" name="game_players_text" class="" />
 				</td>
 				<td>
-					스테이지 2
+					스테이지
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
+					<input type="text" name="game_challenge_text" class="" />
 				</td>
 				<td>
-					스테이지 3
 				</td>
 				<td>
-					<input type="text" name="link_url_text" class="" />
 				</td>
 			</tr>
 			<tr>
-				<td>
-					스테이지 4
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-				<td>
-					스테이지 5
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-				<td>
-					스테이지 6
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-				<td>
-					스테이지 7
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-			</tr>
-			<tr>
-				<td>
-					뽑기
-				</td>
-				<td>
-					A급 뽑기 확률 증가(%)
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-				<td>
-					S급 뽑기 확률 증가(%)
-				</td>
-				<td>
-					<input type="text" name="link_url_text" class="" />
-				</td>
-				<td>
-				</td>
-				<td>
-				</td>
-				<td>
-				</td>
-				<td>
+				<td colspan="10">
+					<input type="submit" name="reg" value="등록" />
 				</td>
 			</tr>
 		</tbody>
 	</table>
-	<p>
-	<input type="submit" name="reg" value="등록" />
-	</p>
 	</form>
 	</p>
 	
+	<?php
+	if (isset($target_event))
+	{
+	?>
+	<p>
+	<form method="post" action="/game_management/ingame_event/save_event">
+	<table class="event_table">
+		<thead>
+			<tr>
+				<th scope="col" colspan="10">
+					 인게임 이벤트 수정
+					 <input type="hidden" name="event_no_text" class="input_text" value="<?php echo $target_event['event_no']; ?>" />
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row" >
+					 이벤트 명
+				</th>
+				<td colspan="9">
+					<input type="text" name="event_name_text" class="input_text" value="<?php echo $target_event['title']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
+					 이벤트 시간
+				</th>
+				<td colspan="9">
+					<input type="text" name="begin_day_text" class="" value="<?php echo $target_event['begin_day']; ?>" />
+					<input type="text" name="begin_time_text" class="" value="<?php echo $target_event['begin_time']; ?>" />
+					~
+					<input type="text" name="end_day_text" class="" value="<?php echo $target_event['end_day']; ?>" />
+					<input type="text" name="end_time_text" class="" value="<?php echo $target_event['end_time']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
+					 배너 노출 시작 시간
+				</th>
+				<td colspan="9">
+					<input type="text" name="open_day_text" class="" value="<?php echo $target_event['open_day']; ?>" />
+					<input type="text" name="open_time_text" class="" value="<?php echo $target_event['open_time']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
+					 배너 이미지 URL
+				</th>
+				<td colspan="9">
+					<input type="text" name="image_url_text" class="input_text" value="<?php echo $target_event['image_url']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
+					 배너 연결 URL
+				</th>
+				<td colspan="9">
+					<input type="text" name="link_url_text" class="input_text" value="<?php echo $target_event['link_url']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" rowspan="6">
+					 이벤트 내용 설정
+				</th>
+				<td>
+					보너스
+				</td>
+				<td>
+					보석 구매 보너스(%)
+				</td>
+				<td>
+					<input type="text" name="bonus_gold_text" class="" value="<?php echo $target_event['bonus.gold']; ?>" />
+				</td>
+				<td>
+					코인 구매 보너스(%)
+				</td>
+				<td>
+					<input type="text" name="bonus_coin_text" class="" value="<?php echo $target_event['bonus.coin']; ?>" />
+				</td>
+				<td>
+					연료 구매 보너스(%)
+				</td>
+				<td>
+					<input type="text" name="bonus_gas_text" class="" value="<?php echo $target_event['bonus.gas']; ?>" />
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					할인
+				</td>
+				<td>
+					고급 부품 카드 뽑기 할인(%)
+				</td>
+				<td>
+					<input type="text" name="sale_gacha_1_text" class="" value="<?php echo $target_event['sale.gacha.1']; ?>"/>
+				</td>
+				<td>
+					일반 부품 카드 뽑기 할인(%)
+				</td>
+				<td>
+					<input type="text" name="sale_gacha_0_text" class="" value="<?php echo $target_event['sale.gacha.0']; ?>" />
+				</td>
+				<td>
+					차량 할인(%)
+				</td>
+				<td>
+					<input type="text" name="sale_car_text" class="" value="<?php echo $target_event['sale.car']; ?>" />
+				</td>
+				<td>
+					서포터즈 할인(%)
+				</td>
+				<td>
+					<input type="text" name="sale_supporter_text" class="" value="<?php echo $target_event['sale.supporter']; ?>" />
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="5">
+					플레이
+				</td>
+				<td>
+					코인 획득량 증가(%)
+				</td>
+				<td>
+					<input type="text" name="gain_coin_text" class="" value="<?php echo $target_event['gain.coin']; ?>" />
+				</td>
+				<td>
+					경험치 획득량 증가(%)
+				</td>
+				<td>
+					<input type="text" name="gain_exp_text" class="" value="<?php echo $target_event['gain.exp']; ?>" />
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					트로피 획득량 증가(%)
+				</td>
+				<td>
+					<input type="text" name="gain_chip_text" class="" value="<?php echo $target_event['gain.chip']; ?>" />
+				</td>
+				<td>
+					다이아 획득량 증가(%)
+				</td>
+				<td>
+					<input type="text" name="gain_gold_text" class="" value="<?php echo $target_event['gain.gold']; ?>" />
+				</td>
+				<td>
+					다이아 획득 확률 증가(%)
+				</td>
+				<td>
+					<input type="text" name="gain_gold_prob_text" class="" value="<?php echo $target_event['gain.gold.prob']; ?>" />
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+			</tr>
+			<tr>
+				<td colspan="8">
+					이벤트 적용 게임 모드, 플레이어 수, 스테이지 선택
+				</td>
+			</tr>
+			<tr>
+				<td>
+					게임 모드
+				</td>
+				<td>
+					<input type="text" name="game_mode_text" class="" value="<?php echo $target_event['game_mode']; ?>" />
+				</td>
+				<td>
+					플레이어 수
+				</td>
+				<td>
+					<input type="text" name="game_players_text" class="" value="<?php echo $target_event['game_players']; ?>" />
+				</td>
+				<td>
+					스테이지
+				</td>
+				<td>
+					<input type="text" name="game_challenge_text" class="" value="<?php echo $target_event['game_challenge']; ?>" />
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="10">
+					<input type="submit" name="save" value="저장" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
+	</p>
+	<?php
+	}
+	?>
+	
+	<p>
 	<table class="event_table">
 		<thead>
 			<tr>
@@ -322,7 +487,7 @@ table.event_table {
 				<tr>
 					<form method="post" action="/game_management/ingame_event/button_event">
 					<th scope="row">
-						<input type="text" name="event_no" readonly="readonly" value="<?php echo $event['event_no']; ?>" class="input_text" />
+						<input type="hidden" name="event_no" readonly="readonly" value="<?php echo $event['event_no']; ?>" class="input_text" />
 						<?php echo $event['event_no']; ?>
 					</th>
 					<td>
@@ -355,4 +520,11 @@ table.event_table {
 			?>
 		</tbody>
 	</table>
+	</p>
+	
+	<p>
+	<form method="post" action="/game_management/ingame_event/publish">
+	<input type="submit" name="publish" value="변경 사항 적용" />
+	</form>
+	</p>
 </section>

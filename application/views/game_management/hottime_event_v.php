@@ -175,6 +175,7 @@ table.event_table {
 	</table>
 	</p>
 	
+	<p>
 	<table class="event_table">
 		<thead>
 			<tr>
@@ -254,10 +255,10 @@ table.event_table {
 						<input type="submit" name="modify" value="수정" />
 					</td>
 					<td>
-						<input type="submit" name="status" value="Y" />
+						<input type="submit" name="state" value="<?php echo $event['is_used']; ?>" />
 					</td>
 					<td>
-						<input type="submit" name="participant" value="조회" />
+						
 					</td>
 					</form>
 				</tr>
@@ -266,4 +267,11 @@ table.event_table {
 			?>
 		</tbody>
 	</table>
+	</p>
+	
+	<p>
+	<form method="post" action="/game_management/hottime_event/publish">
+	<input type="submit" name="publish" value="변경 사항 적용" />
+	</form>
+	</p>
 </section>
