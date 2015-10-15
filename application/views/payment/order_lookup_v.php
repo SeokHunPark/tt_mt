@@ -74,10 +74,15 @@ function open_cancel_order_popup(order_id){
 		<div>
 			주문 복구 상품 명
 			<input type="text" name="item_id_text" />
+			이벤트 보너스 비율(%)
+			<input type="text" name="event_bonus_text" />
 			게임 회원번호
 			<input type="text" name="game_account_id_text" />
+			결제 일시
+			<input type="text" name="order_day_text" />
+			<input type="text" name="order_time_text" />
 			주문 번호
-			<input type="text" name="receipt_key_text" />
+			<input type="text" name="order_id_text" />
 			<input type="submit" name="recovery" value="복구" />
 		</div>
 		</form>

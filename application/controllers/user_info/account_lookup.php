@@ -198,7 +198,7 @@ class Account_lookup extends CI_Controller
 			$user_id = $this->input->post('secession_user_id_text', TRUE);
 			
 			$time = time();
-			$date_string = "%Y-%m-%d %h:%i:%s";
+			$date_string = "%Y-%m-%d %H:%i:%s";
 			$unreg_date = mdate($date_string, $time);
 			
 			$this->user_info_m->leave_game($user_id, $unreg_date);

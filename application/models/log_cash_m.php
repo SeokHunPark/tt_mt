@@ -16,7 +16,7 @@ class Log_cash_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_cash');
-		$this->db->order_by("log_cash_idx", "desc");
+		$this->db->order_by("pub_date", "desc");
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -50,8 +50,8 @@ class Log_cash_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_cash');
-		$this->db->where('reg_date >=', $begin_date);
-		$this->db->where('reg_Date <=', $end_date);
+		$this->db->where('pub_date >=', $begin_date);
+		$this->db->where('pub_Date <=', $end_date);
 		$this->db->order_by("log_cash_idx", "desc");
 		$query = $this->db->get();
 		return $query->result();
@@ -63,5 +63,26 @@ class Log_cash_m extends CI_Model
 		$this->db->set('status', 'C');
 		$this->db->set('memo', $memo);
 		return $this->db->update('drag_logdb.log_cash');
+	}
+	
+	function insert_order($partkey_month, $user_id, $categ, $item_id, $real_cash, $real_cash_kr, $receipt_key, $inc_gold, $market, $country, $currency_type,
+		$memo, $reg_date, $pub_date, $status)
+	{
+		$this->db->set('partkey_month', $partkey_month);
+		$this->db->set('user_id', $user_id);
+		$this->db->set('categ', $categ);
+		$this->db->set('item_id', $item_id);
+		$this->db->set('real_cash', $real_cash);
+		$this->db->set('real_cash_kr', $real_cash_kr);
+		$this->db->set('receipt_key', $receipt_key);
+		$this->db->set('inc_gold', $inc_gold);
+		$this->db->set('market', $market);
+		$this->db->set('country', $country);
+		$this->db->set('currency_type', $currency_type);
+		$this->db->set('memo', $memo);
+		$this->db->set('reg_date', $reg_date);
+		$this->db->set('pub_date', $pub_date);
+		$this->db->set('status', $status);
+		return $this->db->insert('drag_logdb.log_cash');
 	}
 }

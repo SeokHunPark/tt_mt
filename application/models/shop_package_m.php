@@ -21,6 +21,15 @@ class Shop_package_m extends CI_Model
 		return $query->result();
 	}
 	
+	function find_with_package_no($package_no)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_globaldb.shop_package');
+		$this->db->where('package_no', $package_no);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
 	function save_package($package_no, $price, $image_url, $gold, $gas, $coin, $item_string)
 	{
 		$this->db->where('package_no', $package_no);

@@ -31,5 +31,19 @@ class Mail_m extends CI_Model
 		return $result;
 	}
 	
-	
+	function insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date)
+	{
+		$this->db->set('user_id', $user_id);
+		$this->db->set('sender_id', $sender_id);
+		$this->db->set('mail_type', $mail_type);
+		$this->db->set('send_ts', $send_ts);
+		$this->db->set('title', $title);
+		$this->db->set('message', $message);
+		$this->db->set('is_received', $is_received);
+		$this->db->set('item_string', $item_string);
+		$this->db->set('categ', $categ);
+		$this->db->set('reg_date', $reg_date);
+		$this->db->set('expire_date', $expire_date);
+		return $this->db->insert('drag_gamedb.mail');
+	}
 }
