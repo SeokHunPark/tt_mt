@@ -105,9 +105,11 @@ class Popup_market extends CI_Controller
 		
 		$redis_host =  $this->config->item('redis_host');
 		
-		$redis = new Predis\Client('tcp://' . $redis_host);
-		$redis->publish($channel, $message);
+		print "redis_host : $redis_host";
 		
-		$this->load_event();
+		// $redis = new Predis\Client('tcp://' . $redis_host);
+		// $redis->publish($channel, $message);
+		
+		$this->load_current_promotion();
 	}
 }

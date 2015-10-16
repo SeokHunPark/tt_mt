@@ -95,7 +95,7 @@ table.item_recall_table {
 		<tbody>
 			<tr>
 				<td scope="row" >
-					<textarea name="result_text" class="input_textarea" readonly="readonly"><?php echo $result_string ?></textarea>
+					<textarea name="result_text" class="input_textarea" readonly="readonly">아직사용안함</textarea>
 				</td>
 			</tr>
 		</tbody>
