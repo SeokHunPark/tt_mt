@@ -35,4 +35,20 @@ class User_inven_m extends CI_Model
 		$this->db->set('sel_color', $color);
 		return $this->db->update('drag_gamedb.user_inven');
 	}
+	
+	function get_user_action($user_id)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.user_inven');
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+	
+	function delete_car($user_id, $model_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->where('model_id', $model_id);
+		$this->db->delete('drag_gamedb.user_inven');
+	}
 }

@@ -66,6 +66,9 @@ table.nav_table {
 			<tr>
 				<th scope="row"><a href="/game_management/item_paid">- 아이템 지급</a></th>
 			</tr>
+			<tr>
+				<th scope="row"><a href="/game_management/item_recall">- 아이템 회수</a></th>
+			</tr>
 		</tbody>
 	</table>
 </nav>

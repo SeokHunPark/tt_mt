@@ -28,4 +28,11 @@ class User_supporters_m extends CI_Model
 		$this->db->set('count', $count);
 		return $this->db->update('drag_gamedb.user_supporters');
 	}
+	
+	function delete_sup($user_id, $model_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->where('model_id', $model_id);
+		$this->db->delete('drag_gamedb.user_supporters');
+	}
 }

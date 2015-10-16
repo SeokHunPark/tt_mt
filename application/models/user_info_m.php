@@ -96,4 +96,39 @@ class User_info_m extends CI_Model
 		$this->db->set('coin', $coin);
 		return $this->db->update('drag_gamedb.user_info');
 	}
+	
+	function set($user_id, $key, $value)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set($key, $value);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
+	function modify_gas($user_id, $gas)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('gas', $gas);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
+	function modify_coin($user_id, $coin)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('coin', $coin);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
+	function modify_vgold($user_id, $vgold)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('vgold', $vgold);
+		return $this->db->update('drag_gamedb.user_info');
+	}
+	
+	function modify_chip($user_id, $chip)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('chip', $chip);
+		return $this->db->update('drag_gamedb.user_info');
+	}
 }

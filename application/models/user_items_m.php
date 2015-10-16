@@ -28,4 +28,13 @@ class User_items_m extends CI_Model
 		$this->db->set('count', $count);
 		return $this->db->update('drag_gamedb.user_items');
 	}
+	
+	function get_user_items($user_id)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.user_items');
+		$this->db->where('user_id', $user_id);
+		$query = $this->db->get();
+		return $query->result();
+	}
 }
