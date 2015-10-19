@@ -43,6 +43,13 @@ class Ingame_event extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$_event_list = $this->event_ingame_m->get_event_list();
 		$data['event_list'] = $this->make_view_data($_event_list);
 		$this->load->view('/game_management/ingame_event_v', $data);

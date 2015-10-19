@@ -36,6 +36,13 @@ class Banned_word extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if (isset($_POST['word_text']))
 		{			
 			$word = $this->input->post('word_text', TRUE);

@@ -21,7 +21,7 @@ class User_action_m extends CI_Model
 	function find_with_user_id($user_id)
 	{
 		$this->db->select('*');
-		$this->db->from('user_action');
+		$this->db->from('drag_gamedb.user_action');
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get();
 		return $query->row_array();
@@ -31,7 +31,7 @@ class User_action_m extends CI_Model
 	function update_user_action($user_id)
 	{
 		$this->db->where('user_id', $user_id);
-		return $this->db->update('user_action');
+		return $this->db->update('drag_gamedb.user_action');
 	}
 	
 	function modify_straight_wins($user_id, $winning_count)

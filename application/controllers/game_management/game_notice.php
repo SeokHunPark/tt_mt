@@ -41,6 +41,13 @@ class Game_notice extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$_notice_list = $this->notice_ingame_m->get_notice_list();
 		$data['notice_list'] = $this->make_view_data($_notice_list);
 		

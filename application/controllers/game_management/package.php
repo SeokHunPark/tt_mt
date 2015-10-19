@@ -37,6 +37,13 @@ class Package extends CI_Controller
 	
 	public function load_current_package()
 	{
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$target_package['package_no'] = "";
 		$target_package['price'] = "";
 		$target_package['image_url'] = "";

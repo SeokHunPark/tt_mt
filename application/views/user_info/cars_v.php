@@ -67,13 +67,13 @@ table.car_table {
 					부스터 파워
 				</th>
 				<th scope="col">
-					강화 등급
+					진화 등급
 				</th>
 				<th scope="col">
 					경험치
 				</th>
 				<th scope="col">
-					진화 등급
+					사용 가능 기술 포인트
 				</th>
 				<th scope="col">
 					데칼 정보
@@ -114,7 +114,7 @@ table.car_table {
 					<input type="text" name="exp_text" value="<?php echo $target_car['exp']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="evol_text" value="<?php echo $target_car['evol']; ?>" class="input_text" />
+					<input type="text" name="point_text" value="<?php echo $target_car['point']; ?>" class="input_text" />
 				</td>
 				<td>
 					<input type="text" name="decal_text" value="<?php echo $target_car['decal']; ?>" class="input_text" />
@@ -153,13 +153,13 @@ table.car_table {
 					부스터 파워
 				</th>
 				<th scope="col">
-					강화 등급
+					진화 등급
 				</th>
 				<th scope="col">
 					경험치
 				</th>
 				<th scope="col">
-					진화 등급
+					사용 가능 기술 포인트
 				</th>
 				<th scope="col">
 					데칼 정보
@@ -204,7 +204,7 @@ table.car_table {
 						<input type="text" name="exp" readonly="readonly" value="<?php echo $car['exp']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="evol" readonly="readonly" value="<?php echo $car['evol']; ?>" class="input_text" />
+						<input type="text" name="point" readonly="readonly" value="<?php echo $car['point']; ?>" class="input_text" />
 					</td>
 					<td>
 						<input type="text" name="decal" readonly="readonly" value="<?php echo $car['decal']; ?>" class="input_text" />

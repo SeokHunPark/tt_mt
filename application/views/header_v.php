@@ -28,6 +28,23 @@
 </head>
 <body>
 	<header id="header">
-		<h5>Header</h5>
+		<h5>
+		<?php
+		if (@$this->session->userdata('logged_in') == TRUE)
+		{
+		?>
+		계정 : <?php echo $this->session->userdata('username')?>
+		<br>
+		<a href="/auth/logout" class="btn">로그아웃</a>
+		<?php
+		}
+		else
+		{
+		?>
+		<a href="/auth/login" class="btn btn-primary">로그인</a>
+		<?php
+		}
+		?>
+		</h5>
 	</header>
 	

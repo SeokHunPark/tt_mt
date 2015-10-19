@@ -42,6 +42,13 @@ class Item_paid extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$this->load->view('/game_management/item_paid_v');
 	}
 	
@@ -49,11 +56,24 @@ class Item_paid extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if (isset($_POST['send_button']))
 		{
 			$user_list_text = $this->input->post('user_list_text', TRUE);
 			$item_list_text = $this->input->post('item_list_text', TRUE);
 			$message = $this->input->post('message_text', TRUE);
+			
+			if ($user_list_text == '' || $item_list_text == '' || $message == '')
+			{
+				alert("입력하지 않은 항목이 있습니다.", '/game_management/item_paid');
+				exit;
+			}
 			
 			$nickname_list = explode("\n", $user_list_text);
 			$user_id_list = array();

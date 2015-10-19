@@ -10,6 +10,7 @@ class Account_lookup extends CI_Controller
 		$this->load->model('user_action_m');
 		$this->load->model('user_challenges_m');
 		$this->load->model('sanction_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -44,7 +45,13 @@ class Account_lookup extends CI_Controller
 		
 		print "load_account_info \n<br>";
 		
-		#print_r($_POST);
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		#print "$admin_name 으로 로그인.";
 		
 		$account_info['kakao_id'] = "";
 		$account_info['nickname'] = "";
@@ -92,7 +99,6 @@ class Account_lookup extends CI_Controller
 			}
 		}
 		
-		print "user info \n<br>";
 		$data['account_info'] = $account_info;
 		$this->load->view('/user_info/account_lookup_v', $data);
 	}
@@ -170,6 +176,13 @@ class Account_lookup extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			$user_id = $this->input->post('user_id_text', TRUE);
@@ -181,7 +194,19 @@ class Account_lookup extends CI_Controller
 			}
 			else
 			{
-				$this->user_info_m->modify_nickname($user_id, $new_nickname);
+				$return = $this->user_info_m->modify_nickname($user_id, $new_nickname);
+				if ($return)
+				{
+					$time = time();
+					$date_string = "Y-m-d h:i:s";
+					$reg_date = date($date_string, $time);
+					$ip_address = '';
+					$action = '닉네임 수정';
+					$item_id = NULL;
+					$item_count = NULL;
+					$memo = '';
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				}
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
@@ -192,6 +217,13 @@ class Account_lookup extends CI_Controller
 	public function secession()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -212,6 +244,13 @@ class Account_lookup extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			$user_id = $this->input->post('secession_recovery_user_id_text', TRUE);
@@ -226,6 +265,13 @@ class Account_lookup extends CI_Controller
 	public function modify_money()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -258,6 +304,13 @@ class Account_lookup extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			$user_id = $this->input->post('straight_wins_user_id_text', TRUE);
@@ -280,6 +333,13 @@ class Account_lookup extends CI_Controller
 	public function modify_mission_status()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -306,6 +366,13 @@ class Account_lookup extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			print_r($_POST);
@@ -331,6 +398,13 @@ class Account_lookup extends CI_Controller
 	public function user_sanctions()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -396,6 +470,13 @@ class Account_lookup extends CI_Controller
 	public function off_sanctions()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{

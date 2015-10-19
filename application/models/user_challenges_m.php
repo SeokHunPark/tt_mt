@@ -21,7 +21,7 @@ class User_challenges_m extends CI_Model
 	function find_with_user_id($user_id)
 	{
 		$this->db->select('*');
-		$this->db->from('user_challenges');
+		$this->db->from('drag_gamedb.user_challenges');
 		$this->db->where('user_id', $user_id);
 		$query = $this->db->get();
 		return $query->row_array();
