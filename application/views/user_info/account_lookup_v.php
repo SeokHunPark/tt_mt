@@ -295,8 +295,10 @@ function open_modify_level_popup(user_id){
 			</tr>
 			<tr>
 				<th scope="row">
+					랭크 포인트
 				</th>
 				<td>
+					<?php echo $account_info['rank_point']; ?>
 				</td>
 				<th>
 					계정 경험치

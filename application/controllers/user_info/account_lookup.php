@@ -65,6 +65,7 @@ class Account_lookup extends CI_Controller
 		$account_info['straight_wins'] = "";
 		$account_info['current_challenge'] = "";
 		$account_info['current_stage'] = "";
+		$account_info['rank_point'] = "";
 		$account_info['account_level'] = "";
 		$account_info['secession'] = "";
 		$account_info['secession_date'] = "";
@@ -125,7 +126,7 @@ class Account_lookup extends CI_Controller
 		$current_stage = substr($stage, -2, 2);
 		$account_info['current_challenge'] = $current_mission;
 		$account_info['current_stage'] = $current_stage;
-		
+		$account_info['rank_point'] = $user_action['rank_point'];
 		$exp = $user_info['exp'];
 		$level = (int)sqrt((int)$exp / 4);
 		$account_info['account_level'] = $exp;
@@ -163,7 +164,7 @@ class Account_lookup extends CI_Controller
 		}
 		else
 		{
-			$account_info['sanction_type'] = $sanctions_user['sanction_type'];
+			$account_info['sanction_type'] = $sanctions_user['code'];
 			$account_info['sanction_date'] = $sanctions_user['s_date'];
 			$account_info['release_date'] = $sanctions_user['e_date'];
 		}
@@ -198,7 +199,7 @@ class Account_lookup extends CI_Controller
 				if ($return)
 				{
 					$time = time();
-					$date_string = "Y-m-d h:i:s";
+					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
 					$ip_address = '';
 					$action = '닉네임 수정';
@@ -230,10 +231,20 @@ class Account_lookup extends CI_Controller
 			$user_id = $this->input->post('secession_user_id_text', TRUE);
 			
 			$time = time();
-			$date_string = "%Y-%m-%d %H:%i:%s";
+			$date_string = "Y-m-d H:i:s";
 			$unreg_date = mdate($date_string, $time);
 			
-			$this->user_info_m->leave_game($user_id, $unreg_date);
+			$return = $this->user_info_m->leave_game($user_id, $unreg_date);
+			if ($return)
+			{
+				$reg_date = $unreg_date;
+				$ip_address = '';
+				$action = '회원 탈퇴';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
@@ -255,7 +266,19 @@ class Account_lookup extends CI_Controller
 		{
 			$user_id = $this->input->post('secession_recovery_user_id_text', TRUE);
 			
-			$this->user_info_m->leave_recovery_game($user_id);
+			$return = $this->user_info_m->leave_recovery_game($user_id);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '탈퇴 복구';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
@@ -293,7 +316,19 @@ class Account_lookup extends CI_Controller
 			if ($this->input->post('new_chip_count_text', TRUE) != "")
 				$chip = $this->input->post('new_chip_count_text', TRUE);
 			
-			$this->user_info_m->modify_money($user_id, $gas, $coin, $gold, $vgold, $chip);
+			$return = $this->user_info_m->modify_money($user_id, $gas, $coin, $gold, $vgold, $chip);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '재화 수정';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
@@ -322,7 +357,19 @@ class Account_lookup extends CI_Controller
 			}
 			else
 			{
-				$this->user_action_m->modify_straight_wins($user_id, $winning_count);
+				$return = $this->user_action_m->modify_straight_wins($user_id, $winning_count);
+				if ($return)
+				{
+					$time = time();
+					$date_string = "Y-m-d H:i:s";
+					$reg_date = date($date_string, $time);
+					$ip_address = '';
+					$action = '연승 수정';
+					$item_id = NULL;
+					$item_count = NULL;
+					$memo = '';
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				}
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
@@ -355,7 +402,19 @@ class Account_lookup extends CI_Controller
 			$mission_stage .= $stage;
 			#print "mission_stage : $mission_stage";
 			
-			$this->user_challenges_m->modify_stage($user_id, $mission_stage);
+			$return = $this->user_challenges_m->modify_stage($user_id, $mission_stage);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '미션 진행도 변경';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
@@ -387,7 +446,19 @@ class Account_lookup extends CI_Controller
 			{
 				$exp = $new_level;
 				#$exp = ((int)$new_level * (int)$new_level) * 4;
-				$this->load->user_info_m->modify_exp($user_id, $exp);
+				$return = $this->load->user_info_m->modify_exp($user_id, $exp);
+				if ($return)
+				{
+					$time = time();
+					$date_string = "Y-m-d H:i:s";
+					$reg_date = date($date_string, $time);
+					$ip_address = '';
+					$action = '경험치 수정';
+					$item_id = NULL;
+					$item_count = NULL;
+					$memo = '';
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				}
 			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
@@ -408,13 +479,13 @@ class Account_lookup extends CI_Controller
 		
 		if ($_POST)
 		{
-			print_r($_POST);
+			#print_r($_POST);
 			$user_id = $this->input->post('sanction_user_id_text', TRUE);
 			$sanctions_days = $this->input->post('sanctions_days');
 			$sanction_type = "";
 			
 			$time = time();
-			$date_string = "Y-m-d h:i:s";
+			$date_string = "Y-m-d H:i:s";
 			$s_date = date($date_string, $time);
 			$e_date = "";
 			
@@ -448,10 +519,10 @@ class Account_lookup extends CI_Controller
 				$sanction_type = "30";
 				$e_date = date($date_string, $time + (60 * 60 * 24 * 30));
 			}
-			else if ($sanctions_days == 'inf')
+			else if ($sanctions_days == '1000')
 			{
 				$sanction_type = "1000";
-				$e_date = "INF";
+				$e_date = '3015-12-31';
 			}
 			
 			$subject = "test";
@@ -460,7 +531,19 @@ class Account_lookup extends CI_Controller
 			$reg_user = "1";
 			$reg_date = $s_date;
 			
-			$this->sanction_m->reg_user($user_id, $sanction_type, $s_date, $e_date, $subject, $reason, $memo, $reg_user, $reg_date);
+			$return = $this->sanction_m->reg_user($user_id, $sanction_type, $s_date, $e_date, $subject, $reason, $memo, $reg_user, $reg_date);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '제재. ' . '제재 유형 ' . $sanction_type;
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
@@ -481,7 +564,19 @@ class Account_lookup extends CI_Controller
 		if ($_POST)
 		{
 			$user_id = $this->input->post('sanction_user_id_text', TRUE);
-			$this->sanction_m->delete_user($user_id);
+			$return = $this->sanction_m->delete_user($user_id);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '제재 해제';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			}
 			$data['account_info'] = $this->get_account_info($user_id);
 			$this->load->view('/user_info/account_lookup_v', $data);
 		}
