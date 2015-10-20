@@ -41,7 +41,8 @@ class Log_leave_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_leave');
-		$this->db->where('user_id', $user_id);
+		if ($user_id != '-1')
+			$this->db->where('user_id', $user_id);
 		$this->db->where('leave_date >=', $begin_date);
 		$this->db->where('leave_date <=', $end_date);
 		$this->db->order_by("leave_date", "desc");

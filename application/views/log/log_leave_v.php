@@ -24,7 +24,7 @@ table.log_list_table {
 
 <section id="content">
 	<fieldset>
-		<form method="post" action="/log/log_viewer_item/load_log">
+		<form method="post" action="/log/log_viewer/load_log">
 		<input type="submit" name="log_connect_button" value="log_connect" />
 		<input type="submit" name="log_consume_item_button" value="log_consume_item" />
 		<input type="submit" name="log_consume_money_button" value="log_consume_money" />

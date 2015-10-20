@@ -41,7 +41,8 @@ class Log_gain_money_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_gain_money');
-		$this->db->where('user_id', $user_id);
+		if ($user_id != '-1')
+			$this->db->where('user_id', $user_id);
 		$this->db->where('reg_date >=', $begin_date);
 		$this->db->where('reg_date <=', $end_date);
 		$this->db->order_by("reg_date", "desc");

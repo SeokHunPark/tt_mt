@@ -41,7 +41,8 @@ class Log_game_room_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_game_room');
-		$this->db->where('owner_id', $owner_id);
+		if ($owner_id != '-1')
+			$this->db->where('owner_id', $owner_id);
 		$this->db->where('start_date >=', $begin_date);
 		$this->db->where('start_date <=', $end_date);
 		$this->db->order_by("start_date", "desc");
