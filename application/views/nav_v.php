@@ -75,5 +75,10 @@ table.nav_table {
 				<th scope="row"><a href="/game_management/item_recall">- 아이템 회수</a></th>
 			</tr>
 		</tbody>
+		<tbody>
+			<tr>
+				<th scope="row"><a href="/log/log_viewer">- 로그 조회</a></th>
+			</tr>
+		</tbody>
 	</table>
 </nav>
