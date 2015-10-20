@@ -47,7 +47,8 @@ a.pop-btn:hover {
 			<p class="ctxt mb20">회수 하시겠습니까?</p>
 			
 			<form id="_mail_collect" method="post" action="/user_info/mail_box/mail_collect/">
-			<input type="input" id="_mail_idx_text" name="mail_idx_text" />
+			<input type="hidden" id="_mail_idx_text" name="mail_idx_text" />
+			<input type="hidden" id="_user_id_text" name="user_id_text" />
 			<div class="btn-r">
 				<input type="submit" value="확인" name="button" />
 				<input type="button" id="cancel_btn" value="취소" />

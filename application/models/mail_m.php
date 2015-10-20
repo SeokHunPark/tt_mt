@@ -46,4 +46,10 @@ class Mail_m extends CI_Model
 		$this->db->set('expire_date', $expire_date);
 		return $this->db->insert('drag_gamedb.mail');
 	}
+	
+	function delete_mail($mail_idx)
+	{
+		$this->db->where('mail_idx', $mail_idx);
+		return $this->db->delete('drag_gamedb.mail');
+	}
 }

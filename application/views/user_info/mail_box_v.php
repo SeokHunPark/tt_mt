@@ -19,7 +19,7 @@ table.mail_box_table {
 </style>
 
 <script>
-function open_collect_popup(mail_idx){
+function open_collect_popup(mail_idx, user_id){
 
 	var temp = $('#_mail_collect_popup');		//레이어의 id를 temp변수에 저장
 	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
@@ -37,6 +37,8 @@ function open_collect_popup(mail_idx){
 	
 	var mail_idx_text = document.getElementById("_mail_idx_text");
 	mail_idx_text.value = mail_idx;
+	var user_id_text = document.getElementById("_user_id_text");
+	user_id_text.value = user_id;
 }
 </script>
 
@@ -74,6 +76,7 @@ function open_collect_popup(mail_idx){
 		<thead>
 			<tr>
 				<th scope="col">메일 번호</th>
+				<th scope="col">유저 아이디</th>
 				<th scope="col">아이템 명</th>
 				<th scope="col">개수</th>
 				<th scope="col">보낸 사람</th>
@@ -92,34 +95,38 @@ function open_collect_popup(mail_idx){
 			?>
 				<tr>
 					<th scope="row">
-						<input type="text" class="input_text" name="promotion_no" readonly="readonly" value="<?php echo $mail['mail_idx']; ?>" />
+						<input type="text" class="input_text" name="mail_idx" readonly="readonly" value="<?php echo $mail['mail_idx']; ?>" />
 					</th>
 					<td>
-						<input type="text" class="input_text" name="title" readonly="readonly" value="<?php echo $mail['item_name']; ?>" />
+						<input type="text" class="input_text" name="user_id" readonly="readonly" value="<?php echo $mail['user_id']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="package" readonly="readonly" value="<?php echo $mail['item_count']; ?>" />
+						<input type="text" class="input_text" name="item_name" readonly="readonly" value="<?php echo $mail['item_name']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="expose_int" readonly="readonly" value="<?php echo $mail['sender']; ?>" />
+						<input type="text" class="input_text" name="item_count" readonly="readonly" value="<?php echo $mail['item_count']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="reexpose_buy" readonly="readonly" value="<?php echo $mail['description']; ?>" />
+						<input type="text" class="input_text" name="sender" readonly="readonly" value="<?php echo $mail['sender']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="expose_limit" readonly="readonly" value="<?php echo $mail['reg_date']; ?>" />
+						<input type="text" class="input_text" name="description" readonly="readonly" value="<?php echo $mail['description']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['expire_date']; ?>" />
+						<input type="text" class="input_text" name="reg_date" readonly="readonly" value="<?php echo $mail['reg_date']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['recv_date']; ?>" />
+						<input type="text" class="input_text" name="expire_date" readonly="readonly" value="<?php echo $mail['expire_date']; ?>" />
 					</td>
 					<td>
-						<input type="text" class="input_text" name="expose_prob" readonly="readonly" value="<?php echo $mail['stats']; ?>" />
+						<input type="text" class="input_text" name="recv_date" readonly="readonly" value="<?php echo $mail['recv_date']; ?>" />
 					</td>
 					<td>
-						<input type="submit" value="회수" onclick="open_collect_popup('<?php echo $mail['mail_idx']; ?>'); return false"/>
+						<input type="text" class="input_text" name="stats" readonly="readonly" value="<?php echo $mail['stats']; ?>" />
+					</td>
+					<td>
+						<input type="submit" value="회수" onclick="open_collect_popup('<?php echo $mail['mail_idx']; ?>',
+																					'<?php echo $mail['user_id']; ?>'); return false"/>
 					</td>
 				</tr>
 			<?php

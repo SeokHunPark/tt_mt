@@ -9,7 +9,7 @@ class Mail_box extends CI_Controller
 		$this->load->model('user_info_m');
 		$this->load->model('mail_m');
 		$this->load->model('log_mail_m');
-		
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -176,6 +176,7 @@ class Mail_box extends CI_Controller
 		for ($i = 0; $i < count($_mail_list); $i++)
 		{
 			$mail_list[$i]['mail_idx'] = $_mail_list[$i]->mail_idx;
+			$mail_list[$i]['user_id'] = $_mail_list[$i]->user_id;
 			$item_string = $_mail_list[$i]->item_string;
 			$item_array = explode(':', $item_string);
 			$mail_list[$i]['item_name'] = $item_array[1];
@@ -187,7 +188,7 @@ class Mail_box extends CI_Controller
 			$mail_list[$i]['recv_date'] = "";
 			
 			$time = time();
-			$date_string = "%Y-%m-%d %h:%i:%s";
+			$date_string = "%Y-%m-%d %H:%i:%s";
 			$current_date = mdate($date_string, $time);
 			if ($mail_list[$i]['expire_date'] > $current_date)
 			{
@@ -210,6 +211,7 @@ class Mail_box extends CI_Controller
 		for ($i = 0; $i < count($_mail_list); $i++)
 		{
 			$mail_list[$i]['mail_idx'] = $_mail_list[$i]->mail_idx;
+			$mail_list[$i]['user_id'] = $_mail_list[$i]->user_id;
 			$item_string = $_mail_list[$i]->item_string;
 			$item_array = explode(':', $item_string);
 			$mail_list[$i]['item_name'] = $item_array[1];
@@ -222,7 +224,7 @@ class Mail_box extends CI_Controller
 			$mail_list[$i]['recv_date'] = "";
 			
 			$time = time();
-			$date_string = "%Y-%m-%d %h:%i:%s";
+			$date_string = "%Y-%m-%d %H:%i:%s";
 			$current_date = mdate($date_string, $time);
 			if ($mail_list[$i]['expire_date'] > $current_date)
 			{
@@ -239,7 +241,32 @@ class Mail_box extends CI_Controller
 	
 	public function mail_collect()
 	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$mail_idx = $this->input->post('mail_idx_text', TRUE);
-		print "$mail_idx 메일을 회수합니다.";
+		$user_id = $this->input->post('user_id_text', TRUE);
+		
+		$return = $this->mail_m->delete_mail($mail_idx, $user_id);
+		if ($return)
+		{
+			$time = time();
+			$date_string = "Y-m-d H:i:s";
+			$reg_date = date($date_string, $time);
+			$ip_address = '';
+			$action = '닉네임 수정';
+			$item_id = NULL;
+			$item_count = NULL;
+			$memo = '';
+			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			
+			alert('회수가 완료 되었습니다.', '/user_info/mail_box/load_mail_box/user_search/' . $user_id);
+		}
 	}
 }

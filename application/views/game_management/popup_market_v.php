@@ -56,7 +56,7 @@ table.promotion_table {
 					재 노출 간격 (분)
 				</th>
 				<th scope="col">
-					구매 후 재 노출 간격 (일)
+					구매 후 재 노출 간격 (시간)
 				</th>
 				<th scope="col">
 					노출 상한 보석
