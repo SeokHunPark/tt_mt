@@ -70,6 +70,9 @@ table.nav_table {
 				<th scope="row"><a href="/banned_word">- 금칙어 관리</a></th>
 			</tr>
 			<tr>
+				<th scope="row"><a href="/game_management/rank">- Top 300 조회</a></th>
+			</tr>
+			<tr>
 				<th scope="row"><a href="/game_management/item_paid">- 아이템 지급</a></th>
 			</tr>
 			<tr>

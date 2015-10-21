@@ -95,7 +95,7 @@ class Log_mail extends CI_Controller
 		{
 			if (strcmp($mode, "date_search") == 0)
 			{
-				$offset = $this->uri->segment(8, 0);
+				#$offset = $this->uri->segment(8, 0);
 				$user_id = $this->uri->segment(5, -1);
 				$begin_date = $this->uri->segment(6, 0) . " 00:00:00";
 				$end_date = $this->uri->segment(7, 0) . " 23:59:59";
