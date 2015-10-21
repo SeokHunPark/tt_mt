@@ -44,6 +44,14 @@ table.event_table {
 			</tr>
 			<tr>
 				<th scope="row" >
+					 카테고리
+				</th>
+				<td colspan="9">
+					<input type="text" name="categ_text" class="input_text" />
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
 					 이벤트 시간
 				</th>
 				<td colspan="9">
@@ -258,6 +266,14 @@ table.event_table {
 			</tr>
 			<tr>
 				<th scope="row" >
+					 카테고리
+				</th>
+				<td colspan="9">
+					<input type="text" name="categ_text" class="input_text" value="<?php echo $target_event['categ']; ?>"/>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row" >
 					 이벤트 시간
 				</th>
 				<td colspan="9">
@@ -460,6 +476,9 @@ table.event_table {
 					이벤트 명
 				</th>
 				<th scope="col">
+					카테고리
+				</th>
+				<th scope="col">
 					이벤트 기간
 				</th>
 				<th scope="col">
@@ -492,6 +511,9 @@ table.event_table {
 					</th>
 					<td>
 						<?php echo $event['title']; ?>
+					</td>
+					<td>
+						<?php echo $event['categ']; ?>
 					</td>
 					<td>
 						시작 : <?php echo $event['begin_date']; ?><br>

@@ -156,4 +156,10 @@ function open_cancel_notice_popup(notice_no){
 		</tbody>
 	</table>
 	</p>
+	
+	<p>
+	<form method="post" action="/game_management/game_notice/publish">
+	<input type="submit" name="publish" value="변경 사항 적용" />
+	</form>
+	</p>
 </section>

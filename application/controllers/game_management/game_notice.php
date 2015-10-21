@@ -1,5 +1,8 @@
 ﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+require 'Predis/Autoloader.php';
+Predis\Autoloader::register();
+
 class Game_notice extends CI_Controller
 {
 	function __construct()
@@ -112,5 +115,22 @@ class Game_notice extends CI_Controller
 		}
 		
 		$this->load_notice();
+	}
+	
+	public function publish()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		$channel = "pubsub_contents";
+		$message = "notice";
+		
+		$redis_host =  $this->config->item('redis_host');
+		
+		#print "redis_host : $redis_host";
+		
+		$redis = new Predis\Client('tcp://' . $redis_host);
+		$redis->publish($channel, $message);
+		
+		$this->index();
 	}
 }

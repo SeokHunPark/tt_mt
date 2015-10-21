@@ -10,6 +10,7 @@ class Account_lookup extends CI_Controller
 		$this->load->model('user_action_m');
 		$this->load->model('user_challenges_m');
 		$this->load->model('sanction_m');
+		$this->load->model('user_purchase_items_m');
 		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
@@ -75,8 +76,12 @@ class Account_lookup extends CI_Controller
 		$account_info['sanction_date'] = "";
 		$account_info['release_date'] = "";
 		$account_info['invite_count'] = "";
+		$account_info['sub_item'] = "";
 		
 		$user_id = "";
+		
+		$user_id = $this->uri->segment(4, -1);
+		print "user_id : $user_id";
 		
 		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
@@ -99,6 +104,10 @@ class Account_lookup extends CI_Controller
 				}
 			}
 		}
+		else if ($user_id > 0)
+		{
+			$account_info = $this->get_account_info($user_id);
+		}
 		
 		$data['account_info'] = $account_info;
 		$this->load->view('/user_info/account_lookup_v', $data);
@@ -107,8 +116,14 @@ class Account_lookup extends CI_Controller
 	public function get_account_info($user_id)
 	{
 		$user_info = $this->user_info_m->find_with_user_id($user_id);
+		// if (count($user_info) == 0)
+		// {
+			// return array();
+		// }
+		
 		$user_action = $this->user_action_m->find_with_user_id($user_id);
 		$user_challenges = $this->user_challenges_m->find_with_user_id($user_id);
+		$user_purchase_items = $this->user_purchase_items_m->find_with_user_id($user_id);
 		
 		$account_info['kakao_id'] = $user_info['platform_user_id'];
 		$account_info['nickname'] = $user_info['nickname'];
@@ -170,6 +185,16 @@ class Account_lookup extends CI_Controller
 		}
 		$account_info['invite_count'] = $user_action['invite_count'];
 		
+		$account_info['sub_item'] = "";
+		foreach ($user_purchase_items as $package)
+		{
+			if ($package->type == 'D')
+			{
+				$account_info['sub_item'] = $package->item_id;
+				break;
+			}
+		}
+		
 		return $account_info;
 	}
 	
@@ -207,11 +232,13 @@ class Account_lookup extends CI_Controller
 					$item_count = NULL;
 					$memo = '';
 					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+					
+					alert('닉네임 변경이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 				}
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			#$data['account_info'] = $this->get_account_info($user_id);
+			#$this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -244,10 +271,12 @@ class Account_lookup extends CI_Controller
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('회원 탈퇴가 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -278,10 +307,12 @@ class Account_lookup extends CI_Controller
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('탈퇴 복구가 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -299,39 +330,66 @@ class Account_lookup extends CI_Controller
 		if ($_POST)
 		{
 			$user_id = $this->input->post('modify_money_user_id_text', TRUE);
-			$gas = $this->input->post('gas_text', TRUE);
-			$coin = $this->input->post('coin_text', TRUE);
-			$gold = $this->input->post('gold_text', TRUE);
-			$vgold = $this->input->post('vgold_text', TRUE);
-			$chip = $this->input->post('chip_text', TRUE);
 			
-			if ($this->input->post('new_gas_count_text', TRUE) != "")
-				$gas = $this->input->post('new_gas_count_text', TRUE);
-			if ($this->input->post('new_coin_count_text', TRUE) != "")
-				$coin = $this->input->post('new_coin_count_text', TRUE);
-			if ($this->input->post('new_gold_count_text', TRUE) != "")
-				$gold = $this->input->post('new_gold_count_text', TRUE);
-			if ($this->input->post('new_vgold_count_text', TRUE) != "")
-				$vgold = $this->input->post('new_vgold_count_text', TRUE);
-			if ($this->input->post('new_chip_count_text', TRUE) != "")
-				$chip = $this->input->post('new_chip_count_text', TRUE);
+			$gas = (int)$this->input->post('gas_text', TRUE);
+			$coin = (int)$this->input->post('coin_text', TRUE);
+			$gold = (int)$this->input->post('gold_text', TRUE);
+			$vgold = (int)$this->input->post('vgold_text', TRUE);
+			$chip = (int)$this->input->post('chip_text', TRUE);
+			
+			$add_gas = (int)$this->input->post('new_gas_count_text', TRUE);
+			$add_coin = (int)$this->input->post('new_coin_count_text', TRUE);
+			$add_gold = (int)$this->input->post('new_gold_count_text', TRUE);
+			$add_vgold = (int)$this->input->post('new_vgold_count_text', TRUE);
+			$add_chip = (int)$this->input->post('new_chip_count_text', TRUE);
+			
+			if ($add_gas != 0)
+				$gas += $add_gas;
+			if ($add_coin != 0)
+				$coin += $add_coin;
+			if ($add_gold != 0)
+				$gold += $add_gold;
+			if ($add_vgold != 0)
+				$vgold += $add_vgold;
+			if ($add_chip != 0)
+				$chip += $add_chip;
 			
 			$return = $this->user_info_m->modify_money($user_id, $gas, $coin, $gold, $vgold, $chip);
 			if ($return)
-			{
+			{	
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
 				$ip_address = '';
 				$action = '재화 수정';
-				$item_id = NULL;
-				$item_count = NULL;
 				$memo = '';
-				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				if ($add_gas !=0)
+				{
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, '연료', $add_gas, $memo);
+				}
+				if ($add_coin !=0)
+				{
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, '코인', $add_coin, $memo);
+				}
+				if ($add_gold !=0)
+				{
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, '유료 다이아', $add_gold, $memo);
+				}
+				if ($add_vgold !=0)
+				{
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, '무료 다이아', $add_vgold, $memo);
+				}
+				if ($add_chip !=0)
+				{
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, '트로피', $add_chip, $memo);
+				}
+				
+				alert('재화 수정이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -369,11 +427,13 @@ class Account_lookup extends CI_Controller
 					$item_count = NULL;
 					$memo = '';
 					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+					
+					alert('연승 수정이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 				}
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -414,10 +474,12 @@ class Account_lookup extends CI_Controller
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('미션 진행도 변경이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -458,11 +520,13 @@ class Account_lookup extends CI_Controller
 					$item_count = NULL;
 					$memo = '';
 					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+					
+					alert('경험치 수정이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 				}
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -543,10 +607,12 @@ class Account_lookup extends CI_Controller
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('사용자 제재가 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
 			
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
 		}
 	}
 	
@@ -576,9 +642,44 @@ class Account_lookup extends CI_Controller
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('제재 해제가 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
 			}
-			$data['account_info'] = $this->get_account_info($user_id);
-			$this->load->view('/user_info/account_lookup_v', $data);
+			// $data['account_info'] = $this->get_account_info($user_id);
+			// $this->load->view('/user_info/account_lookup_v', $data);
+		}
+	}
+	
+	public function sub_cancel()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('sub_user_id_text', TRUE);
+			$item_id = $this->input->post('sub_item_id_text', TRUE);
+			
+			$return = $this->user_purchase_items_m->delete_purchase_item($user_id, $item_id);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '청약 해제(계정 조회)';
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('청약 취소가 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
+			}
 		}
 	}
 }

@@ -396,6 +396,34 @@ function open_modify_level_popup(user_id){
 				<td>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">
+				정액 상품 이용
+				</th>
+				<td>
+				<form method="post" action="/user_info/account_lookup/sub_cancel">
+				<input type="hidden" name="sub_user_id_text" value="<?php echo $account_info['user_id'] ?>" />
+				<input type="hidden" name="sub_item_id_text" value="<?php echo $account_info['sub_item'] ?>" />
+				<?php
+				if ($account_info['sub_item'] != '')
+				{
+				?>
+				<?php echo $account_info['sub_item']; ?>
+				<input type="submit" value="청약 취소" name="button" />
+				<?php
+				}
+				?>
+				</form>
+				</td>
+				<th>
+				
+				</th>
+				<td>
+				
+				</td>
+				<td>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 </section>

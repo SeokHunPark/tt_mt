@@ -65,6 +65,7 @@ class Ingame_event extends CI_Controller
 			
 			$event_list[$i]['event_no'] = $event['event_no'];
 			$event_list[$i]['title'] = $event['title'];
+			$event_list[$i]['categ'] = $event['categ'];
 			$event_list[$i]['begin_date'] = $event['begin_date'];
 			$event_list[$i]['end_date'] = $event['end_date'];
 			$event_list[$i]['open_date'] = $event['open_date'];
@@ -93,19 +94,19 @@ class Ingame_event extends CI_Controller
 			if ((float)$bonus_gold > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "보너스 다이아 : ";
+				$event_list[$i]['description'] .= "보석 구매 보너스 비율 : ";
 				$event_list[$i]['description'] .= $bonus_gold;
 			}
 			if ((float)$bonus_coin > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "보너스 코인 : ";
+				$event_list[$i]['description'] .= "코인 구매 보너스 비율 : ";
 				$event_list[$i]['description'] .= $bonus_coin;
 			}
 			if ((float)$bonus_gas > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "보너스 연료 : ";
+				$event_list[$i]['description'] .= "연료 구매 보너스 비율 : ";
 				$event_list[$i]['description'] .= $bonus_gas;
 			}
 			if ((float)$sale_car > 0)
@@ -117,19 +118,19 @@ class Ingame_event extends CI_Controller
 			if ((float)$sale_supporter > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "서포터 할인 : ";
+				$event_list[$i]['description'] .= "서포터즈 할인 : ";
 				$event_list[$i]['description'] .= $sale_supporter;
 			}
 			if ((float)$sale_gacha_0 > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "A급 뽑기 확률 증가 : ";
+				$event_list[$i]['description'] .= "일반 부품 뽑기 확률 증가 : ";
 				$event_list[$i]['description'] .= $sale_gacha_0;
 			}
 			if ((float)$sale_gacha_1 > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "S급 뽑기 확률 증가 : ";
+				$event_list[$i]['description'] .= "고급 부품 뽑기 확률 증가 : ";
 				$event_list[$i]['description'] .= $sale_gacha_1;
 			}
 			$event_list[$i]['description'] .= "\n<br>";
@@ -164,7 +165,7 @@ class Ingame_event extends CI_Controller
 			if ((float)$gain_gold_prob > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "다이아 획득량 증가2 : ";
+				$event_list[$i]['description'] .= "다이아 획득 확률 증가 : ";
 				$event_list[$i]['description'] .= $gain_gold_prob;
 			}
 			$event_list[$i]['description'] .= "\n<br>\n<br>";
@@ -182,6 +183,7 @@ class Ingame_event extends CI_Controller
 		if (isset($_POST['reg']))
 		{
 			$title = $this->input->post('event_name_text', TRUE);
+			$categ = $this->input->post('categ_text', TRUE);
 			
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' '. $this->input->post('end_time_text', TRUE);
@@ -224,7 +226,7 @@ class Ingame_event extends CI_Controller
 			if ($game_players == '') $game_players = '-1';
 			if ($game_challenge == '') $game_challenge = '-1';
 			
-			$this->event_ingame_m->reg_event($title, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+			$this->event_ingame_m->reg_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 				$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 				$game_mode, $game_players, $game_challenge);
 		}
@@ -299,6 +301,7 @@ class Ingame_event extends CI_Controller
 		if (isset($_POST['save']))
 		{
 			$title = $this->input->post('event_name_text', TRUE);
+			$categ = $this->input->post('categ_text', TRUE);
 				
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' '. $this->input->post('end_time_text', TRUE);
@@ -345,7 +348,7 @@ class Ingame_event extends CI_Controller
 			
 			if ($event_no != "")
 			{
-				$this->event_ingame_m->save_event($title, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+				$this->event_ingame_m->save_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 					$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 					$game_mode, $game_players, $game_challenge, $event_no);
 			}

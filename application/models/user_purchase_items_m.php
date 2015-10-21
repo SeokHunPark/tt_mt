@@ -16,7 +16,15 @@ class User_purchase_items_m extends CI_Model
 		
 		$this->db->select('*');
 		$this->db->from('drag_gamedb.user_purchase_items');
-		$this->db->order_by("apply_date", "desc");
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function find_with_user_id($user_id)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.user_purchase_items');
+		$this->db->where('user_id', $user_id);
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -35,5 +43,12 @@ class User_purchase_items_m extends CI_Model
 		$this->db->set('max_count', $max_count);
 		$this->db->set('used', $used);
 		return $this->db->insert('drag_gamedb.user_purchase_items');
+	}
+	
+	function delete_purchase_item($user_id, $item_id)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->where('item_id', $item_id);
+		return $this->db->delete('drag_gamedb.user_purchase_items');
 	}
 }

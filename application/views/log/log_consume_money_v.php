@@ -73,8 +73,8 @@ table.log_list_table {
 				<th scope="col">라벨</th>
 				<th scope="col">카테고리</th>
 				<th scope="col">재화 타입</th>
-				<th scope="col">재화 수</th>
-				<th scope="col">재화 레알</th>
+				<th scope="col">재화 소비량</th>
+				<th scope="col">현금 결제 다이아 소비량</th>
 				<th scope="col">게임 모드</th>
 				<th scope="col">등록 일시</th>
 			</tr>

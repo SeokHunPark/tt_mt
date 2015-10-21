@@ -14,7 +14,7 @@
 }
 #content {
 	border: 1px solid #555;
-	height:2000px;	
+	height:2000px;
 	background-color:#FFFFFF;
 }
 #footer {

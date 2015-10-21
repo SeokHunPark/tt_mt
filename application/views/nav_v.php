@@ -1,7 +1,7 @@
 ﻿<style type="text/css">
 #nav {
 	border: 1px solid #555;
-	width: 150px;
+	width: 170px;
 	height:2500px;
 	float: left;
 	background-color:#DCDAD9;
@@ -10,6 +10,7 @@ table.nav_table {
 	border: 1px solid black;
 	border-collapse: collapse;
 	text-align: left;
+	width: 170px;
 }
 .nav_table th {
 	border: 1px solid black;

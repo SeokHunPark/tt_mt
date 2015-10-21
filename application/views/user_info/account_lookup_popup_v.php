@@ -121,7 +121,7 @@ a.pop-btn:hover {
 	<div class="pop-container">
 		<div class="pop-conts">
 			<!--content //-->
-			<p class="ctxt mb20">재화 변경</p>
+			<p class="ctxt mb20">재화 변경 (+/- 기호로 재화 조절)</p>
 			
 			<form id="modify_money" method="post" action="/user_info/account_lookup/modify_money">
 			<input type="hidden" id="_modify_money_user_id_text" name="modify_money_user_id_text" />
