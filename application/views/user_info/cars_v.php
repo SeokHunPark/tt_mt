@@ -41,7 +41,7 @@ table.car_table {
 	<table class="car_table">
 		<thead>
 			<tr>
-				<th scope="col" colspan="11">
+				<th scope="col" colspan="15">
 					차량 수정
 				</th>
 			</tr>
@@ -74,6 +74,15 @@ table.car_table {
 				</th>
 				<th scope="col">
 					사용 가능 기술 포인트
+				</th>
+				<th scope="col">
+					공격
+				</th>
+				<th scope="col">
+					방어
+				</th>
+				<th scope="col">
+					공기 저항
 				</th>
 				<th scope="col">
 					데칼 정보
@@ -115,6 +124,15 @@ table.car_table {
 				</td>
 				<td>
 					<input type="text" name="point_text" value="<?php echo $target_car['point']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="atk_text" value="<?php echo $target_car['atk']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="def_text" value="<?php echo $target_car['def']; ?>" class="input_text" />
+				</td>
+				<td>
+					<input type="text" name="aero_text" value="<?php echo $target_car['aero']; ?>" class="input_text" />
 				</td>
 				<td>
 					<input type="text" name="decal_text" value="<?php echo $target_car['decal']; ?>" class="input_text" />
@@ -162,6 +180,15 @@ table.car_table {
 					사용 가능 기술 포인트
 				</th>
 				<th scope="col">
+					공격
+				</th>
+				<th scope="col">
+					방어
+				</th>
+				<th scope="col">
+					공기 저항
+				</th>
+				<th scope="col">
 					데칼 정보
 				</th>
 				<th scope="col">
@@ -205,6 +232,15 @@ table.car_table {
 					</td>
 					<td>
 						<input type="text" name="point" readonly="readonly" value="<?php echo $car['point']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="atk" readonly="readonly" value="<?php echo $car['atk']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="def" readonly="readonly" value="<?php echo $car['def']; ?>" class="input_text" />
+					</td>
+					<td>
+						<input type="text" name="aero" readonly="readonly" value="<?php echo $car['aero']; ?>" class="input_text" />
 					</td>
 					<td>
 						<input type="text" name="decal" readonly="readonly" value="<?php echo $car['decal']; ?>" class="input_text" />

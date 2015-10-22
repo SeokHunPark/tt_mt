@@ -21,7 +21,7 @@ class User_inven_m extends CI_Model
 		return $query->result();
 	}
 	
-	function modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $decal, $color)
+	function modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $atk, $def, $aero, $decal, $color)
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('model_id', $model_id);
@@ -32,19 +32,22 @@ class User_inven_m extends CI_Model
 		$this->db->set('upgrade', $upgrade);
 		$this->db->set('exp', $exp);
 		$this->db->set('point', $point);
+		$this->db->set('gr_0', $atk);
+		$this->db->set('gr_1', $def);
+		$this->db->set('gr_2', $aero);
 		$this->db->set('sel_skin', $decal);
 		$this->db->set('sel_color', $color);
 		return $this->db->update('drag_gamedb.user_inven');
 	}
 	
-	function get_user_action($user_id)
-	{
-		$this->db->select('*');
-		$this->db->from('drag_gamedb.user_inven');
-		$this->db->where('user_id', $user_id);
-		$query = $this->db->get();
-		return $query->row_array();
-	}
+	// function get_user_inven($user_id)
+	// {
+		// $this->db->select('*');
+		// $this->db->from('drag_gamedb.user_inven');
+		// $this->db->where('user_id', $user_id);
+		// $query = $this->db->get();
+		// return $query->row_array();
+	// }
 	
 	function delete_car($user_id, $model_id)
 	{

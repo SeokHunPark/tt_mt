@@ -60,6 +60,9 @@ class Cars extends CI_Controller
 		$target_car['upgrade'] = "";
 		$target_car['exp'] = "";
 		$target_car['point'] = "";
+		$target_car['atk'] = "";
+		$target_car['def'] = "";
+		$target_car['aero'] = "";
 		$target_car['decal'] = "";
 		$target_car['color'] = "";
 		$data['target_car'] = $target_car;
@@ -111,6 +114,9 @@ class Cars extends CI_Controller
 			$car_list[$i]['upgrade'] = $_car_list[$i]->upgrade;
 			$car_list[$i]['exp'] = $_car_list[$i]->exp;
 			$car_list[$i]['point'] = $_car_list[$i]->point;
+			$car_list[$i]['atk'] = $_car_list[$i]->gr_0;
+			$car_list[$i]['def'] = $_car_list[$i]->gr_1;
+			$car_list[$i]['aero'] = $_car_list[$i]->gr_2;
 			$car_list[$i]['decal'] = $_car_list[$i]->sel_skin;
 			$car_list[$i]['color'] = $_car_list[$i]->sel_color;
 		}
@@ -146,6 +152,9 @@ class Cars extends CI_Controller
 			$target_car['upgrade'] = $this->input->post('upgrade', TRUE);
 			$target_car['exp'] = $this->input->post('exp', TRUE);
 			$target_car['point'] = $this->input->post('point', TRUE);
+			$target_car['atk'] = $this->input->post('atk', TRUE);
+			$target_car['def'] = $this->input->post('def', TRUE);
+			$target_car['aero'] = $this->input->post('aero', TRUE);
 			$target_car['decal'] = $this->input->post('decal', TRUE);
 			$target_car['color'] = $this->input->post('color', TRUE);
 			$data['target_car'] = $target_car;
@@ -191,10 +200,13 @@ class Cars extends CI_Controller
 			$upgrade = $this->input->post('upgrade_text', TRUE);
 			$exp = $this->input->post('exp_text', TRUE);
 			$point = $this->input->post('point_text', TRUE);
+			$atk = $this->input->post('atk_text', TRUE);
+			$def = $this->input->post('def_text', TRUE);
+			$aero = $this->input->post('aero_text', TRUE);
 			$decal = $this->input->post('decal_text', TRUE);
 			$color = $this->input->post('color_text', TRUE);
 			
-			$return = $this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $decal, $color);
+			$return = $this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $atk, $def, $aero, $decal, $color);
 			if ($return)
 			{
 				$time = time();
@@ -271,6 +283,9 @@ class Cars extends CI_Controller
 			$target_car['upgrade'] = "";
 			$target_car['exp'] = "";
 			$target_car['point'] = "";
+			$target_car['atk'] = "";
+			$target_car['def'] = "";
+			$target_car['aero'] = "";
 			$target_car['decal'] = "";
 			$target_car['color'] = "";
 			$data['target_car'] = $target_car;
@@ -323,6 +338,9 @@ class Cars extends CI_Controller
 			$target_car['upgrade'] = "";
 			$target_car['exp'] = "";
 			$target_car['point'] = "";
+			$target_car['atk'] = "";
+			$target_car['def'] = "";
+			$target_car['aero'] = "";
 			$target_car['decal'] = "";
 			$target_car['color'] = "";
 			$data['target_car'] = $target_car;

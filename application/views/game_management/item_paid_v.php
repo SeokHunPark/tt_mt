@@ -3,6 +3,7 @@
 	width: 500px;
 }
 .input_textarea {
+	resize: none;
 	width: 500px;
 	height: 150px;
 }
@@ -28,7 +29,7 @@ table.item_paid_table {
 
 <section id="content">
 	<p>
-	<form method="post" action="/game_management/item_paid/send_all_item">
+	<form method="post" action="/game_management/item_paid/send_all_item" >
 	<table class="item_paid_table">
 		<thead>
 			<tr>

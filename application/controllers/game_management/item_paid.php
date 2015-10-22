@@ -8,7 +8,7 @@ class Item_paid extends CI_Controller
 		$this->load->database('gamedb');
 		$this->load->model('user_info_m');
 		$this->load->model('mail_m');
-		
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -85,7 +85,6 @@ class Item_paid extends CI_Controller
 					array_push($user_id_list, $user_id);
 				}
 			}
-			print_r($user_id_list);
 			
 			$temp = explode("\n", $item_list_text);
 			$item_string_list = array();
@@ -99,12 +98,33 @@ class Item_paid extends CI_Controller
 			
 			$send_ts = time();
 			$reg_date = date("Y-m-d H:i:s", $send_ts);
+			$expire_date = date("Y-m-d H:i:s", $send_ts + (60 * 60 * 24 * 7));
+			
+			foreach ($item_string_list as $item_string)
+			{
+				$item_info = $this->get_item_info($item_string);
+				if (count($item_info) != 3)
+				{
+					alert("잘못된 아이템 문자열이 포함되어 있습니다.", '/game_management/item_paid');
+					exit;
+				}
+			}
 			
 			foreach ($user_id_list as $user_id)
 			{
 				foreach ($item_string_list as $item_string)
 				{
-					$this->send_item($user_id, $send_ts, $message, $message, $item_string, $reg_date);
+					$return = $this->send_item($user_id, $send_ts, $message, $message, $item_string, $reg_date, $expire_date);
+					if ($return)
+					{
+						$ip_address = '';
+						$action = '아이템 지급';
+						$item_info = $this->get_item_info($item_string);
+						$item_id = $item_info[1];
+						$item_count = $item_info[2];
+						$memo = $message;
+						$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+					}
 				}
 			}
 			
@@ -112,14 +132,19 @@ class Item_paid extends CI_Controller
 		}
 	}
 	
-	public function send_item($user_id, $send_ts, $title, $message, $item_string, $reg_date)
+	public function send_item($user_id, $send_ts, $title, $message, $item_string, $reg_date, $expire_date)
 	{
 		$mail_type = 'G';
 		$sender_id = 0;
 		$is_received = 0;
-		$categ = 'P';
-		$expire_date = $reg_date;
+		$categ = 'T';
 		
-		$this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
+		return $this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
+	}
+	
+	public function get_item_info($item_string)
+	{
+		$item_info = explode(":", $item_string);
+		return $item_info;
 	}
 }
