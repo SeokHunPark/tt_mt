@@ -135,7 +135,7 @@ function open_collect_popup(mail_idx, user_id){
 		</tbody>
 		</tfoot>
 			<tr>
-				<th colspan="10">
+				<th colspan="11">
 					<?php echo $pagination; ?>
 				</th>
 			</tr>

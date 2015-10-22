@@ -49,45 +49,13 @@ class Mail_box extends CI_Controller
 		}
 		$admin_name = $this->session->userdata('username');
 		
-		#$_mail_list = $this->mail_m->get_mail_list(0, 60);
-		
-		$this->load->library('pagination');
-		$size = 10;
-		
 		$mail_list = array();
 		
+		$this->load->library('pagination');
 		$mode = $this->uri->segment(4, 0);
-		if ($mode == "date_search")
-		{	
-			$offset = $this->uri->segment(7, 0);
-			$begin_date = $this->uri->segment(5, 0) . " 00:00:00";
-			$end_date = $this->uri->segment(6, 0) . " 23:59:59";
-			
-			$_mail_list = $this->mail_m->get_list_with_date($begin_date, $end_date);
-			$config['base_url'] = '/user_info/mail_box/load_mail_box/date_search/' . $this->uri->segment(5, 0) . '/' . $this->uri->segment(6, 0) . '/';
-			$config['total_rows'] = count($_mail_list);
-			$config['per_page'] = $size;
-			$config['uri_segment'] = 7;
-			$this->pagination->initialize($config);
-			
-			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
-		}
-		else if ($mode == "user_search")
-		{
-			$offset = $this->uri->segment(6, 0);
-			$user_id = $this->uri->segment(5, 0);
-			
-			$_mail_list = $this->mail_m->get_list_with_user_id($user_id);
-			
-			$config['base_url'] = '/user_info/mail_box/load_mail_box/user_search/' . $user_id . '/';
-			$config['total_rows'] = count($_mail_list);
-			$config['per_page'] = $size;
-			$config['uri_segment'] = 6;
-			$this->pagination->initialize($config);
-			
-			$offset = $this->uri->segment(6, 0);
-			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
-		}
+		#$offset = $this->uri->segment(7, 0);
+		$size = 10;
+		$max_rows = 1000;
 		
 		if (isset($_POST['date_search']))
 		{
@@ -103,20 +71,20 @@ class Mail_box extends CI_Controller
 			{
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
+				$offset = $this->uri->segment(7, 0);
 
-				$_mail_list = $this->mail_m->get_list_with_date($begin_date, $end_date);
+				$_mail_list = $this->mail_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
 				
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
 				
 				$config['base_url'] = '/user_info/mail_box/load_mail_box/date_search/' . $begin_date . '/' . $end_date . '/';
-				$config['total_rows'] = count($_mail_list);
+				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 7;
 				$this->pagination->initialize($config);
 				
-				$offset = $this->uri->segment(7, 0);
-				$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
+				$mail_list = $this->make_view_data($_mail_list);
 			}
 			else
 			{
@@ -126,19 +94,19 @@ class Mail_box extends CI_Controller
 		else if (isset($_POST['week_search']))
 		{			
 			$time = time();
-			$begin_date = date("Y-m-d", $time);
-			$end_date = date("Y-m-d", $time + (60 * 60 * 24 * 7));
+			$begin_date = date("Y-m-d", $time - (60 * 60 * 24 * 7));
+			$end_date = date("Y-m-d", $time);
+			$offset = $this->uri->segment(7, 0);
 			
-			$_mail_list = $this->mail_m->get_list_with_date($begin_date . " 00:00:00", $end_date . " 23:59:59");
+			$_mail_list = $this->mail_m->get_list_with_date_2($begin_date . " 00:00:00", $end_date . " 23:59:59", $size, $offset);
 			
 			$config['base_url'] = '/user_info/mail_box/load_mail_box/date_search/' . $begin_date . '/' . $end_date . '/';
-			$config['total_rows'] = count($_mail_list);
+			$config['total_rows'] = $max_rows;
 			$config['per_page'] = $size;
 			$config['uri_segment'] = 7;
 			$this->pagination->initialize($config);
 			
-			$offset = $this->uri->segment(7, 0);
-			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
+			$mail_list = $this->make_view_data($_mail_list);
 		}
 		else if (isset($_POST['user_search']))
 		{
@@ -153,16 +121,51 @@ class Mail_box extends CI_Controller
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
 			
-			$_mail_list = $this->mail_m->get_list_with_user_id($user_id);
+			$offset = $this->uri->segment(6, 0);
+			$_mail_list = $this->mail_m->get_list_with_user_id($user_id, $size, $offset);
 			
 			$config['base_url'] = '/user_info/mail_box/load_mail_box/user_search/' . $user_id . '/';
-			$config['total_rows'] = count($_mail_list);
+			$config['total_rows'] = $max_rows;
 			$config['per_page'] = $size;
 			$config['uri_segment'] = 6;
 			$this->pagination->initialize($config);
 			
-			$offset = $this->uri->segment(6, 0);
-			$mail_list = $this->make_view_data(array_splice($_mail_list, (int)$offset, (int)$size));
+			$mail_list = $this->make_view_data($_mail_list);
+		}
+		else
+		{
+			if ($mode == "date_search")
+			{	
+				$offset = $this->uri->segment(7, 0);
+				$begin_date = $this->uri->segment(5, 0) . " 00:00:00";
+				$end_date = $this->uri->segment(6, 0) . " 23:59:59";
+				
+				#$_mail_list = $this->mail_m->get_list_with_date($begin_date, $end_date);
+				$_mail_list = $this->mail_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
+				
+				$config['base_url'] = '/user_info/mail_box/load_mail_box/date_search/' . $this->uri->segment(5, 0) . '/' . $this->uri->segment(6, 0) . '/';
+				$config['total_rows'] = $max_rows;
+				$config['per_page'] = $size;
+				$config['uri_segment'] = 7;
+				$this->pagination->initialize($config);
+				
+				$mail_list = $this->make_view_data($_mail_list);
+			}
+			else if ($mode == "user_search")
+			{
+				$offset = $this->uri->segment(6, 0);
+				$user_id = $this->uri->segment(5, 0);
+				
+				$_mail_list = $this->mail_m->get_list_with_user_id_2($user_id, $size, $offset);
+				
+				$config['base_url'] = '/user_info/mail_box/load_mail_box/user_search/' . $user_id . '/';
+				$config['total_rows'] = $max_rows;
+				$config['per_page'] = $size;
+				$config['uri_segment'] = 6;
+				$this->pagination->initialize($config);
+				
+				$mail_list = $this->make_view_data($_mail_list);
+			}
 		}
 		
 		$data['pagination'] = $this->pagination->create_links();

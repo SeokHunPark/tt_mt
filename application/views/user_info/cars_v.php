@@ -186,7 +186,7 @@ table.car_table {
 						<input type="text" name="class" readonly="readonly" value="<?php echo $car['class']; ?>" class="input_text" />
 					</td>
 					<td>
-						<input type="text" name="speed" readonly="readonly" value="<?php echo $car['speed']; ?>" class="" />
+						<input type="text" name="speed" readonly="readonly" value="<?php echo $car['speed']; ?>" class="input_text" />
 					</td>
 					<td>
 						<input type="text" name="accel" readonly="readonly" value="<?php echo $car['accel']; ?>" class="input_text" />

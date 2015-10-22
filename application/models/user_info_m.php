@@ -28,6 +28,23 @@ class User_info_m extends CI_Model
 		#return $query->result();
 	}
 	
+	function get_user_id_with_pid($pid)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.user_info');
+		$this->db->where('platform_user_id', $pid);
+		$query = $this->db->get();
+		$result = $query->row_array();
+		if (isset($result['user_id']))
+		{
+			return $result['user_id'];
+		}
+		else
+		{
+			return "";
+		}
+	}
+	
 	function get_user_id_with_nickname($nickname)
 	{
 		$this->db->select('user_id');

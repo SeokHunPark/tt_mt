@@ -9,6 +9,7 @@ class Cars extends CI_Controller
 		$this->load->model('user_info_m');
 		$this->load->model('user_inven_m');
 		$this->load->model('user_supporters_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -64,6 +65,7 @@ class Cars extends CI_Controller
 		$data['target_car'] = $target_car;
 		
 		$user_id = "";
+		$user_id = $this->uri->segment(4, -1);
 		$data['user_id'] = $user_id;
 		
 		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
@@ -170,6 +172,13 @@ class Cars extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			$user_id = $this->input->post('user_id_text', TRUE);
@@ -185,43 +194,64 @@ class Cars extends CI_Controller
 			$decal = $this->input->post('decal_text', TRUE);
 			$color = $this->input->post('color_text', TRUE);
 			
-			$this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_power, $booster_charge, $upgrade, $exp, $point, $decal, $color);
+			$return = $this->user_inven_m->modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $decal, $color);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '차량 정보 수정';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $model_id, $item_count, $memo);
+				
+				alert('차량 정보 변경이 완료 되었습니다.', '/user_info/cars/load_car_list/'. $user_id);
+			}
 		}
 		
-		$target_car['user_id'] = "";
-		$target_car['model_id'] = "";
-		$target_car['class'] = "";
-		$target_car['speed'] = "";
-		$target_car['accel'] = "";
-		$target_car['booster_charge'] = "";
-		$target_car['booster_power'] = "";
-		$target_car['upgrade'] = "";
-		$target_car['exp'] = "";
-		$target_car['point'] = "";
-		$target_car['decal'] = "";
-		$target_car['color'] = "";
-		$data['target_car'] = $target_car;
+		// $target_car['user_id'] = "";
+		// $target_car['model_id'] = "";
+		// $target_car['class'] = "";
+		// $target_car['speed'] = "";
+		// $target_car['accel'] = "";
+		// $target_car['booster_charge'] = "";
+		// $target_car['booster_power'] = "";
+		// $target_car['upgrade'] = "";
+		// $target_car['exp'] = "";
+		// $target_car['point'] = "";
+		// $target_car['decal'] = "";
+		// $target_car['color'] = "";
+		// $data['target_car'] = $target_car;
 		
-		$_car_list = $this->user_inven_m->get_list($user_id);
-		$car_list = $this->make_load_data($_car_list);
-		$data['car_list'] = $car_list;
+		// $_car_list = $this->user_inven_m->get_list($user_id);
+		// $car_list = $this->make_load_data($_car_list);
+		// $data['car_list'] = $car_list;
 		
-		$target_sup['user_id'] = "";
-		$target_sup['model_id'] = "";
-		$target_sup['ability'] = "";
-		$target_sup['count'] = "";
-		$data['target_sup'] = $target_sup;
+		// $target_sup['user_id'] = "";
+		// $target_sup['model_id'] = "";
+		// $target_sup['ability'] = "";
+		// $target_sup['count'] = "";
+		// $data['target_sup'] = $target_sup;
 		
-		$_sup_list = $this->user_supporters_m->get_list($user_id);
-		$sup_list = $this->make_load_sup_data($_sup_list);
-		$data['sup_list'] = $sup_list;
+		// $_sup_list = $this->user_supporters_m->get_list($user_id);
+		// $sup_list = $this->make_load_sup_data($_sup_list);
+		// $data['sup_list'] = $sup_list;
 		
-		$this->load->view('/user_info/cars_v', $data);
+		// $this->load->view('/user_info/cars_v', $data);
 	}
 	
 	public function click_modify_sup_button()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -266,7 +296,22 @@ class Cars extends CI_Controller
 			$user_id = $this->input->post('user_id_text', TRUE);
 			$model_id = $this->input->post('model_id_text', TRUE);
 			$count = $this->input->post('count_text', TRUE);
-			$this->user_supporters_m->modify_sup($user_id, $model_id, $count);
+			$return = $this->user_supporters_m->modify_sup($user_id, $model_id, $count);
+			
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = '';
+				$action = '서포터 정보 수정';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $model_id, $item_count, $memo);
+				
+				alert('서포터 정보 변경이 완료 되었습니다.', '/user_info/cars/load_car_list/'. $user_id);
+			}
 			
 			$target_car['user_id'] = "";
 			$target_car['model_id'] = "";

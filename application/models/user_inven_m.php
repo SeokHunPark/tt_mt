@@ -21,14 +21,14 @@ class User_inven_m extends CI_Model
 		return $query->result();
 	}
 	
-	function modify_car($user_id, $model_id, $speed, $accel, $booster_power, $booster_charge, $upgrade, $exp, $point, $decal, $color)
+	function modify_car($user_id, $model_id, $speed, $accel, $booster_charge, $booster_power, $upgrade, $exp, $point, $decal, $color)
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('model_id', $model_id);
 		$this->db->set('up_0', $speed);
 		$this->db->set('up_1', $accel);
-		$this->db->set('up_2', $booster_charge);
-		$this->db->set('up_3', $booster_power);
+		$this->db->set('up_3', $booster_charge);
+		$this->db->set('up_2', $booster_power);
 		$this->db->set('upgrade', $upgrade);
 		$this->db->set('exp', $exp);
 		$this->db->set('point', $point);
@@ -50,6 +50,6 @@ class User_inven_m extends CI_Model
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('model_id', $model_id);
-		$this->db->delete('drag_gamedb.user_inven');
+		return $this->db->delete('drag_gamedb.user_inven');
 	}
 }

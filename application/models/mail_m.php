@@ -15,6 +15,22 @@ class Mail_m extends CI_Model
 		return $result;
 	}
 	
+	function get_list_with_user_id_2($user_id, $limit, $offset)
+	{
+		// $sql = "select * from drag_gamedb.mail where user_id = '$user_id' order by mail_idx desc limit $limit, $offset";
+		// $query = $this->db->query($sql);
+		// $result = $query->result();
+		// return $result;
+		
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.mail');
+		$this->db->where('user_id', $user_id);
+		$this->db->order_by("reg_date", "desc");
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
 	function get_list_with_date($begin_date, $end_date)
 	{
 		$sql = "select * from drag_gamedb.mail where reg_date between '$begin_date' and '$end_date' order by mail_idx desc";
@@ -23,12 +39,21 @@ class Mail_m extends CI_Model
 		return $result;
 	}
 	
-	function get_list_with_date_2($begin_date, $end_date, $offset, $size)
+	function get_list_with_date_2($begin_date, $end_date, $limit, $offset)
 	{
-		$sql = "select * from drag_gamedb.mail where reg_date between '$begin_date' and '$end_date' order by mail_idx desc limit $offset, $size";
-		$query = $this->db->query($sql);
-		$result = $query->result();
-		return $result;
+		// $sql = "select * from drag_gamedb.mail where reg_date between '$begin_date' and '$end_date' order by mail_idx desc limit $limit, $offset";
+		// $query = $this->db->query($sql);
+		// $result = $query->result();
+		// return $result;
+		
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.mail');
+		$this->db->where('reg_date >=', $begin_date);
+		$this->db->where('reg_date <=', $end_date);
+		$this->db->order_by("reg_date", "desc");
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
 	}
 	
 	function insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date)

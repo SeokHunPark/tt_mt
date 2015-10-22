@@ -103,6 +103,21 @@ class Account_lookup extends CI_Controller
 					$account_info = $this->get_account_info($user_id);
 				}
 			}
+			else if ($_POST['kakao_id_text'] != "")
+			{
+				$kakao_id = $this->input->post('kakao_id_text', TRUE);
+				
+				$sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
+				$query = $this->db->query($sql, ($kakao_id));
+				$result = $query->result();
+				$pid = $result[0]->pid;
+				
+				$user_id = $this->user_info_m->get_user_id_with_pid($pid);
+				if ($user_id != "")
+				{
+					$account_info = $this->get_account_info($user_id);
+				}
+			}
 		}
 		else if ($user_id > 0)
 		{
@@ -125,7 +140,12 @@ class Account_lookup extends CI_Controller
 		$user_challenges = $this->user_challenges_m->find_with_user_id($user_id);
 		$user_purchase_items = $this->user_purchase_items_m->find_with_user_id($user_id);
 		
-		$account_info['kakao_id'] = $user_info['platform_user_id'];
+		$sql = "select `drag_gamedb`.`usf_secure_data`('D', 'K', ?) as kakao_id;";
+		$query = $this->db->query($sql, ($user_info['platform_user_id']));
+		$result = $query->result();
+		$kakao_id = $result[0]->kakao_id;
+		
+		$account_info['kakao_id'] = $kakao_id;
 		$account_info['nickname'] = $user_info['nickname'];
 		$account_info['user_id'] = $user_info['user_id'];
 		$account_info['reg_date'] = $user_info['create_date'];
