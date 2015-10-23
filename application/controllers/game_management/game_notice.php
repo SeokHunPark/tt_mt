@@ -11,6 +11,7 @@ class Game_notice extends CI_Controller
 		$this->load->database('globaldb');
 		#$this->load->model('user_info_m');
 		$this->load->model('notice_ingame_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -108,13 +109,35 @@ class Game_notice extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if (isset($_POST))
 		{
 			$notice_no = $this->input->post('notice_no_text', TRUE);
-			$this->notice_ingame_m->cancel_notice($notice_no);
+			$return = $this->notice_ingame_m->cancel_notice($notice_no);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '공지 취소';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('공지가 취소 되었습니다.', '/game_management/game_notice');
+			}
 		}
 		
-		$this->load_notice();
+		#$this->load_notice();
 	}
 	
 	public function publish()
@@ -132,5 +155,68 @@ class Game_notice extends CI_Controller
 		$redis->publish($channel, $message);
 		
 		$this->index();
+	}
+	
+	public function spot_notice()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		if (isset($_POST))
+		{
+			$spot_text = $this->input->post('body_text', TRUE);
+			print $spot_text;
+			if (strlen($spot_text) <= 0)
+			{
+				alert('공지 내용을 입력 하십시오.', '/game_management/game_notice');
+			}
+			else if (strlen($spot_text) >= 200)
+			{
+				alert('200자(영문기준, 공백 포함) 이하로 입력하십시오.', '/game_management/game_notice');
+			}
+			
+			$return = $this->spot_publish($spot_text);
+			print "Return : $return";
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '스팟 공지 발송';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('스팟 공지가 발송 되었습니다.', '/game_management/game_notice');
+			}
+		}
+		
+		#$this->load_notice();
+	}
+	
+	public function spot_publish($spot_text)
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		$channel = "notice";
+		$message = $spot_text;
+		
+		$redis_host =  $this->config->item('redis_host');
+		
+		#print "redis_host : $redis_host";
+		
+		$redis = new Predis\Client('tcp://' . $redis_host);
+		return $redis->publish($channel, $message);
+		
+		#$this->index();
 	}
 }

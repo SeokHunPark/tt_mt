@@ -12,6 +12,7 @@ class Order_lookup extends CI_Controller
 		$this->load->model('shop_package_m');
 		$this->load->model('purchase_history_m');
 		$this->load->model('user_purchase_items_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -54,10 +55,9 @@ class Order_lookup extends CI_Controller
 		
 		$this->load->library('pagination');
 		$size = 10;
-		
-		$order_list = array();
-		
 		$mode = $this->uri->segment(4, 0);
+		$max_rows = 1000;
+		$order_list = array();
 
 		if (isset($_POST['date_search']))
 		{
@@ -74,19 +74,20 @@ class Order_lookup extends CI_Controller
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
 
-				$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
+				$offset = $this->uri->segment(7, 0);
+				#$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
+				$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
 				
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
 				
 				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $begin_date . '/' . $end_date . '/';
-				$config['total_rows'] = count($_order_list);
+				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 7;
 				$this->pagination->initialize($config);
-				
-				$offset = $this->uri->segment(7, 0);
-				$order_list = $this->make_view_data(array_splice($_order_list, (int)$offset, (int)$size));
+
+				$order_list = $this->make_view_data($_order_list);
 			}
 			else
 			{
@@ -105,17 +106,29 @@ class Order_lookup extends CI_Controller
 				$nickname = $this->input->post('nickname_text', TRUE);
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
+			// else if ($_POST['kakao_id_text'] != "")
+			// {
+				// $kakao_id = $this->input->post('kakao_id_text', TRUE);
+				
+				// $sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
+				// $query = $this->db->query($sql, ($kakao_id));
+				// $result = $query->result();
+				// $pid = $result[0]->pid;
+				
+				// $user_id = $this->user_info_m->get_user_id_with_pid($pid);
+			// }
 			
-			$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+			$offset = $this->uri->segment(6, 0);
+			#$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+			$_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
 			
 			$config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
-			$config['total_rows'] = count($_order_list);
+			$config['total_rows'] = $max_rows;
 			$config['per_page'] = $size;
 			$config['uri_segment'] = 6;
 			$this->pagination->initialize($config);
 			
-			$offset = $this->uri->segment(6, 0);
-			$order_list = $this->make_view_data(array_splice($_order_list, (int)$offset, (int)$size));
+			$order_list = $this->make_view_data($_order_list);
 		}
 		else
 		{
@@ -125,30 +138,31 @@ class Order_lookup extends CI_Controller
 				$begin_date = $this->uri->segment(5, 0) . " 00:00:00";
 				$end_date = $this->uri->segment(6, 0) . " 23:59:59";
 				
-				$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
+				#$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date);
+				$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
 				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $this->uri->segment(5, 0) . '/' . $this->uri->segment(6, 0) . '/';
-				$config['total_rows'] = count($_order_list);
+				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 7;
 				$this->pagination->initialize($config);
 				
-				$order_list = $this->make_view_data(array_splice($_order_list, (int)$offset, (int)$size));
+				$order_list = $this->make_view_data($_order_list);
 			}
 			else if (strcmp($mode, "user_search") == 0)
 			{
 				$offset = $this->uri->segment(6, 0);
 				$user_id = $this->uri->segment(5, 0);
 				
-				$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+				#$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+				$_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
 				
 				$config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
-				$config['total_rows'] = count($_order_list);
+				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 6;
 				$this->pagination->initialize($config);
 				
-				$offset = $this->uri->segment(6, 0);
-				$order_list = $this->make_view_data(array_splice($_order_list, (int)$offset, (int)$size));
+				$order_list = $this->make_view_data($_order_list);
 			}
 		}
 		
@@ -172,12 +186,31 @@ class Order_lookup extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$order_id = "";
 		if (isset($_POST))
 		{
 			$order_id = $this->input->post('order_id_text', TRUE);
-			$memo = $this->input->post('memo_text', TRUE);
-			$this->log_cash_m->cancel_order($order_id, $memo);
+			$user_id = $this->input->post('user_id_text', TRUE);
+			$message = $this->input->post('memo_text', TRUE);
+			$return = $this->log_cash_m->cancel_order($order_id, $message);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$action = '결제 취소';
+				$item_count = NULL;
+				$memo = $message;
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $order_id, $item_count, $memo);
+			}
 		}
 		
 		$_order_list = $this->log_cash_m->find_order($order_id);
@@ -190,6 +223,13 @@ class Order_lookup extends CI_Controller
 	public function recovery()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if (isset($_POST['recovery']))
 		{
@@ -276,9 +316,16 @@ class Order_lookup extends CI_Controller
 					foreach ($item_string_list as $item)
 					{
 						$this->send_item($user_id, $send_ts, $title, $message, $item, $reg_date);
-					}
+					}					
+					
+					$ip_address = $_SERVER['REMOTE_ADDR'];
+					$action = '결제 오류 복구';
+					$item_count = NULL;
+					$memo = '';
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $order_id, $item_count, $memo);
 					
 					alert("복구 완료 되었습니다.", '/payment/order_lookup');
+					
 				}
 				else
 				{
@@ -423,6 +470,6 @@ class Order_lookup extends CI_Controller
 		$categ = 'P';
 		$expire_date = $reg_date;
 		
-		$this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
+		return $this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
 	}
 }

@@ -71,15 +71,25 @@ class Cars extends CI_Controller
 		$user_id = $this->uri->segment(4, -1);
 		$data['user_id'] = $user_id;
 		
-		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
+		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']) || isset($_POST['kakao_id_text']))
 		{
 			$user_id = $this->input->post('game_account_id_text', TRUE);
 			$nickname = $this->input->post('nickname_text', TRUE);
+			$kakao_id = $this->input->post('kakao_id_text', TRUE);
 			
 			if ($nickname != "")
 			{
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
+			// else if ($kakao_id != '')
+			// {
+				// $sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
+				// $query = $this->db->query($sql, ($kakao_id));
+				// $result = $query->result();
+				// $pid = $result[0]->pid;
+				
+				// $user_id = $this->user_info_m->get_user_id_with_pid($pid);
+			// }
 		}
 		
 		$_car_list = $this->user_inven_m->get_list($user_id);
@@ -212,7 +222,7 @@ class Cars extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '차량 정보 수정';
 				$item_id = NULL;
 				$item_count = NULL;
@@ -318,7 +328,7 @@ class Cars extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '서포터 정보 수정';
 				$item_id = NULL;
 				$item_count = NULL;

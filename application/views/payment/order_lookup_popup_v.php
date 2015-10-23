@@ -47,8 +47,11 @@ a.pop-btn:hover {
 			<p class="ctxt mb20">주문을 취소 처리 하시겠습니까?</p>
 			
 			<form method="post" action="/payment/order_lookup/cancel_order/">
+			주문 번호 :
 			<input type="input" id="_order_id_text" name="order_id_text" readonly="readonly"/>
-			<input type="input" id="_memo_text" name="memo_text" />
+			<input type="hidden" id="_user_id_text" name="user_id_text" readonly="readonly"/>
+			<br>
+			메모 : <input type="input" id="_memo_text" name="memo_text" />
 			<div class="btn-r">
 				<input type="submit" value="확인" name="button" />
 				<input type="button" id="cancel_btn" value="취소" />

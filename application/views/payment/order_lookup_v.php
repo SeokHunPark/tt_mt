@@ -19,7 +19,7 @@ table.order_list_table {
 </style>
 
 <script>
-function open_cancel_order_popup(order_id){
+function open_cancel_order_popup(order_id, user_id){
 
 	var temp = $('#_order_cancel_popup');		//레이어의 id를 temp변수에 저장
 	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
@@ -37,6 +37,8 @@ function open_cancel_order_popup(order_id){
 	
 	var order_id_text = document.getElementById("_order_id_text");
 	order_id_text.value = order_id;
+	var user_id_text = document.getElementById("_user_id_text");
+	user_id_text.value = user_id;
 }
 </script>
 
@@ -145,7 +147,8 @@ function open_cancel_order_popup(order_id){
 						{
 						?>
 						<input type="submit" name="cancel_order" value="주문 취소" 
-							onclick="open_cancel_order_popup('<?php echo $order['receipt_key']; ?>'); return false;" />
+							onclick="open_cancel_order_popup('<?php echo $order['receipt_key']; ?>',
+															'<?php echo $order['user_id']; ?>'); return false;" />
 						<?php
 						}
 						?>

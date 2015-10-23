@@ -409,6 +409,11 @@ function open_modify_level_popup(user_id){
 				{
 				?>
 				<?php echo $account_info['sub_item']; ?>
+				(
+				<?php echo $account_info['sub_begin_date']; ?>
+				~
+				<?php echo $account_info['sub_end_date']; ?>
+				)
 				<input type="submit" value="청약 취소" name="button" />
 				<?php
 				}

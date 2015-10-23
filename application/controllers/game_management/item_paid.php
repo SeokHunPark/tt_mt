@@ -117,7 +117,7 @@ class Item_paid extends CI_Controller
 					$return = $this->send_item($user_id, $send_ts, $message, $message, $item_string, $reg_date, $expire_date);
 					if ($return)
 					{
-						$ip_address = '';
+						$ip_address = $_SERVER['REMOTE_ADDR'];
 						$action = '아이템 지급';
 						$item_info = $this->get_item_info($item_string);
 						$item_id = $item_info[1];

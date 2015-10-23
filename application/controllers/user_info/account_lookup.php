@@ -77,11 +77,12 @@ class Account_lookup extends CI_Controller
 		$account_info['release_date'] = "";
 		$account_info['invite_count'] = "";
 		$account_info['sub_item'] = "";
+		$account_info['sub_begin_date'] = "";
+		$account_info['sub_end_date'] = "";
 		
 		$user_id = "";
 		
 		$user_id = $this->uri->segment(4, -1);
-		print "user_id : $user_id";
 		
 		if (isset($_POST['game_account_id_text']) || isset($_POST['nickname_text']))
 		{
@@ -206,12 +207,20 @@ class Account_lookup extends CI_Controller
 		$account_info['invite_count'] = $user_action['invite_count'];
 		
 		$account_info['sub_item'] = "";
+		$account_info['sub_begin_date'] = "";
+		$account_info['sub_end_date'] = "";
 		foreach ($user_purchase_items as $package)
 		{
 			if ($package->type == 'D')
 			{
-				$account_info['sub_item'] = $package->item_id;
-				break;
+				if ($package->item_id == '1001')
+				{
+					#$account_info['sub_item'] = $package->item_id;
+					$account_info['sub_item'] = '7일간의 질주';
+					$account_info['sub_begin_date'] = date('Y-m-d',strtotime($package->start_date));
+					$account_info['sub_end_date'] =  date('Y-m-d',strtotime($package->start_date.'+'.'6'.' days'));
+					break;
+				}
 			}
 		}
 		
@@ -246,7 +255,7 @@ class Account_lookup extends CI_Controller
 					$time = time();
 					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
-					$ip_address = '';
+					$ip_address = $_SERVER['REMOTE_ADDR'];
 					$action = '닉네임 수정';
 					$item_id = NULL;
 					$item_count = NULL;
@@ -285,7 +294,7 @@ class Account_lookup extends CI_Controller
 			if ($return)
 			{
 				$reg_date = $unreg_date;
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '회원 탈퇴';
 				$item_id = NULL;
 				$item_count = NULL;
@@ -321,7 +330,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '탈퇴 복구';
 				$item_id = NULL;
 				$item_count = NULL;
@@ -380,7 +389,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '재화 수정';
 				$memo = '';
 				
@@ -441,7 +450,7 @@ class Account_lookup extends CI_Controller
 					$time = time();
 					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
-					$ip_address = '';
+					$ip_address = $_SERVER['REMOTE_ADDR'];
 					$action = '연승 수정';
 					$item_id = NULL;
 					$item_count = NULL;
@@ -488,7 +497,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '미션 진행도 변경';
 				$item_id = NULL;
 				$item_count = NULL;
@@ -534,7 +543,7 @@ class Account_lookup extends CI_Controller
 					$time = time();
 					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
-					$ip_address = '';
+					$ip_address = $_SERVER['REMOTE_ADDR'];
 					$action = '경험치 수정';
 					$item_id = NULL;
 					$item_count = NULL;
@@ -621,7 +630,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '제재. ' . '제재 유형 ' . $sanction_type;
 				$item_id = NULL;
 				$item_count = NULL;
@@ -656,7 +665,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '제재 해제';
 				$item_id = NULL;
 				$item_count = NULL;
@@ -692,7 +701,7 @@ class Account_lookup extends CI_Controller
 				$time = time();
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
-				$ip_address = '';
+				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$action = '청약 해제(계정 조회)';
 				$item_count = NULL;
 				$memo = '';

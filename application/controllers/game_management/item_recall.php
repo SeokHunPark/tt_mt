@@ -136,6 +136,7 @@ class Item_recall extends CI_Controller
 	public function recall_item($user_id, $item_string, $user_info, $user_inven, $user_items, $user_supporters, $admin_name, $message)
 	{
 		$item_info = explode(":", $item_string);
+		$ip_address = $_SERVER['REMOTE_ADDR'];
 		
 		$categ = $item_info[0];
 		$type = $item_info[1];
@@ -171,7 +172,6 @@ class Item_recall extends CI_Controller
 					$time = time();
 					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
-					$ip_address = '';
 					$action = '아이템 회수(재화) - 부족';
 					$item_id = $type;
 					$item_count = $count;
@@ -187,7 +187,6 @@ class Item_recall extends CI_Controller
 					$time = time();
 					$date_string = "Y-m-d H:i:s";
 					$reg_date = date($date_string, $time);
-					$ip_address = '';
 					$action = '아이템 회수(재화)';
 					$item_id = $type;
 					$item_count = $count;
@@ -208,7 +207,6 @@ class Item_recall extends CI_Controller
 						$time = time();
 						$date_string = "Y-m-d H:i:s";
 						$reg_date = date($date_string, $time);
-						$ip_address = '';
 						$action = '아이템 회수(차량)';
 						$item_id = $type;
 						$item_count = '1';
@@ -235,7 +233,6 @@ class Item_recall extends CI_Controller
 							$time = time();
 							$date_string = "Y-m-d H:i:s";
 							$reg_date = date($date_string, $time);
-							$ip_address = '';
 							$action = '아이템 회수(부품 카드) - 부족';
 							$item_id = $type;
 							$item_count = $count;
@@ -251,7 +248,6 @@ class Item_recall extends CI_Controller
 							$time = time();
 							$date_string = "Y-m-d H:i:s";
 							$reg_date = date($date_string, $time);
-							$ip_address = '';
 							$action = '아이템 회수(부품 카드)';
 							$item_id = $type;
 							$item_count = $count;
@@ -275,7 +271,6 @@ class Item_recall extends CI_Controller
 						$time = time();
 						$date_string = "Y-m-d H:i:s";
 						$reg_date = date($date_string, $time);
-						$ip_address = '';
 						$action = '아이템 회수(서포터)';
 						$item_id = $type;
 						$item_count = '1';

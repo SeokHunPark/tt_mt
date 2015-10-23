@@ -3,9 +3,11 @@
 	width: 100%;
 }
 .input_textarea {
+	resize: none;
 	width: 100%;
 	height: 250px;
 }
+
 table.notice_table {
 	border: 1px solid black;
 	border-collapse: collapse;
@@ -20,6 +22,11 @@ table.notice_table {
 	border-spacing: 0px;
  }
 
+.spot_text_textarea {
+	resize: none;
+	width: 1000px;
+	height: 100px;
+} 
 </style>
 
 <script>
@@ -162,4 +169,30 @@ function open_cancel_notice_popup(notice_no){
 	<input type="submit" name="publish" value="변경 사항 적용" />
 	</form>
 	</p>
+	
+	<form id="spot_notice" method="post" action="/game_management/game_notice/spot_notice">
+	<table class="notice_table">
+		<thead>
+			<tr>
+				<th scope="row" colspan="2">
+					스팟 공지
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td scope="row" colspan="2">
+					<textarea name="body_text" class="spot_text_textarea"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td scope="row" colspan="2">
+					<input type="submit" name="spot_notice_button" value="발송" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</form>
+	</p>
+	
 </section>
