@@ -263,7 +263,7 @@ class Mail_box extends CI_Controller
 			$date_string = "Y-m-d H:i:s";
 			$reg_date = date($date_string, $time);
 			$ip_address = '';
-			$action = '닉네임 수정';
+			$action = '우편 회수';
 			$item_id = NULL;
 			$item_count = NULL;
 			$memo = '';
