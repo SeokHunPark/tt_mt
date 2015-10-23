@@ -10,6 +10,7 @@ class Ingame_event extends CI_Controller
 		parent::__construct();
 		$this->load->database('globaldb');
 		$this->load->model('event_ingame_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -49,6 +50,37 @@ class Ingame_event extends CI_Controller
 			exit;
 		}
 		$admin_name = $this->session->userdata('username');
+		
+		$default_event['title'] = '';
+		$default_event['categ'] = '0';
+		$default_event['begin_day'] = '';
+		$default_event['begin_time'] = '';
+		$default_event['end_day'] = '';
+		$default_event['end_time'] = '';
+		$default_event['open_day'] = '';
+		$default_event['open_time'] = '';
+		$default_event['image_url'] = '';
+		$default_event['link_url'] = '';
+		$default_event['used'] = '';
+		$default_event['body'] = '';
+		
+		// $default_event['bonus.gold'] = '0';
+		// $default_event['bonus.coin'] = '0';
+		// $default_event['bonus.gas'] = '0';
+		// $default_event['sale.car'] = '0';
+		// $default_event['sale.supporter'] = '0';
+		// $default_event['sale.gacha.0'] = '0';
+		// $default_event['sale.gacha.1'] = '0';
+		$default_event['game_mode'] = '-1';
+		$default_event['game_players'] = '-1';
+		$default_event['game_challenge'] = '-1';
+		// $default_event['gain.coin'] = '0';
+		// $default_event['gain.exp'] = '0';
+		// $default_event['gain.chip'] = '0';
+		// $default_event['gain.gold'] = '0';
+		// $default_event['gain.gold.prob'] = '0';
+		$default_event['default_value'] = '0';
+		$data['default_event'] = $default_event;
 		
 		$_event_list = $this->event_ingame_m->get_event_list();
 		$data['event_list'] = $this->make_view_data($_event_list);
@@ -180,6 +212,46 @@ class Ingame_event extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('event_name_text', '이벤트 명', 'required');
+		$this->form_validation->set_rules('categ_text', '카테고리', 'required');
+		$this->form_validation->set_rules('begin_day_text', '시작 일', 'required');
+		$this->form_validation->set_rules('begin_time_text', '시작 시간', 'required');
+		$this->form_validation->set_rules('end_day_text', '종료 일', 'required');
+		$this->form_validation->set_rules('end_time_text', '종료 시간', 'required');
+		$this->form_validation->set_rules('open_day_text', '배너 노출 시작 일', 'required');
+		$this->form_validation->set_rules('open_time_text', '배너 노출 시작 시간', 'required');
+		$this->form_validation->set_rules('image_url_text', '배너 이미지 URL', 'required');
+		$this->form_validation->set_rules('link_url_text', '배너 연결 URL', 'required');
+		$this->form_validation->set_rules('bonus_gold_text', '보석 구매 보너스', 'required');
+		$this->form_validation->set_rules('bonus_coin_text', '코인 구매 보너스', 'required');
+		$this->form_validation->set_rules('bonus_gas_text', '연료 구매 보너스', 'required');
+		$this->form_validation->set_rules('sale_gacha_1_text', '고급 부품 카드 뽑기 할인', 'required');
+		$this->form_validation->set_rules('sale_gacha_0_text', '일반 부품 카드 뽑기 할인', 'required');
+		$this->form_validation->set_rules('sale_car_text', '차량 할인', 'required');
+		$this->form_validation->set_rules('sale_supporter_text', '서포터즈 할인', 'required');
+		$this->form_validation->set_rules('gain_coin_text', '코인 획득량 증가', 'required');
+		$this->form_validation->set_rules('gain_exp_text', '경험치 획득량 증가', 'required');
+		$this->form_validation->set_rules('gain_chip_text', '트로피 획득량 증가', 'required');
+		$this->form_validation->set_rules('gain_gold_text', '다이아 획득량 증가', 'required');
+		$this->form_validation->set_rules('gain_gold_prob_text', '다이아 획득 확률 증가', 'required');
+		$this->form_validation->set_rules('game_mode_text', '게임 모드', 'required');
+		$this->form_validation->set_rules('game_players_text', '플레이어 수', 'required');
+		$this->form_validation->set_rules('game_challenge_text', '미션', 'required');
+		
+		if ($this->form_validation->run() == FALSE)
+		{
+			alert('입력 하지 않은 항목이 있습니다.', '/game_management/ingame_event');
+		}
+		
 		if (isset($_POST['reg']))
 		{
 			$title = $this->input->post('event_name_text', TRUE);
@@ -226,24 +298,48 @@ class Ingame_event extends CI_Controller
 			if ($game_players == '') $game_players = '-1';
 			if ($game_challenge == '') $game_challenge = '-1';
 			
-			$this->event_ingame_m->reg_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+			$return = $this->event_ingame_m->reg_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 				$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 				$game_mode, $game_players, $game_challenge);
+				
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '이벤트 등록';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('이벤트 등록이 완료 되었습니다..', '/game_management/ingame_event');
+			}
 		}
 		
-		$this->load_event();
+		#$this->load_event();
 	}
 	
 	public function button_event()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$data = array();
 
 		if (isset($_POST['modify']))
 		{
 			$event_no = $this->input->post('event_no', TRUE);
 			$event = $this->event_ingame_m->get_event($event_no);
-			print_r($event);
+			#print_r($event);
 			
 			// $target_event['event_no'] = $event['event_no'];
 			// $target_event['title'] = $event['title'];
@@ -286,7 +382,22 @@ class Ingame_event extends CI_Controller
 		else if (isset($_POST['delete']))
 		{
 			$event_no = $this->input->post('event_no', TRUE);
-			$this->event_ingame_m->delete_event($event_no);
+			$return = $this->event_ingame_m->delete_event($event_no);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '이벤트 삭제';
+				$item_id = $event_no;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('이벤트 삭제가 완료 되었습니다..', '/game_management/ingame_event');
+			}
 		}
 		
 		$_event_list = $this->event_ingame_m->get_event_list();
@@ -297,6 +408,13 @@ class Ingame_event extends CI_Controller
 	public function save_event()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 
 		if (isset($_POST['save']))
 		{
@@ -348,9 +466,25 @@ class Ingame_event extends CI_Controller
 			
 			if ($event_no != "")
 			{
-				$this->event_ingame_m->save_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+				$return = $this->event_ingame_m->save_event($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 					$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 					$game_mode, $game_players, $game_challenge, $event_no);
+					
+				if ($return)
+				{
+					$time = time();
+					$date_string = "Y-m-d H:i:s";
+					$reg_date = date($date_string, $time);
+					$ip_address = $_SERVER['REMOTE_ADDR'];
+					$user_id = NULL;
+					$action = '이벤트 수정';
+					$item_id = $event_no;
+					$item_count = NULL;
+					$memo = '';
+					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+					
+					alert('이벤트 수정이 완료 되었습니다..', '/game_management/ingame_event');
+				}
 			}
 		}
 		

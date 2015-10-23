@@ -57,8 +57,8 @@ class Event_ingame_m extends CI_Model
 		// $this->db->set('game_challenge', $game_challenge);
 		// return $this->db->insert('drag_globaldb.event_ingame');
 		
-		$query = "INSERT INTO `drag_globaldb`.`event_ingame` (`title`, `categ`, `begin_date`, `end_date`, `open_date`, `image_url`, `link_url`, `bonus.gold`, `bonus.coin`, `bonus.gas`, `sale.gacha.1`, `sale.gacha.0`, `sale.car`, `sale.supporter`, `gain.coin`, `gain.exp`, `gain.chip`, `gain.gold`, `gain.gold.prob`, `game_mode`, `game_players`, `game_challenge`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		$this->db->query($query, array($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+		$query = "INSERT INTO `drag_globaldb`.`event_ingame` (`title`, `categ`, `begin_date`, `end_date`, `open_date`, `image_url`, `link_url`, `bonus.gold`, `bonus.coin`, `bonus.gas`, `sale.gacha.1`, `sale.gacha.0`, `sale.car`, `sale.supporter`, `gain.coin`, `gain.exp`, `gain.chip`, `gain.gold`, `gain.gold.prob`, `game_mode`, `game_players`, `game_challenge`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return $this->db->query($query, array($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 				$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 				$game_mode, $game_players, $game_challenge));
 	}
@@ -68,7 +68,7 @@ class Event_ingame_m extends CI_Model
 				$game_mode, $game_players, $game_challenge, $event_no)
 	{
 		$query = "UPDATE `drag_globaldb`.`event_ingame` SET `title` = ?, `categ` = ?, `begin_date` = ?, `end_date` = ?, `open_date` = ?, `image_url` = ?, `link_url` = ?, `bonus.gold` = ?, `bonus.coin` = ?, `bonus.gas` = ?, `sale.gacha.1` = ?, `sale.gacha.0` = ?, `sale.car` = ?, `sale.supporter` = ?, `gain.coin` = ?, `gain.exp` = ?, `gain.chip` = ?, `gain.gold` = ?, `gain.gold.prob` = ?, `game_mode` = ?, `game_players` = ?, `game_challenge` = ? WHERE `event_no` = ?";
-		$this->db->query($query, array($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
+		return $this->db->query($query, array($title, $categ, $begin_date, $end_date, $open_date, $image_url, $link_url, $bonus_gold, $bonus_coin, $bonus_gas,
 				$sale_gacha_1, $sale_gacha_0, $sale_car, $sale_supporter, $gain_coin, $gain_exp, $gain_chip, $gain_gold , $gain_gold_prob,
 				$game_mode, $game_players, $game_challenge, $event_no));
 	}
@@ -76,6 +76,6 @@ class Event_ingame_m extends CI_Model
 	function delete_event($event_no)
 	{		
 		$this->db->where('event_no', $event_no);
-		$this->db->delete('drag_globaldb.event_ingame');
+		return $this->db->delete('drag_globaldb.event_ingame');
 	}
 }

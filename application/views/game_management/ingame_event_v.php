@@ -22,7 +22,11 @@ table.event_table {
 
 </script>
 
-<section id="content">	
+<section id="content">
+	<?php
+	if (isset($default_event))
+	{
+	?>
 	<p>
 	<form method="post" action="/game_management/ingame_event/reg_event">
 	<table class="event_table">
@@ -39,7 +43,7 @@ table.event_table {
 					 이벤트 명
 				</th>
 				<td colspan="9">
-					<input type="text" name="event_name_text" class="input_text" />
+					<input type="text" name="event_name_text" class="input_text" value="<?php echo $default_event['title']; ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -47,7 +51,7 @@ table.event_table {
 					 카테고리
 				</th>
 				<td colspan="9">
-					<input type="text" name="categ_text" class="input_text" />
+					<input type="text" name="categ_text" class="input_text" value="<?php echo $default_event['categ']; ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -55,11 +59,11 @@ table.event_table {
 					 이벤트 시간
 				</th>
 				<td colspan="9">
-					<input type="text" name="begin_day_text" class="" />
-					<input type="text" name="begin_time_text" class="" />
+					<input type="text" name="begin_day_text" class="" value="<?php echo $default_event['begin_day']; ?>"/>
+					<input type="text" name="begin_time_text" class="" value="<?php echo $default_event['begin_time']; ?>"/>
 					~
-					<input type="text" name="end_day_text" class="" />
-					<input type="text" name="end_time_text" class="" />
+					<input type="text" name="end_day_text" class="" value="<?php echo $default_event['end_day']; ?>"/>
+					<input type="text" name="end_time_text" class="" value="<?php echo $default_event['end_time']; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -67,8 +71,8 @@ table.event_table {
 					 배너 노출 시작 시간
 				</th>
 				<td colspan="9">
-					<input type="text" name="open_day_text" class="" />
-					<input type="text" name="open_time_text" class="" />
+					<input type="text" name="open_day_text" class="" value="<?php echo $default_event['open_day']; ?>"/>
+					<input type="text" name="open_time_text" class="" value="<?php echo $default_event['open_time']; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -76,7 +80,7 @@ table.event_table {
 					 배너 이미지 URL
 				</th>
 				<td colspan="9">
-					<input type="text" name="image_url_text" class="input_text" />
+					<input type="text" name="image_url_text" class="input_text" value="<?php echo $default_event['image_url']; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -84,7 +88,7 @@ table.event_table {
 					 배너 연결 URL
 				</th>
 				<td colspan="9">
-					<input type="text" name="link_url_text" class="input_text" />
+					<input type="text" name="link_url_text" class="input_text" value="<?php echo $default_event['link_url']; ?>"/>
 				</td>
 			</tr>
 			<tr>
@@ -98,19 +102,19 @@ table.event_table {
 					보석 구매 보너스(%)
 				</td>
 				<td>
-					<input type="text" name="bonus_gold_text" class="" />
+					<input type="text" name="bonus_gold_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					코인 구매 보너스(%)
 				</td>
 				<td>
-					<input type="text" name="bonus_coin_text" class="" />
+					<input type="text" name="bonus_coin_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					연료 구매 보너스(%)
 				</td>
 				<td>
-					<input type="text" name="bonus_gas_text" class="" />
+					<input type="text" name="bonus_gas_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					
@@ -127,25 +131,25 @@ table.event_table {
 					고급 부품 카드 뽑기 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_gacha_1_text" class="" />
+					<input type="text" name="sale_gacha_1_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					일반 부품 카드 뽑기 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_gacha_0_text" class="" />
+					<input type="text" name="sale_gacha_0_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					차량 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_car_text" class="" />
+					<input type="text" name="sale_car_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					서포터즈 할인(%)
 				</td>
 				<td>
-					<input type="text" name="sale_supporter_text" class="" />
+					<input type="text" name="sale_supporter_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 			</tr>
 			<tr>
@@ -156,13 +160,13 @@ table.event_table {
 					코인 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="gain_coin_text" class="" />
+					<input type="text" name="gain_coin_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					경험치 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="gain_exp_text" class="" />
+					<input type="text" name="gain_exp_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 				</td>
@@ -180,19 +184,19 @@ table.event_table {
 					트로피 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="gain_chip_text" class="" />
+					<input type="text" name="gain_chip_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					다이아 획득량 증가(%)
 				</td>
 				<td>
-					<input type="text" name="gain_gold_text" class="" />
+					<input type="text" name="gain_gold_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					다이아 획득 확률 증가(%)
 				</td>
 				<td>
-					<input type="text" name="gain_gold_prob_text" class="" />
+					<input type="text" name="gain_gold_prob_text" class="" value="<?php echo $default_event['default_value']; ?>" />
 				</td>
 				<td>
 					
@@ -211,19 +215,19 @@ table.event_table {
 					게임 모드
 				</td>
 				<td>
-					<input type="text" name="game_mode_text" class="" />
+					<input type="text" name="game_mode_text" class="" value="<?php echo $default_event['game_mode']; ?>" />
 				</td>
 				<td>
-					플레이어 수
+					플레이어 수(1vs1 or 4인)
 				</td>
 				<td>
-					<input type="text" name="game_players_text" class="" />
+					<input type="text" name="game_players_text" class="" value="<?php echo $default_event['game_players']; ?>" />
 				</td>
 				<td>
-					스테이지
+					미션
 				</td>
 				<td>
-					<input type="text" name="game_challenge_text" class="" />
+					<input type="text" name="game_challenge_text" class="" value="<?php echo $default_event['game_challenge']; ?>" />
 				</td>
 				<td>
 				</td>
@@ -239,6 +243,9 @@ table.event_table {
 	</table>
 	</form>
 	</p>
+	<?php
+	}
+	?>
 	
 	<?php
 	if (isset($target_event))
