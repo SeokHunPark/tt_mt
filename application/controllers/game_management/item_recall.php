@@ -81,9 +81,9 @@ class Item_recall extends CI_Controller
 			}
 			
 			$nickname_list = explode("\n", $user_list_text);
-			if (count($nickname_list) > 100)
+			if (count($nickname_list) > 1000)
 			{
-				alert("유저 닉네임을 100개 이하로 입력해 주십시오.", '/game_management/item_recall');
+				alert("유저 닉네임을 1000개 이하로 입력해 주십시오.", '/game_management/item_recall');
 				exit;
 			}
 			$user_id_list = array();

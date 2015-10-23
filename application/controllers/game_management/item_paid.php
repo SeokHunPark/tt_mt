@@ -76,6 +76,11 @@ class Item_paid extends CI_Controller
 			}
 			
 			$nickname_list = explode("\n", $user_list_text);
+			if (count($nickname_list) >= 1000)
+			{
+				alert("유저 닉네임을 1000개 이하로 입력해 주십시오.", '/game_management/item_paid');
+				exit;
+			}
 			$user_id_list = array();
 			foreach ($nickname_list as $nickname)
 			{
@@ -86,13 +91,18 @@ class Item_paid extends CI_Controller
 				}
 			}
 			
-			$temp = explode("\n", $item_list_text);
-			$item_string_list = array();
-			foreach ($temp as $t)
+			$item_list = explode("\n", $item_list_text);
+			if (count($item_list) >= 10)
 			{
-				if ($t != '')
+				alert("아이템 종류를 10개 이하로 입력해 주십시오.", '/game_management/item_paid');
+				exit;
+			}
+			$item_string_list = array();
+			foreach ($item_list as $item)
+			{
+				if ($item != '')
 				{
-					array_push($item_string_list, $t);
+					array_push($item_string_list, $item);
 				}
 			}
 			

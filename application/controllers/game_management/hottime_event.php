@@ -345,6 +345,7 @@ class Hottime_event extends CI_Controller
 		$message = "hottime";
 		
 		$redis_host =  $this->config->item('redis_host');
+		#$redis_host =  $this->config->item('58.121.156.234');
 		
 		$redis = new Predis\Client('tcp://' . $redis_host);
 		$redis->publish($channel, $message);
