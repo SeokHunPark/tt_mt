@@ -44,6 +44,9 @@ table.package_table {
 		<thead>
 			<tr>
 				<th scope="col">
+					sku
+				</th>
+				<th scope="col">
 					아이템 가격
 				</th>
 				<th scope="col">
@@ -81,6 +84,9 @@ table.package_table {
 			<tr>
 				<form id="_add_package" method="post" action="/game_management/package/add_package">
 				<td scope="row">
+					<input type="text" name="sku_text" class="input_text" />
+				</td>
+				<td>
 					<input type="text" name="price_text" class="input_text" />
 				</td>
 				<td>
@@ -119,6 +125,10 @@ table.package_table {
 	</table>
 	</p>
 	
+	<?php
+	if (isset($target_package))
+	{
+	?>
 	<p>
 	<table class="package_table">
 		<thead>
@@ -132,6 +142,9 @@ table.package_table {
 			<tr>
 				<th scope="col">
 					패키지 번호
+				</th>
+				<th scope="col">
+					sku
 				</th>
 				<th scope="col">
 					아이템 가격
@@ -174,6 +187,9 @@ table.package_table {
 					<input type="text" name="package_no_new_text" value="<?php echo $target_package['package_no']; ?>" class="input_text" readonly="readonly" />
 				</td>
 				<td>
+					<input type="text" name="sku_new_text" value="<?php echo $target_package['sku']; ?>" class="input_text" />
+				</td>
+				<td>
 					<input type="text" name="price_new_text" value="<?php echo $target_package['price']; ?>" class="input_text" />
 				</td>
 				<td>
@@ -211,12 +227,18 @@ table.package_table {
 		</tbody>
 	</table>
 	</p>
+	<?php
+	}
+	?>
 	
 	<table class="package_table">
 		<thead>
 			<tr>
 				<th scope="col">
 					패키지 번호
+				</th>
+				<th scope="col">
+					sku
 				</th>
 				<th scope="col">
 					아이템 가격
@@ -262,6 +284,9 @@ table.package_table {
 					<th scope="row">
 						<input type="text" name="package_no" readonly="readonly" value="<?php echo $pkg['package_no']; ?>" class="input_text" />
 					</th>
+					<td>
+						<input type="text" name="sku" readonly="readonly" value="<?php echo $pkg['sku']; ?>" class="input_text" />
+					</td>
 					<td>
 						<input type="text" name="price" readonly="readonly" value="<?php echo $pkg['price']; ?>" class="input_text" />
 					</td>

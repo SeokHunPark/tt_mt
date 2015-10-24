@@ -10,6 +10,7 @@ class Popup_market extends CI_Controller
 		parent::__construct();
 		$this->load->database('globaldb');
 		$this->load->model('shop_promotion_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -87,6 +88,13 @@ class Popup_market extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if ($_POST)
 		{
 			$promotion_no = $this->input->post('promotion_no_new_text', TRUE);
@@ -97,9 +105,23 @@ class Popup_market extends CI_Controller
 			$expose_limit = $this->input->post('expose_limit_new_text', TRUE);
 			$expose_prob = $this->input->post('expose_prob_new_text', TRUE);
 			
-			$this->shop_promotion_m->save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob);
-			
-			$this->index();
+			$return = $this->shop_promotion_m->save_promotion($promotion_no, $title, $package, $expose_int, $reexpose_buy, $expose_limit, $expose_prob);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '프로모션 수정';
+				$item_id = $promotion_no;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('프로모션 수정이 완료 되었습니다.', '/game_management/popup_market');
+			}
+			#$this->index();
 		}
 	}
 	

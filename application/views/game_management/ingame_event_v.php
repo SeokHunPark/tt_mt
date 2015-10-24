@@ -531,7 +531,7 @@ table.event_table {
 					</td>
 					<td>
 						배너URL : <?php echo $event['image_url']; ?><br>
-						링크URL : <?php echo $event['image_url']; ?>
+						링크URL : <?php echo $event['link_url']; ?>
 					</td>
 					<td>
 						<?php echo $event['description']; ?>

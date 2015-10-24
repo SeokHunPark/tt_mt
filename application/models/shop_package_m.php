@@ -30,9 +30,10 @@ class Shop_package_m extends CI_Model
 		return $query->result();
 	}
 	
-	function save_package($package_no, $price, $image_url, $gold, $gas, $coin, $item_string)
+	function save_package($package_no, $sku, $price, $image_url, $gold, $gas, $coin, $item_string)
 	{
 		$this->db->where('package_no', $package_no);
+		$this->db->set('sku', $sku);
 		$this->db->set('price', $price);
 		$this->db->set('image_url', $image_url);
 		$this->db->set('gold', $gold);
@@ -42,8 +43,9 @@ class Shop_package_m extends CI_Model
 		return $this->db->update('drag_globaldb.shop_package');
 	}
 	
-	function add_package($price, $image_url, $gold, $gas, $coin, $item_string)
+	function add_package($sku, $price, $image_url, $gold, $gas, $coin, $item_string)
 	{
+		$this->db->set('sku', $sku);
 		$this->db->set('price', $price);
 		$this->db->set('image_url', $image_url);
 		$this->db->set('gold', $gold);
