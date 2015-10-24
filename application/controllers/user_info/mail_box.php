@@ -184,6 +184,7 @@ class Mail_box extends CI_Controller
 			$item_array = explode(':', $item_string);
 			$mail_list[$i]['item_name'] = $item_array[1];
 			$mail_list[$i]['item_count'] = $item_array[2];
+			$mail_list[$i]['item_string'] = $_mail_list[$i]->item_string;
 			$mail_list[$i]['sender'] = "";
 			$mail_list[$i]['description'] = $_mail_list[$i]->title;
 			$mail_list[$i]['reg_date'] = $_mail_list[$i]->reg_date;

@@ -79,6 +79,7 @@ function open_collect_popup(mail_idx, user_id){
 				<th scope="col">유저 아이디</th>
 				<th scope="col">아이템 명</th>
 				<th scope="col">개수</th>
+				<th scope="col">아이템 스트링</th>
 				<th scope="col">보낸 사람</th>
 				<th scope="col">설명</th>
 				<th scope="col">받은 시각</th>
@@ -105,6 +106,9 @@ function open_collect_popup(mail_idx, user_id){
 					</td>
 					<td>
 						<input type="text" class="input_text" name="item_count" readonly="readonly" value="<?php echo $mail['item_count']; ?>" />
+					</td>
+					<td>
+						<input type="text" class="input_text" name="item_string" readonly="readonly" value="<?php echo $mail['item_string']; ?>" />
 					</td>
 					<td>
 						<input type="text" class="input_text" name="sender" readonly="readonly" value="<?php echo $mail['sender']; ?>" />
@@ -135,7 +139,7 @@ function open_collect_popup(mail_idx, user_id){
 		</tbody>
 		</tfoot>
 			<tr>
-				<th colspan="11">
+				<th colspan="12">
 					<?php echo $pagination; ?>
 				</th>
 			</tr>
