@@ -7,13 +7,13 @@ class Mail_m extends CI_Model
 		parent::__construct();
 	}
 	
-	function get_list_with_user_id($user_id)
-	{
-		$sql = "select * from drag_gamedb.mail where user_id = '$user_id' order by mail_idx desc";
-		$query = $this->db->query($sql);
-		$result = $query->result();
-		return $result;
-	}
+	// function get_list_with_user_id($user_id)
+	// {
+		// $sql = "select * from drag_gamedb.mail where user_id = '$user_id' order by mail_idx desc";
+		// $query = $this->db->query($sql);
+		// $result = $query->result();
+		// return $result;
+	// }
 	
 	function get_list_with_user_id_2($user_id, $limit, $offset)
 	{
@@ -52,6 +52,16 @@ class Mail_m extends CI_Model
 		$this->db->where('reg_date <=', $end_date);
 		$this->db->order_by("reg_date", "desc");
 		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function find_mail_by_mail_idx($mail_idx)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.mail');
+		$this->db->where('mail_idx', $mail_idx);
+		$this->db->order_by("reg_date", "desc");
 		$query = $this->db->get();
 		return $query->result();
 	}

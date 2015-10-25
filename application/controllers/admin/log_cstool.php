@@ -7,6 +7,7 @@ class Log_cstool extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('log_cstool_m');
+		$this->load->model('user_info_m');
 		$this->load->helper(array('url', 'form', 'alert_helper'));
 	}
 	

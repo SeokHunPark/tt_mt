@@ -122,7 +122,7 @@ class Mail_box extends CI_Controller
 			}
 			
 			$offset = $this->uri->segment(6, 0);
-			$_mail_list = $this->mail_m->get_list_with_user_id($user_id, $size, $offset);
+			$_mail_list = $this->mail_m->get_list_with_user_id_2($user_id, $size, $offset);
 			
 			$config['base_url'] = '/user_info/mail_box/load_mail_box/user_search/' . $user_id . '/';
 			$config['total_rows'] = $max_rows;
@@ -256,7 +256,7 @@ class Mail_box extends CI_Controller
 		
 		$mail_idx = $this->input->post('mail_idx_text', TRUE);
 		$user_id = $this->input->post('user_id_text', TRUE);
-		
+		$mail = $this->mail_m->find_mail_by_mail_idx($mail_idx);
 		$return = $this->mail_m->delete_mail($mail_idx, $user_id);
 		if ($return)
 		{
@@ -267,7 +267,7 @@ class Mail_box extends CI_Controller
 			$action = '우편 회수';
 			$item_id = NULL;
 			$item_count = NULL;
-			$memo = '';
+			$memo = $mail[0]->item_string;
 			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
 			
 			alert('회수가 완료 되었습니다.', '/user_info/mail_box/load_mail_box/user_search/' . $user_id);
