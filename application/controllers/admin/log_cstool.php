@@ -49,7 +49,7 @@ class Log_cstool extends CI_Controller
 		
 		$this->load->library('pagination');
 		$size = 10;
-		
+		$max_rows = 1000;
 		$mode = $this->uri->segment(4, 0);
 		
 		if (isset($_POST['date_search']))
@@ -169,7 +169,7 @@ class Log_cstool extends CI_Controller
 				
 				$_log_list = $this->log_cstool_m->get_list_with_admin_name($admin_id);
 				
-				$config['base_url'] = '/admin/log_cstool/load_log/user_search/' . $admin_id . '/';
+				$config['base_url'] = '/admin/log_cstool/load_log/admin_search/' . $admin_id . '/';
 				$config['total_rows'] = count($_log_list);
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 6;

@@ -29,6 +29,32 @@ class User_purchase_items_m extends CI_Model
 		return $query->result();
 	}
 	
+	function find_items_by_uid_sku($user_id, $sku)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_gamedb.user_purchase_items');
+		$this->db->where('user_id', $user_id);
+		$this->db->where('sku', $sku);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function update_purchase_item($user_id, $sku, $item_id, $event_id, $type, $start_date, $recent_date, $item_string, $count, $max_count, $used)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->where('sku', $sku);
+		$this->db->set('item_id', $item_id);
+		$this->db->set('event_id', $event_id);
+		$this->db->set('type', $type);
+		$this->db->set('start_date', $start_date);
+		$this->db->set('recent_date', $recent_date);
+		$this->db->set('item_string', $item_string);
+		$this->db->set('count', $count);
+		$this->db->set('max_count', $max_count);
+		$this->db->set('used', $used);
+		return $this->db->update('drag_gamedb.user_purchase_items');
+	}
+	
 	function insert_purchase_item($user_id, $sku, $item_id, $event_id, $type, $start_date, $recent_date, $item_string, $count, $max_count, $used)
 	{
 		$this->db->set('user_id', $user_id);

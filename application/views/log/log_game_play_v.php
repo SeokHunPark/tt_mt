@@ -75,6 +75,7 @@ table.log_list_table {
 				<th scope="col">연승</th>
 				<th scope="col">사용 아이템</th>
 				<th scope="col">시작 일시</th>
+				<th scope="col">종료 일시</th>
 				<th scope="col">게임 모드</th>
 				<th scope="col">플레이 타입</th>
 				<th scope="col">선택 차량</th>
@@ -143,7 +144,7 @@ table.log_list_table {
 		</tbody>
 		</tfoot>
 			<tr>
-				<th colspan="14">
+				<th colspan="15">
 					<?php echo $pagination; ?>
 				</th>
 			</tr>

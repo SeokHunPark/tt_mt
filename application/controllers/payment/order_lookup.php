@@ -9,6 +9,7 @@ class Order_lookup extends CI_Controller
 		$this->load->model('log_cash_m');
 		$this->load->model('user_info_m');
 		$this->load->model('mail_m');
+		$this->load->model('log_gain_mail_m');
 		$this->load->model('shop_package_m');
 		$this->load->model('purchase_history_m');
 		$this->load->model('user_purchase_items_m');
@@ -123,6 +124,21 @@ class Order_lookup extends CI_Controller
 			$_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
 			
 			$config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
+			$config['total_rows'] = $max_rows;
+			$config['per_page'] = $size;
+			$config['uri_segment'] = 6;
+			$this->pagination->initialize($config);
+			
+			$order_list = $this->make_view_data($_order_list);
+		}
+		else if (isset($_POST['order_id_search']))
+		{
+			$order_id = $this->input->post('order_id_text', TRUE);
+			
+			$offset = $this->uri->segment(6, 0);
+			$_order_list = $this->log_cash_m->find_order($order_id);
+			
+			$config['base_url'] = '/payment/order_lookup/load_order/order_id_search/' . $order_id . '/';
 			$config['total_rows'] = $max_rows;
 			$config['per_page'] = $size;
 			$config['uri_segment'] = 6;
@@ -274,6 +290,7 @@ class Order_lookup extends CI_Controller
 				$currency_type = '2'; // 원
 				$memo = "결제 오류 아이템 지급";
 				$reg_date = date("Y-m-d H:i:s", $send_ts);
+				$expire_date = date("Y-m-d H:i:s", $send_ts + (60 * 60 * 24 * 7));
 				$pub_date = $order_day . ' ' . $order_time;
 				$status = 'N';
 				
@@ -303,11 +320,21 @@ class Order_lookup extends CI_Controller
 					$item_string = $item_info['item_string'];
 					$count = '1';
 					$used = 'Y';
-					$purchase_items_return = $this->user_purchase_items_m->insert_purchase_item($user_id, $sku, $item_id, $event_id, $type, $reg_date, $reg_date, $item_string, $count, 																			$max_count, $used);
+					
+					$purchase_items = $this->user_purchase_items_m->find_items_by_uid_sku($user_id, $sku);
+					if (count($purchase_items) == 1)
+					{
+						$purchase_items_return = $this->user_purchase_items_m->update_purchase_item($user_id, $sku, $item_id, $event_id, $type, $reg_date, $reg_date, $item_string, 																		$count, $max_count, $used);
+					}
+					else
+					{
+						$purchase_items_return = $this->user_purchase_items_m->insert_purchase_item($user_id, $sku, $item_id, $event_id, $type, $reg_date, $reg_date, $item_string, 																		$count, $max_count, $used);
+					}
 				}
 				
 				if ($log_cash_return && $purchase_history_return && $purchase_items_return)
 				{
+					$partkey_month = date("m", $send_ts);
 					$title = "결제 오류 아이템 지급";
 					$message = "결제 오류 아이템 지급";
 					$item_string_all = $item_info['item_string_all'];
@@ -315,7 +342,7 @@ class Order_lookup extends CI_Controller
 					$item_string_list = explode(',', $item_string_all);
 					foreach ($item_string_list as $item)
 					{
-						$this->send_item($user_id, $send_ts, $title, $message, $item, $reg_date);
+						$this->send_item($partkey_month, $user_id, $send_ts, $title, $message, $item, $reg_date, $expire_date);
 					}					
 					
 					$ip_address = $_SERVER['REMOTE_ADDR'];
@@ -462,14 +489,14 @@ class Order_lookup extends CI_Controller
 		return $this->log_cash_m->find_order($order_id);
 	}
 	
-	public function send_item($user_id, $send_ts, $title, $message, $item_string, $reg_date)
+	public function send_item($partkey_month, $user_id, $send_ts, $title, $message, $item_string, $reg_date, $expire_date)
 	{
 		$mail_type = 'G';
 		$sender_id = 0;
 		$is_received = 0;
 		$categ = 'P';
-		$expire_date = $reg_date;
 		
+		$this->log_gain_mail_m->insert_log($partkey_month, $user_id, $sender_id, $mail_type, $title, $item_string, $categ, $reg_date);
 		return $this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
 	}
 }

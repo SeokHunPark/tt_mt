@@ -8,6 +8,7 @@ class Item_paid extends CI_Controller
 		$this->load->database('gamedb');
 		$this->load->model('user_info_m');
 		$this->load->model('mail_m');
+		$this->load->model('log_gain_mail_m');
 		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
@@ -107,6 +108,7 @@ class Item_paid extends CI_Controller
 			}
 			
 			$send_ts = time();
+			$partkey_month = date("m", $send_ts);
 			$reg_date = date("Y-m-d H:i:s", $send_ts);
 			$expire_date = date("Y-m-d H:i:s", $send_ts + (60 * 60 * 24 * 7));
 			
@@ -124,7 +126,7 @@ class Item_paid extends CI_Controller
 			{
 				foreach ($item_string_list as $item_string)
 				{
-					$return = $this->send_item($user_id, $send_ts, $message, $message, $item_string, $reg_date, $expire_date);
+					$return = $this->send_item($partkey_month, $user_id, $send_ts, $message, $message, $item_string, $reg_date, $expire_date);
 					if ($return)
 					{
 						$ip_address = $_SERVER['REMOTE_ADDR'];
@@ -142,13 +144,14 @@ class Item_paid extends CI_Controller
 		}
 	}
 	
-	public function send_item($user_id, $send_ts, $title, $message, $item_string, $reg_date, $expire_date)
+	public function send_item($partkey_month, $user_id, $send_ts, $title, $message, $item_string, $reg_date, $expire_date)
 	{
 		$mail_type = 'G';
 		$sender_id = 0;
 		$is_received = 0;
 		$categ = 'T';
 		
+		$this->log_gain_mail_m->insert_log($partkey_month, $user_id, $sender_id, $mail_type, $title, $item_string, $categ, $reg_date);
 		return $this->mail_m->insert_mail($user_id, $sender_id, $mail_type, $send_ts, $title, $message, $is_received, $item_string, $categ, $reg_date, $expire_date);
 	}
 	

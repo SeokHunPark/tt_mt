@@ -50,4 +50,17 @@ class Log_gain_mail_m extends CI_Model
 		$query = $this->db->get();
 		return $query->result();
 	}
+	
+	function insert_log($partkey_month, $user_id, $sender_id, $mail_type, $title, $item_string, $categ, $reg_date)
+	{
+		$this->db->set('partkey_month', $partkey_month);
+		$this->db->set('user_id', $user_id);
+		$this->db->set('sender_id', $sender_id);
+		$this->db->set('mail_type', $mail_type);
+		$this->db->set('title', $title);
+		$this->db->set('item_string', $item_string);
+		$this->db->set('categ', $categ);
+		$this->db->set('reg_date', $reg_date);
+		return $this->db->insert('drag_logdb.log_gain_mail');
+	}
 }

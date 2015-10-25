@@ -69,6 +69,14 @@ function open_cancel_order_popup(order_id, user_id){
 			<input type="submit" name="user_search" value="검색" />
 		</div>
 		</form>
+		
+		<form method="post" action="/payment/order_lookup/load_order/order_id_search">
+		<div>
+			주문 번호
+			<input type="text" name="order_id_text" />
+			<input type="submit" name="order_id_search" value="검색" />
+		</div>
+		</form>
 	</fieldset>
 	
 	<fieldset>
