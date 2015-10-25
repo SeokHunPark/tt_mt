@@ -10,6 +10,7 @@ class Hottime_event extends CI_Controller
 		parent::__construct();
 		$this->load->database('gamedb');
 		$this->load->model('event_hottime_m');
+		$this->load->model('log_cstool_m');
 		$this->load->helper(array('url', 'date', 'alert_helper'));
 	}
 	
@@ -87,6 +88,7 @@ class Hottime_event extends CI_Controller
 			$event_list[$i]['gold'] = "0";
 			$event_list[$i]['coin'] = "0";
 			$item_string_list = explode(',', $_event_list[$i]->item_string);
+			
 			foreach ($item_string_list as $item_string)
 			{
 				$item_info = explode(':', $item_string);
@@ -182,6 +184,13 @@ class Hottime_event extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$target_event = array();
 		$target_event['event_no'] = "";
 		$target_event['event_name'] = "";
@@ -241,6 +250,17 @@ class Hottime_event extends CI_Controller
 			
 			if ($return)
 			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '핫타임 이벤트 수정';
+				$item_id = $event_no;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+
 				alert('수정되었습니다.', '/game_management/hottime_event');
 			}
 			else
@@ -261,6 +281,13 @@ class Hottime_event extends CI_Controller
 	public function add_event()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		$target_event = array();
 		$target_event['event_no'] = "";
@@ -291,6 +318,13 @@ class Hottime_event extends CI_Controller
 			$chip = $this->input->post('chip_text', TRUE);
 			$gold = $this->input->post('gold_text', TRUE);
 			$coin = $this->input->post('coin_text', TRUE);
+			
+			if ($gas == '' && $chip == '' && $gold == '' && $coin == '')
+			{
+				alert('한 항목 이상 입력해야 합니다.', '/game_management/hottime_event');
+				exit;
+			}
+			
 			$item_string = "";
 			if ((int)$gas > 0)
 			{
@@ -321,6 +355,17 @@ class Hottime_event extends CI_Controller
 			
 			if ($return)
 			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '핫타임 이벤트 등록';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = $event_name;
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
 				alert('등록 되었습니다.', '/game_management/hottime_event');
 			}
 			else
