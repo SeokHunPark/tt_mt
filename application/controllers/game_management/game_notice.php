@@ -85,6 +85,13 @@ class Game_notice extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		if (isset($_POST))
 		{
 			$platform = "0";
@@ -99,10 +106,25 @@ class Game_notice extends CI_Controller
 				alert("내용을 입력하십시오.");
 			}
 			
-			$this->notice_ingame_m->reg_notice($platform, $title, $begin_date, $end_date, $body, $used);
+			$return = $this->notice_ingame_m->reg_notice($platform, $title, $begin_date, $end_date, $body, $used);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$user_id = NULL;
+				$action = '공지 등록';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('공지 등록이 완료 되었습니다.', '/game_management/game_notice');
+			}
 		}
 		
-		$this->load_notice();
+		#$this->load_notice();
 	}
 	
 	public function cancel_notice()
@@ -144,6 +166,13 @@ class Game_notice extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$channel = "pubsub_contents";
 		$message = "notice";
 		
@@ -152,9 +181,24 @@ class Game_notice extends CI_Controller
 		#print "redis_host : $redis_host";
 		
 		$redis = new Predis\Client('tcp://' . $redis_host);
-		$redis->publish($channel, $message);
+		$return = $redis->publish($channel, $message);
+		if ($return)
+		{
+			$time = time();
+			$date_string = "Y-m-d H:i:s";
+			$reg_date = date($date_string, $time);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$user_id = NULL;
+			$action = '게임 공지 변경 사항 적용';
+			$item_id = NULL;
+			$item_count = NULL;
+			$memo = '';
+			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			
+			alert('변경 사항이 적용 되었습니다.', '/game_management/game_notice');
+		}
 		
-		$this->index();
+		#$this->index();
 	}
 	
 	public function spot_notice()
@@ -182,7 +226,7 @@ class Game_notice extends CI_Controller
 			}
 			
 			$return = $this->spot_publish($spot_text);
-			print "Return : $return";
+			#print "Return : $return";
 			if ($return)
 			{
 				$time = time();

@@ -148,4 +148,11 @@ class User_info_m extends CI_Model
 		$this->db->set('chip', $chip);
 		return $this->db->update('drag_gamedb.user_info');
 	}
+	
+	function modify_user_type($user_id, $user_type)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('user_type', $user_type);
+		return $this->db->update('drag_gamedb.user_info');
+	}
 }

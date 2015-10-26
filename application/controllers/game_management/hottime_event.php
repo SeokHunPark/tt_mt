@@ -247,7 +247,6 @@ class Hottime_event extends CI_Controller
 			}
 			
 			$return = $this->event_hottime_m->modify_event($event_no, $event_name, $event_type, $begin_date, $end_date, $item_string);
-			
 			if ($return)
 			{
 				$time = time();
@@ -386,15 +385,36 @@ class Hottime_event extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$channel = "pubsub_contents";
 		$message = "hottime";
 		
 		$redis_host =  $this->config->item('redis_host');
-		#$redis_host =  $this->config->item('58.121.156.234');
 		
 		$redis = new Predis\Client('tcp://' . $redis_host);
-		$redis->publish($channel, $message);
+		$return = $redis->publish($channel, $message);
+		if ($return)
+		{
+			$time = time();
+			$date_string = "Y-m-d H:i:s";
+			$reg_date = date($date_string, $time);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$user_id = NULL;
+			$action = '핫타임 이벤트 변경 사항 적용';
+			$item_id = NULL;
+			$item_count = NULL;
+			$memo = $event_name;
+			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			
+			alert('핫타임 이벤트 변경 사항이 적용 되었습니다.', '/game_management/hottime_event');
+		}
 		
-		$this->load_event();
+		#$this->load_event();
 	}
 }

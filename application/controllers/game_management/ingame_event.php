@@ -309,13 +309,13 @@ class Ingame_event extends CI_Controller
 				$reg_date = date($date_string, $time);
 				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$user_id = NULL;
-				$action = '이벤트 등록';
+				$action = '인게임 이벤트 등록';
 				$item_id = NULL;
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
 				
-				alert('이벤트 등록이 완료 되었습니다..', '/game_management/ingame_event');
+				alert('인게임 이벤트 등록이 완료 되었습니다..', '/game_management/ingame_event');
 			}
 		}
 		
@@ -390,13 +390,13 @@ class Ingame_event extends CI_Controller
 				$reg_date = date($date_string, $time);
 				$ip_address = $_SERVER['REMOTE_ADDR'];
 				$user_id = NULL;
-				$action = '이벤트 삭제';
+				$action = '인게임 이벤트 삭제';
 				$item_id = $event_no;
 				$item_count = NULL;
 				$memo = '';
 				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
 				
-				alert('이벤트 삭제가 완료 되었습니다..', '/game_management/ingame_event');
+				alert('인게임 이벤트 삭제가 완료 되었습니다..', '/game_management/ingame_event');
 			}
 		}
 		
@@ -477,13 +477,13 @@ class Ingame_event extends CI_Controller
 					$reg_date = date($date_string, $time);
 					$ip_address = $_SERVER['REMOTE_ADDR'];
 					$user_id = NULL;
-					$action = '이벤트 수정';
+					$action = '인게임 이벤트 수정';
 					$item_id = $event_no;
 					$item_count = NULL;
 					$memo = '';
 					$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
 					
-					alert('이벤트 수정이 완료 되었습니다..', '/game_management/ingame_event');
+					alert('인게임 이벤트 수정이 완료 되었습니다..', '/game_management/ingame_event');
 				}
 			}
 		}
@@ -495,13 +495,35 @@ class Ingame_event extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$channel = "pubsub_contents";
 		$message = "ingame";
 		
 		$redis_host =  $this->config->item('redis_host');
 		
 		$redis = new Predis\Client('tcp://' . $redis_host);
-		$redis->publish($channel, $message);
+		$return = $redis->publish($channel, $message);
+		if ($return)
+		{
+			$time = time();
+			$date_string = "Y-m-d H:i:s";
+			$reg_date = date($date_string, $time);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$user_id = NULL;
+			$action = '인게임 이벤트 변경사항 적용';
+			$item_id = NULL;
+			$item_count = NULL;
+			$memo = '';
+			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			
+			alert('인게임 이벤트 변경 사항이 적용 되었습니다..', '/game_management/ingame_event');
+		}
 		
 		$this->load_event();
 	}

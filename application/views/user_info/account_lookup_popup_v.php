@@ -251,3 +251,22 @@ a.pop-btn:hover {
 		</div>
 	</div>
 </div>
+
+<div id="_modify_user_type_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">계정 유형을 변경 하시겠습니까?</p>
+			
+			<form id="_modify_user_type" method="post" action="/user_info/account_lookup/modify_user_type">
+			<input type="hidden" id="_user_type_user_id_text" name="user_type_user_id_text" />
+			<input type="text" id="_user_type_text" name="user_type_text" />
+			<div class="btn-r">
+				<input type="submit" value="확인" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>

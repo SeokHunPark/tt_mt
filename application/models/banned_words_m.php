@@ -40,12 +40,12 @@ class Banned_words_m extends CI_Model
 	{
 		$this->db->set('word', $word);
 		$this->db->set('is_banned', 1);
-		$this->db->insert('banned_words');
+		return $this->db->insert('banned_words');
 	}
 	
 	function delete_word($word_index)
 	{
 		$this->db->where('word_idx', $word_index);
-		$this->db->delete('banned_words');
+		return $this->db->delete('banned_words');
 	}
 }
