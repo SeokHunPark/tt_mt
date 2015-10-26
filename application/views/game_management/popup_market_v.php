@@ -109,7 +109,7 @@ table.promotion_table {
 				<th scope="col">프로모션 이름</th>
 				<th scope="col">지급 패키지 번호</th>
 				<th scope="col">재 노출 간격 (분)</th>
-				<th scope="col">구매 후 재 노출 간격 (일)</th>
+				<th scope="col">구매 후 재 노출 간격 (시간)</th>
 				<th scope="col">노출 상한 보석</th>
 				<th scope="col">노출 확률 (%)</th>
 				<th scope="col"></th>

@@ -60,6 +60,39 @@ class Order_lookup extends CI_Controller
 		$max_rows = 1000;
 		$order_list = array();
 
+		if (isset($_POST))
+		{
+			$begin_year = $this->input->post('begin_year', TRUE);
+			$begin_month = $this->input->post('begin_month', TRUE);
+			$begin_day = $this->input->post('begin_day', TRUE);
+			$end_year = $this->input->post('end_year', TRUE);
+			$end_month = $this->input->post('end_month', TRUE);
+			$end_day = $this->input->post('end_day', TRUE);
+			
+			$kakao_id = $this->input->post('kakao_id_text', TRUE);
+			$user_id = $this->input->post('game_account_id_text', TRUE);
+			$nickname = $this->input->post('nickname_text', TRUE);
+			$order_id = $this->input->post('order_id_text', TRUE);
+			
+			$is_date = False;
+			if ($begin_year != "" && $begin_month != "" && $begin_day != "" && $end_year != "" && $end_month != "" && $end_day != "")
+			{
+				$is_date = True;
+			}
+			
+			if ($user_id != '')
+			{
+			}
+			else if ($nickname != '')
+			{
+			}
+			else if ($order_id != '')
+			{
+			}
+			
+			
+		}
+		
 		if (isset($_POST['date_search']))
 		{
 			$begin_year = $this->input->post('begin_year', TRUE);

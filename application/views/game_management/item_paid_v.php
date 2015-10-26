@@ -28,6 +28,13 @@ table.item_paid_table {
 </script>
 
 <section id="content">
+	<fieldset>
+		<div>
+			<input type="checkbox" name="" value="유저 아이디">
+			<input type="checkbox" name="" value="">
+		</div>
+	</fieldset>
+	
 	<p>
 	<form method="post" action="/game_management/item_paid/send_all_item" >
 	<table class="item_paid_table">

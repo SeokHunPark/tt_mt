@@ -75,8 +75,22 @@ class Log_cash_m extends CI_Model
 		// if ($user_id != '-1')
 			// $this->db->where('user_id', $user_id);
 		$this->db->where('pub_date >=', $begin_date);
-		$this->db->where('pub_Date <=', $end_date);
-		$this->db->order_by("log_cash_idx", "desc");
+		$this->db->where('pub_date <=', $end_date);
+		$this->db->order_by("pub_date", "desc");
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
+	function search_order($user_id, $begin_date, $end_date, $limit, $offset)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_logdb.log_cash');
+		if ($user_id != '-1')
+			$this->db->where('user_id', $user_id);
+		$this->db->where('pub_date >=', $begin_date);
+		$this->db->where('pub_date <=', $end_date);
+		$this->db->order_by("pub_date", "desc");
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
 		return $query->result();

@@ -290,7 +290,7 @@ class Account_lookup extends CI_Controller
 			
 			$time = time();
 			$date_string = "Y-m-d H:i:s";
-			$unreg_date = mdate($date_string, $time);
+			$unreg_date = date($date_string, $time);
 			
 			$return = $this->user_info_m->leave_game($user_id, $unreg_date);
 			if ($return)
