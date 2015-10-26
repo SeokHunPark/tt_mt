@@ -30,14 +30,21 @@ table.item_paid_table {
 <section id="content">
 	<fieldset>
 		<div>
-			<input type="checkbox" name="" value="유저 아이디">
-			<input type="checkbox" name="" value="">
+			
 		</div>
 	</fieldset>
 	
 	<p>
 	<form method="post" action="/game_management/item_paid/send_all_item" >
 	<table class="item_paid_table">
+		<thead>
+			<tr>
+				<th scope="col">
+					<input type="radio" name="mode_radio" value="radio_user_id">유저 아이디
+					<input type="radio" name="mode_radio" value="radio_nickname">유저 닉네임
+				</th>
+			</tr>
+		</thead>
 		<thead>
 			<tr>
 				<th scope="col">

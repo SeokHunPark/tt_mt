@@ -74,28 +74,58 @@ class Item_recall extends CI_Controller
 			$item_list_text = $this->input->post('item_list_text', TRUE);
 			$message = $this->input->post('message_text', TRUE);
 			
+			if (!isset($_POST['mode_radio']))
+			{
+				alert("입력 형식을 선택해야 합니다.", '/game_management/item_paid');
+				exit;
+			}
+			
 			if ($user_list_text == '' || $item_list_text == '' || $message == '')
 			{
 				alert("입력하지 않은 항목이 있습니다.", '/game_management/item_recall');
 				exit;
 			}
 			
-			$nickname_list = explode("\n", $user_list_text);
-			if (count($nickname_list) > 1000)
-			{
-				alert("유저 닉네임을 1000개 이하로 입력해 주십시오.", '/game_management/item_recall');
-				exit;
-			}
 			$user_id_list = array();
-			foreach ($nickname_list as $nickname)
+			if ($_POST['mode_radio'] == 'radio_nickname')
 			{
-				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
-				if ($user_id != '')
+				$nickname_list = explode("\n", $user_list_text);
+				if (count($nickname_list) > 1000)
 				{
-					array_push($user_id_list, $user_id);
+					alert("유저 닉네임을 1000개 이하로 입력해 주십시오.", '/game_management/item_paid');
+					exit;
+				}
+				
+				foreach ($nickname_list as $nickname)
+				{
+					$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+					if ($user_id != '')
+					{
+						array_push($user_id_list, $user_id);
+					}
 				}
 			}
-			#print_r($user_id_list);
+			else if ($_POST['mode_radio'] == 'radio_user_id')
+			{
+				$id_list = explode("\n", $user_list_text);
+				if (count($id_list) > 1000)
+				{
+					alert("유저 아이디를 1000개 이하로 입력해 주십시오.", '/game_management/item_paid');
+					exit;
+				}
+				
+				foreach ($id_list as $user_id)
+				{
+					if ($user_id != '')
+					{
+						$user_info = $this->user_info_m->find_with_user_id($user_id);
+						if (count($user_info) > 0)
+						{
+							array_push($user_id_list, $user_id);
+						}
+					}
+				}
+			}
 			
 			$item_list = explode("\n", $item_list_text);
 			if (count($item_list) > 10)

@@ -33,7 +33,15 @@ table.item_recall_table {
 		<thead>
 			<tr>
 				<th scope="col">
-					유저 닉네임 리스트
+					<input type="radio" name="mode_radio" value="radio_user_id">유저 아이디
+					<input type="radio" name="mode_radio" value="radio_nickname">유저 닉네임
+				</th>
+			</tr>
+		</thead>
+		<thead>
+			<tr>
+				<th scope="col">
+					유저 리스트
 				</th>
 			</tr>
 		</thead>
