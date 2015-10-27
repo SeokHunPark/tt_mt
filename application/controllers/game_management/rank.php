@@ -49,7 +49,7 @@ class Rank extends CI_Controller
 		$this->load->library('pagination');
 		$mode = $this->uri->segment(4, 0);
 		$offset = $this->uri->segment(6, 0);
-		$size = 10;
+		$size = 50;
 		$max_rows = 300;
 		
 		if (isset($_POST['date_search']))
