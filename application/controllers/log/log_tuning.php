@@ -1,19 +1,19 @@
 ﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Log_mail extends CI_Controller
+class Log_tuning extends CI_Controller
 {
 	
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('log_mail_m');
+		$this->load->model('log_tuning_m');
 		$this->load->model('user_info_m');
 		$this->load->helper(array('url', 'form', 'alert_helper'));
 	}
 	
 	public function index()
 	{
-		print 'log_mail index()';
+		print 'log_tuning index()';
 		$this->load_log();
 	}
 	
@@ -80,12 +80,12 @@ class Log_mail extends CI_Controller
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
 
-				$_log_list = $this->log_mail_m->get_list_with_date($user_id, $begin_date, $end_date, $size, $offset);
+				$_log_list = $this->log_tuning_m->get_list_with_date($user_id, $begin_date, $end_date, $size, $offset);
 				
 				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
 				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
 				
-				$config['base_url'] = '/log/log_mail/load_log/date_search/' . $user_id . '/' . $begin_date . '/' . $end_date . '/';
+				$config['base_url'] = '/log/log_tuning/load_log/date_search/' . $user_id . '/' . $begin_date . '/' . $end_date . '/';
 				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 8;
@@ -102,13 +102,13 @@ class Log_mail extends CI_Controller
 		{
 			if (strcmp($mode, "date_search") == 0)
 			{
-				#$offset = $this->uri->segment(8, 0);
+				$offset = $this->uri->segment(8, 0);
 				$user_id = $this->uri->segment(5, -1);
 				$begin_date = $this->uri->segment(6, 0) . " 00:00:00";
 				$end_date = $this->uri->segment(7, 0) . " 23:59:59";
 				
-				$_log_list = $this->log_mail_m->get_list_with_date($user_id, $begin_date, $end_date, $size, $offset);
-				$config['base_url'] = '/log/log_mail/load_log/date_search/' . $user_id . '/' . $this->uri->segment(6, 0) . '/' . $this->uri->segment(7, 0) . '/';
+				$_log_list = $this->log_tuning_m->get_list_with_date($user_id, $begin_date, $end_date, $size, $offset);
+				$config['base_url'] = '/log/log_tuning/load_log/date_search/' . $user_id . '/' . $this->uri->segment(6, 0) . '/' . $this->uri->segment(7, 0) . '/';
 				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 8;
@@ -120,7 +120,7 @@ class Log_mail extends CI_Controller
 		
 		$data['log_list'] = $log_list;
 		$data['pagination'] = $this->pagination->create_links();
-		$this->load->view('/log/log_mail_v', $data);
+		$this->load->view('/log/log_tuning_v', $data);
 	}
 	
 	public function make_view_data($_log_list)

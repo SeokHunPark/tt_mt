@@ -36,6 +36,7 @@ table.log_list_table {
 		<input type="submit" name="log_leave_button" value="log_leave" />
 		<input type="submit" name="log_levelup_button" value="log_levelup" />
 		<input type="submit" name="log_mail_button" value="log_mail" />
+		<input type="submit" name="log_tuning_button" value="log_tuning" />
 		</form>
 	</fieldset>
 	
@@ -74,6 +75,7 @@ table.log_list_table {
 				<th scope="col">아이템 코드</th>
 				<th scope="col">등록 일시</th>
 				<th scope="col">차량 아이디</th>
+				<th scope="col">잔여 아이템 수량</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -97,6 +99,9 @@ table.log_list_table {
 					<td>
 						<?php echo $log['car_id']; ?>
 					</td>
+					<td>
+						<?php echo $log['item_remain']; ?>
+					</td>
 				</tr>
 			<?php
 			}
@@ -104,7 +109,7 @@ table.log_list_table {
 		</tbody>
 		</tfoot>
 			<tr>
-				<th colspan="5">
+				<th colspan="6">
 					<?php echo $pagination; ?>
 				</th>
 			</tr>

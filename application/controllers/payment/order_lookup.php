@@ -55,7 +55,7 @@ class Order_lookup extends CI_Controller
 		$admin_name = $this->session->userdata('username');
 		
 		$this->load->library('pagination');
-		$size = 10;
+		$size = 50;
 		$mode = $this->uri->segment(4, 0);
 		$max_rows = 1000;
 		$order_list = array();

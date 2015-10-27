@@ -90,6 +90,10 @@ class Log_viewer extends CI_Controller
 		{
 			redirect('/log/log_mail');
 		}
+		else if (isset($_POST['log_tuning_button']))
+		{
+			redirect('/log/log_tuning');
+		}
 		else
 		{
 			$this->load->view('/log/log_viewer_v');

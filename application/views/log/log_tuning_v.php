@@ -41,7 +41,7 @@ table.log_list_table {
 	</fieldset>
 	
 	<fieldset>
-		<form method="post" action="/log/log_mail/load_log/date_search">
+		<form method="post" action="/log/log_tuning/load_log/date_search">
 		<div>
 			기간 설정
 			<input type="text" name="begin_year" />
@@ -71,17 +71,11 @@ table.log_list_table {
 		<thead>
 			<tr>
 				<th scope="col">사용자 아이디</th>
-				<th scope="col">보낸 사람</th>
-				<th scope="col">보낸 사람 플랫폼</th>
-				<th scope="col">메시지 타입</th>
-				<th scope="col">제목</th>
-				<th scope="col">아이템 스트링</th>
-				<th scope="col">쿠폰</th>
-				<th scope="col">event 인덱스</th>
 				<th scope="col">카테고리</th>
+				<th scope="col">차량 모델</th>
+				<th scope="col">적용 인자</th>
 				<th scope="col">등록 일시</th>
-				<th scope="col">만료 일시</th>
-				<th scope="col">수령 일시</th>
+				<th scope="col">사용량</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -94,37 +88,19 @@ table.log_list_table {
 						<?php echo $log['user_id']; ?>
 					</th>
 					<td>
-						<?php echo $log['sender_id']; ?>
-					</td>
-					<td>
-						<?php echo $log['sender_pid']; ?>
-					</td>
-					<td>
-						<?php echo $log['mail_type']; ?>
-					</td>
-					<td>
-						<?php echo $log['title']; ?>
-					</td>
-					<td>
-						<?php echo $log['item_string']; ?>
-					</td>
-					<td>
-						<?php echo $log['coupon']; ?>
-					</td>
-					<td>
-						<?php echo $log['event_idx']; ?>
-					</td>
-					<td>
 						<?php echo $log['categ']; ?>
+					</td>
+					<td>
+						<?php echo $log['car_id']; ?>
+					</td>
+					<td>
+						<?php echo $log['car_arg']; ?>
 					</td>
 					<td>
 						<?php echo $log['reg_date']; ?>
 					</td>
 					<td>
-						<?php echo $log['expire_date']; ?>
-					</td>
-					<td>
-						<?php echo $log['recv_date']; ?>
+						<?php echo $log['consume']; ?>
 					</td>
 				</tr>
 			<?php

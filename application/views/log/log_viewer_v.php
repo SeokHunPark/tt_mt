@@ -36,11 +36,12 @@ table.log_list_table {
 		<input type="submit" name="log_leave_button" value="log_leave" />
 		<input type="submit" name="log_levelup_button" value="log_levelup" />
 		<input type="submit" name="log_mail_button" value="log_mail" />
+		<input type="submit" name="log_tuning_button" value="log_tuning" />
 		</form>
 	</fieldset>
 	
 	<fieldset>
-		<form method="post" action="/payment/log_viewer/load_log/date_search">
+		<form method="post" action="/log_viewer/load_log/date_search">
 		<div>
 			기간 설정
 			<input type="text" name="begin_year" />

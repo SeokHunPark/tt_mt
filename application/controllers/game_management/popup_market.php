@@ -129,6 +129,13 @@ class Popup_market extends CI_Controller
 	{
 		$this->output->enable_profiler(TRUE);
 		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
 		$channel = "pubsub_contents";
 		$message = "package";
 		
@@ -137,8 +144,23 @@ class Popup_market extends CI_Controller
 		#print "redis_host : $redis_host";
 		
 		$redis = new Predis\Client('tcp://' . $redis_host);
-		$redis->publish($channel, $message);
+		$return = $redis->publish($channel, $message);
+		if ($return)
+		{
+			$time = time();
+			$date_string = "Y-m-d H:i:s";
+			$reg_date = date($date_string, $time);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
+			$user_id = NULL;
+			$action = '프로모션 및 패키지 변경 사항 적용';
+			$item_id = NULL;
+			$item_count = NULL;
+			$memo = '';
+			$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+			
+			alert('프로모션 및 패키지 변경사항 적용이 완료 되었습니다.', '/game_management/popup_market');
+		}
 		
-		$this->load_current_promotion();
+		#$this->load_current_promotion();
 	}
 }

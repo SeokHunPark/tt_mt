@@ -36,6 +36,7 @@ table.log_list_table {
 		<input type="submit" name="log_leave_button" value="log_leave" />
 		<input type="submit" name="log_levelup_button" value="log_levelup" />
 		<input type="submit" name="log_mail_button" value="log_mail" />
+		<input type="submit" name="log_tuning_button" value="log_tuning" />
 		</form>
 	</fieldset>
 	
