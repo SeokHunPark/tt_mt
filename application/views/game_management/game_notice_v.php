@@ -175,7 +175,7 @@ function open_cancel_notice_popup(notice_no){
 		<thead>
 			<tr>
 				<th scope="row" colspan="2">
-					스팟 공지
+					스팟 공지 (한 줄에 19자씩 3줄 사용이 최적)
 				</th>
 			</tr>
 		</thead>

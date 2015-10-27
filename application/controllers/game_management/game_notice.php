@@ -220,10 +220,10 @@ class Game_notice extends CI_Controller
 			{
 				alert('공지 내용을 입력 하십시오.', '/game_management/game_notice');
 			}
-			else if (strlen($spot_text) >= 200)
-			{
-				alert('200자(영문기준, 공백 포함) 이하로 입력하십시오.', '/game_management/game_notice');
-			}
+			// else if (strlen($spot_text) >= 200)
+			// {
+				// alert('200자(영문기준, 공백 포함) 이하로 입력하십시오.', '/game_management/game_notice');
+			// }
 			
 			$return = $this->spot_publish($spot_text);
 			#print "Return : $return";
