@@ -259,7 +259,15 @@ class Ingame_event extends CI_Controller
 			
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' '. $this->input->post('end_time_text', TRUE);
-			$open_date = $this->input->post('open_day_text', TRUE) . ' ' . $this->input->post('open_time_text', TRUE);
+			$open_date = '';
+			if ($this->input->post('open_day_text', TRUE) == '' || $this->input->post('open_time_text', TRUE) == '')
+			{
+				$open_date = NULL;
+			}
+			else
+			{
+				$open_date = $this->input->post('open_day_text', TRUE) . ' ' . $this->input->post('open_time_text', TRUE);
+			}
 			
 			$image_url = $this->input->post('image_url_text', TRUE);
 			$link_url = $this->input->post('link_url_text', TRUE);
