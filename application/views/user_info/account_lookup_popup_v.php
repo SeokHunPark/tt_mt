@@ -270,3 +270,22 @@ a.pop-btn:hover {
 		</div>
 	</div>
 </div>
+
+<div id="_modify_rp_popup" class="pop-layer">
+	<div class="pop-container">
+		<div class="pop-conts">
+			<!--content //-->
+			<p class="ctxt mb20">변경할 랭크 포인트를 입력하세요(변경 된 랭크 포인트는 아이템전을 플레이해야 랭킹 서버에 적용이 됩니다)</p>
+			
+			<form id="_modify_rp" method="post" action="/user_info/account_lookup/modify_rp">
+			<input type="hidden" id="_rp_user_id_text" name="rp_user_id_text" />
+			<input type="text" id="_rp_text" name="rp_text" />
+			<div class="btn-r">
+				<input type="submit" value="확인" name="button" />
+				<input type="button" id="cancel_btn" value="취소" />
+			</div>
+			</form>
+			<!--// content-->
+		</div>
+	</div>
+</div>

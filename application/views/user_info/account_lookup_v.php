@@ -199,6 +199,27 @@ function open_modify_user_type_popup(user_id, user_type){
 	var user_type_text = document.getElementById("_user_type_text");
 	user_type_text.value = user_type;
 }
+function open_modify_rp_popup(user_id, rank_point){
+
+	var temp = $('#_modify_rp_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_rp_user_id_text");
+	user_id_text.value = user_id;
+	var rp_text = document.getElementById("_rp_text");
+	rp_text.value = rank_point;
+}
 </script>
 
 <section id="content">
@@ -320,6 +341,9 @@ function open_modify_user_type_popup(user_id, user_type){
 				</th>
 				<td>
 					<?php echo $account_info['rank_point']; ?>
+					<input type="submit" value="변경" 
+							onclick="open_modify_rp_popup('<?php echo $account_info['user_id']; ?>',
+														'<?php echo $account_info['rank_point']; ?>'); return false"/>
 				</td>
 				<th>
 					계정 경험치

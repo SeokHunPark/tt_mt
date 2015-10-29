@@ -229,8 +229,8 @@ class Ingame_event extends CI_Controller
 		$this->form_validation->set_rules('end_time_text', '종료 시간', 'required');
 		$this->form_validation->set_rules('open_day_text', '배너 노출 시작 일', 'required');
 		$this->form_validation->set_rules('open_time_text', '배너 노출 시작 시간', 'required');
-		$this->form_validation->set_rules('image_url_text', '배너 이미지 URL', 'required');
-		$this->form_validation->set_rules('link_url_text', '배너 연결 URL', 'required');
+		#$this->form_validation->set_rules('image_url_text', '배너 이미지 URL', 'required');
+		#$this->form_validation->set_rules('link_url_text', '배너 연결 URL', 'required');
 		$this->form_validation->set_rules('bonus_gold_text', '보석 구매 보너스', 'required');
 		$this->form_validation->set_rules('bonus_coin_text', '코인 구매 보너스', 'required');
 		$this->form_validation->set_rules('bonus_gas_text', '연료 구매 보너스', 'required');

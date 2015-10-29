@@ -40,4 +40,11 @@ class User_action_m extends CI_Model
 		$this->db->set('winning_streak', $winning_count);
 		return $this->db->update('drag_gamedb.user_action');
 	}
+	
+	function modify_rank_point($user_id, $rank_point)
+	{
+		$this->db->where('user_id', $user_id);
+		$this->db->set('rank_point', $rank_point);
+		return $this->db->update('drag_gamedb.user_action');
+	}
 }

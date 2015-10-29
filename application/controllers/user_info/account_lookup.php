@@ -747,4 +747,38 @@ class Account_lookup extends CI_Controller
 			}
 		}
 	}
+	
+	public function modify_rp()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('rp_user_id_text', TRUE);
+			$rank_point = $this->input->post('rp_text', TRUE);
+			
+			$return = $this->user_action_m->modify_rank_point($user_id, $rank_point);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$action = '랭크 포인트 변경';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $item_id, $item_count, $memo);
+				
+				alert('랭크 포인트 변경이 완료 되었습니다.', '/user_info/account_lookup/load_account_info/'. $user_id);
+			}
+		}
+	}
 }
