@@ -185,7 +185,7 @@ class Ingame_event extends CI_Controller
 			if ((float)$gain_exp > 0)
 			{
 				$event_list[$i]['description'] .= "\n<br>";
-				$event_list[$i]['description'] .= "연료 획득량 증가 : ";
+				$event_list[$i]['description'] .= "경험치 획득량 증가 : ";
 				$event_list[$i]['description'] .= $gain_exp;
 			}
 			if ((float)$gain_gold > 0)
@@ -383,7 +383,15 @@ class Ingame_event extends CI_Controller
 			$event['end_day'] = $end_date[0];
 			$event['end_time'] = $end_date[1];
 			$event['open_day'] = $open_date[0];
-			$event['open_time'] = $open_date[1];
+			if (count($open_date) == 0)
+			{
+				$event['open_time'] = $open_date[1];
+			}
+			else
+			{
+				$event['open_time'] = '';
+			}
+			
 			
 			$data['target_event'] = $event;
 		}
@@ -431,7 +439,16 @@ class Ingame_event extends CI_Controller
 				
 			$begin_date = $this->input->post('begin_day_text', TRUE) . ' ' . $this->input->post('begin_time_text', TRUE);
 			$end_date = $this->input->post('end_day_text', TRUE) . ' '. $this->input->post('end_time_text', TRUE);
-			$open_date = $this->input->post('open_day_text', TRUE) . ' ' . $this->input->post('open_time_text', TRUE);
+			#$open_date = $this->input->post('open_day_text', TRUE) . ' ' . $this->input->post('open_time_text', TRUE);
+			$open_date = '';
+			if ($this->input->post('open_day_text', TRUE) == '' || $this->input->post('open_time_text', TRUE) == '')
+			{
+				$open_date = NULL;
+			}
+			else
+			{
+				$open_date = $this->input->post('open_day_text', TRUE) . ' ' . $this->input->post('open_time_text', TRUE);
+			}
 			
 			$image_url = $this->input->post('image_url_text', TRUE);
 			$link_url = $this->input->post('link_url_text', TRUE);
