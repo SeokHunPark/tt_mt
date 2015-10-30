@@ -14,7 +14,7 @@ class Statistic extends CI_Controller
 	
 	public function index()
 	{
-		print 'statistics index()';
+		#print 'statistics index()';
 		$this->load_statistic();
 	}
 	
