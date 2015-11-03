@@ -82,13 +82,14 @@ class Item_paid extends CI_Controller
 				exit;
 			}
 			
+			$max_size = 5000;
 			$user_id_list = array();
 			if ($_POST['mode_radio'] == 'radio_nickname')
 			{
 				$nickname_list = explode("\n", $user_list_text);
-				if (count($nickname_list) > 1000)
+				if (count($nickname_list) > $max_size)
 				{
-					alert("유저 닉네임을 1000개 이하로 입력해 주십시오.", '/game_management/item_paid');
+					alert("유저 닉네임을 5000개 이하로 입력해 주십시오.", '/game_management/item_paid');
 					exit;
 				}
 				
@@ -104,9 +105,9 @@ class Item_paid extends CI_Controller
 			else if ($_POST['mode_radio'] == 'radio_user_id')
 			{
 				$id_list = explode("\n", $user_list_text);
-				if (count($id_list) > 1000)
+				if (count($id_list) > $max_size)
 				{
-					alert("유저 아이디를 1000개 이하로 입력해 주십시오.", '/game_management/item_paid');
+					alert("유저 아이디를 5000개 이하로 입력해 주십시오.", '/game_management/item_paid');
 					exit;
 				}
 				
