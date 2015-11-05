@@ -56,11 +56,7 @@ class Log_mail extends CI_Controller
 		
 		if (isset($_POST['date_search']))
 		{
-			$begin_year = $this->input->post('begin_year', TRUE);
-			$begin_month = $this->input->post('begin_month', TRUE);
 			$begin_day = $this->input->post('begin_day', TRUE);
-			$end_year = $this->input->post('end_year', TRUE);
-			$end_month = $this->input->post('end_month', TRUE);
 			$end_day = $this->input->post('end_day', TRUE);
 			
 			$user_id = "-1";
@@ -74,18 +70,14 @@ class Log_mail extends CI_Controller
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
 			
-			if ($begin_year != "" && $begin_month != "" && $begin_day != "" &&
-				$end_year != "" && $end_month != "" && $end_day != "")
+			if ($begin_day != "" && $end_day != "")
 			{
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
+				$begin_date = $begin_day . " 00:00:00";
+				$end_date = $end_day . " 23:59:59";
 
 				$_log_list = $this->log_mail_m->get_list_with_date($user_id, $begin_date, $end_date, $size, $offset);
 				
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
-				
-				$config['base_url'] = '/log/log_mail/load_log/date_search/' . $user_id . '/' . $begin_date . '/' . $end_date . '/';
+				$config['base_url'] = '/log/log_mail/load_log/date_search/' . $user_id . '/' . $begin_day . '/' . $end_day . '/';
 				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 8;

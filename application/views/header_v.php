@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/jquery-ui.min.js">
-<script src="//code.jquery.com/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <style type="text/css">
 #header {
 	border: 1px solid #555;
@@ -14,7 +14,7 @@
 }
 #content {
 	border: 1px solid #555;
-	height:2500px;
+	height:3000px;
 	background-color:#FFFFFF;
 }
 #footer {

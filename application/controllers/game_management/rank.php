@@ -54,19 +54,15 @@ class Rank extends CI_Controller
 		
 		if (isset($_POST['date_search']))
 		{
-			$reg_year = $this->input->post('reg_year', TRUE);
-			$reg_month = $this->input->post('reg_month', TRUE);
 			$reg_day = $this->input->post('reg_day', TRUE);
 			
-			if ($reg_year != "" && $reg_month != "" && $reg_day != "")
+			if ($reg_day != "")
 			{
-				$reg_date = $reg_year . "-" . $reg_month . "-" . $reg_day . " 00:00:00";
+				$reg_date = $reg_day . " 00:00:00";
 
 				$_rank_info_list = $this->log_rank_m->get_list_with_reg_date($reg_date, $size, $offset);
 				
-				$reg_date = $reg_year . "-" . $reg_month . "-" . $reg_day;
-				
-				$config['base_url'] = '/game_management/rank/load_ranking/date_search/' . $reg_date . '/';
+				$config['base_url'] = '/game_management/rank/load_ranking/date_search/' . $reg_day . '/';
 				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 6;

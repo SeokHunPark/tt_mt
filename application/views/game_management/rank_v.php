@@ -19,6 +19,15 @@ table.order_list_table {
 </style>
 
 <script>
+$(document).ready(function(){
+	$(".datepicker").datepicker({
+		dateFormat:'yy-mm-dd',
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		dayNamesMin : ['일','월','화','수','목','금','토'],
+		monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		constrainInput: true
+	});
+});
 </script>
 
 <section id="content">
@@ -26,9 +35,7 @@ table.order_list_table {
 		<form method="post" action="/game_management/rank/load_ranking/date_search">
 		<div>
 			기간 설정
-			<input type="text" name="reg_year" />
-			<input type="text" name="reg_month" />
-			<input type="text" name="reg_day" />
+			<input type="text" class="datepicker" name="reg_day">
 			<input type="submit" name="date_search" value="검색" />			
 		</div>
 		</form>

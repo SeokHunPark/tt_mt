@@ -60,62 +60,68 @@ class Order_lookup extends CI_Controller
 		$max_rows = 1000;
 		$order_list = array();
 
-		if (isset($_POST))
-		{
-			$begin_year = $this->input->post('begin_year', TRUE);
-			$begin_month = $this->input->post('begin_month', TRUE);
-			$begin_day = $this->input->post('begin_day', TRUE);
-			$end_year = $this->input->post('end_year', TRUE);
-			$end_month = $this->input->post('end_month', TRUE);
-			$end_day = $this->input->post('end_day', TRUE);
+		// if (isset($_POST['date_search']))
+		// {
+			// $begin_day = $this->input->post('begin_day', TRUE);
+			// $end_day = $this->input->post('end_day', TRUE);
 			
-			$kakao_id = $this->input->post('kakao_id_text', TRUE);
-			$user_id = $this->input->post('game_account_id_text', TRUE);
-			$nickname = $this->input->post('nickname_text', TRUE);
-			$order_id = $this->input->post('order_id_text', TRUE);
+			// $kakao_id = $this->input->post('kakao_id_text', TRUE);
+			// $user_id = $this->input->post('game_account_id_text', TRUE);
+			// $nickname = $this->input->post('nickname_text', TRUE);
+			// $order_id = $this->input->post('order_id_text', TRUE);
 			
-			$is_date = False;
-			if ($begin_year != "" && $begin_month != "" && $begin_day != "" && $end_year != "" && $end_month != "" && $end_day != "")
-			{
-				$is_date = True;
-			}
+			// $is_date = False;
+			// if ($begin_day != "" && $end_day != "")
+			// {
+				// $is_date = True;
+			// }
 			
-			if ($user_id != '')
-			{
-			}
-			else if ($nickname != '')
-			{
-			}
-			else if ($order_id != '')
-			{
-			}
+			// if ($user_id != '')
+			// {
+			// }
+			// else if ($nickname != '')
+			// {
+				// $user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+			// }
+			// else
+			// {
+				// $user_id = '-1';
+			// }
 			
+			// if ($order_id == '')
+			// {
+				// $order_id = '-1';
+			// }
 			
-		}
+			// $begin_date = '-1';
+			// $end_date = '-1';
+			// if ($begin_day != "" && $end_day != "")
+			// {
+				// $begin_date = $begin_day . " 00:00:00";
+				// $end_date = $end_day . " 23:59:59";
+			// }
+			
+			// $offset = $this->uri->segment(7, 0);
+			// $_order_list = $this->log_cash_m->search_order($user_id, $order_id, $begin_date, $end_date, $size, $offset);
+			
+			// print_r($_order_list);
+		// }
 		
 		if (isset($_POST['date_search']))
 		{
-			$begin_year = $this->input->post('begin_year', TRUE);
-			$begin_month = $this->input->post('begin_month', TRUE);
 			$begin_day = $this->input->post('begin_day', TRUE);
-			$end_year = $this->input->post('end_year', TRUE);
-			$end_month = $this->input->post('end_month', TRUE);
 			$end_day = $this->input->post('end_day', TRUE);
 			
-			if ($begin_year != "" && $begin_month != "" && $begin_day != "" &&
-				$end_year != "" && $end_month != "" && $end_day != "")
+			if ($begin_day != "" && $end_day != "")
 			{
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
+				$begin_date = $begin_day . " 00:00:00";
+				$end_date = $end_day . " 23:59:59";
 
 				$offset = $this->uri->segment(7, 0);
 				#$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
 				$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
 				
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
-				
-				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $begin_date . '/' . $end_date . '/';
+				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $begin_day . '/' . $end_day . '/';
 				$config['total_rows'] = $max_rows;
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 7;

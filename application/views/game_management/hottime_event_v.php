@@ -19,7 +19,15 @@ table.event_table {
 </style>
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	$(".datepicker").datepicker({
+		dateFormat:'yy-mm-dd',
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		dayNamesMin : ['일','월','화','수','목','금','토'],
+		monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		constrainInput: true
+	});
+});
 </script>
 
 <section id="content">	
@@ -69,10 +77,10 @@ table.event_table {
 					<input type="text" name="event_type_text" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="begin_day_text"  class=""/>
+					<input type="text" name="begin_day_text"  class="datepicker"/>
 					<input type="text" name="begin_time_text" class=""/>
 					~
-					<input type="text" name="end_day_text" class=""/>
+					<input type="text" name="end_day_text" class="datepicker"/>
 					<input type="text" name="end_time_text" class=""/>
 				</td>
 				<td>
@@ -148,10 +156,10 @@ table.event_table {
 					<input type="text" name="event_type_text" value="<?php echo $target_event['event_type']; ?>" class="input_text" />
 				</td>
 				<td>
-					<input type="text" name="begin_day_text" value="<?php echo $target_event['begin_day']; ?>" class=""/>
+					<input type="text" name="begin_day_text" value="<?php echo $target_event['begin_day']; ?>" class="datepicker"/>
 					<input type="text" name="begin_time_text" value="<?php echo $target_event['begin_time']; ?>" class=""/>
 					~
-					<input type="text" name="end_day_text" value="<?php echo $target_event['end_day']; ?>" class=""/>
+					<input type="text" name="end_day_text" value="<?php echo $target_event['end_day']; ?>" class="datepicker"/>
 					<input type="text" name="end_time_text" value="<?php echo $target_event['end_time']; ?>" class=""/>
 				</td>
 				<td>

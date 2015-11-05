@@ -392,7 +392,6 @@ class Ingame_event extends CI_Controller
 				$event['open_time'] = '';
 			}
 			
-			
 			$data['target_event'] = $event;
 		}
 		else if (isset($_POST['delete']))

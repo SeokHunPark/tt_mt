@@ -6,6 +6,7 @@
 	</style>
 	
 	<script>
+			
 		$(document).ready(function() {
 			$("#search_btn").click(function() {
 				if ($("#q").val() == '') {
@@ -48,6 +49,17 @@
 			var id_text = document.getElementById("popup_coin_text");
 			id_text.value = coin;
 		}
+		
+		$(document).ready(function(){
+			$(".datepicker").datepicker({
+				dateFormat:'yy-mm-dd',
+				monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				dayNamesMin : ['일','월','화','수','목','금','토'],
+				monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				constrainInput: true
+			});
+			$("#radio").buttonset();
+		});
 	</script>
 	
 	<section id="content">
@@ -57,6 +69,7 @@
 				<input type="text" name="user_id" id="q" onkeypress="user_search_enter(document.q);" />
 				<input type="button" value="조회" id="search_btn" />
 			</div>
+			<input type="text" class="datepicker">
 		</fieldset>
 		</form>
 		

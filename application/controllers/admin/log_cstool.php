@@ -55,25 +55,17 @@ class Log_cstool extends CI_Controller
 		
 		if (isset($_POST['date_search']))
 		{
-			$begin_year = $this->input->post('begin_year', TRUE);
-			$begin_month = $this->input->post('begin_month', TRUE);
 			$begin_day = $this->input->post('begin_day', TRUE);
-			$end_year = $this->input->post('end_year', TRUE);
-			$end_month = $this->input->post('end_month', TRUE);
 			$end_day = $this->input->post('end_day', TRUE);
 			
-			if ($begin_year != "" && $begin_month != "" && $begin_day != "" &&
-				$end_year != "" && $end_month != "" && $end_day != "")
+			if ($begin_day != "" && $end_day != "")
 			{
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day . " 00:00:00";
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day . " 23:59:59";
+				$begin_date = $begin_day . " 00:00:00";
+				$end_date = $end_day . " 23:59:59";
 
 				$_log_list = $this->log_cstool_m->get_list_with_date($begin_date, $end_date);
 				
-				$begin_date = $begin_year . "-" . $begin_month . "-" . $begin_day;
-				$end_date = $end_year . "-" . $end_month . "-" . $end_day;
-				
-				$config['base_url'] = '/admin/log_cstool/load_log/date_search/' . $begin_date . '/' . $end_date . '/';
+				$config['base_url'] = '/admin/log_cstool/load_log/date_search/' . $begin_day . '/' . $end_day . '/';
 				$config['total_rows'] = count($_log_list);
 				$config['per_page'] = $size;
 				$config['uri_segment'] = 7;

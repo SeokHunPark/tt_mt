@@ -2,7 +2,7 @@
 #nav {
 	border: 1px solid #555;
 	width: 170px;
-	height:2500px;
+	height:3000px;
 	float: left;
 	background-color:#DCDAD9;
 }

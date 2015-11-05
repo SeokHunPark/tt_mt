@@ -19,7 +19,15 @@ table.log_list_table {
 </style>
 
 <script>
-
+$(document).ready(function(){
+	$(".datepicker").datepicker({
+		dateFormat:'yy-mm-dd',
+		monthNamesShort:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		dayNamesMin : ['일','월','화','수','목','금','토'],
+		monthNames : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		constrainInput: true
+	});
+});
 </script>
 
 <section id="content">
@@ -44,13 +52,9 @@ table.log_list_table {
 		<form method="post" action="/log/log_levelup/load_log/date_search">
 		<div>
 			기간 설정
-			<input type="text" name="begin_year" />
-			<input type="text" name="begin_month" />
-			<input type="text" name="begin_day" />
+			<input type="text" class="datepicker" name="begin_day">
 			~
-			<input type="text" name="end_year" />
-			<input type="text" name="end_month" />
-			<input type="text" name="end_day" />
+			<input type="text" class="datepicker" name="end_day">
 		</div>
 		<div>
 			카카오톡 ID

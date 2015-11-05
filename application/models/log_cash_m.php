@@ -82,14 +82,19 @@ class Log_cash_m extends CI_Model
 		return $query->result();
 	}
 	
-	function search_order($user_id, $begin_date, $end_date, $limit, $offset)
+	function search_order($user_id, $order_id, $begin_date, $end_date, $limit, $offset)
 	{
 		$this->db->select('*');
 		$this->db->from('drag_logdb.log_cash');
 		if ($user_id != '-1')
 			$this->db->where('user_id', $user_id);
-		$this->db->where('pub_date >=', $begin_date);
-		$this->db->where('pub_date <=', $end_date);
+		if ($order_id != '-1')
+			$this->db->where('receipt_key', $order_id);
+		if ($begin_date != '-1' && $end_date != '-1')
+		{
+			$this->db->where('pub_date >=', $begin_date);
+			$this->db->where('pub_date <=', $end_date);
+		}
 		$this->db->order_by("pub_date", "desc");
 		$this->db->limit($limit, $offset);
 		$query = $this->db->get();
@@ -124,4 +129,18 @@ class Log_cash_m extends CI_Model
 		$this->db->set('status', $status);
 		return $this->db->insert('drag_logdb.log_cash');
 	}
+	
+	// function search_order($user_id, $begin_date, $end_date, $limit, $offset)
+	// {
+		// $this->db->select('*');
+		// $this->db->from('drag_logdb.log_cash');
+		// if ($user_id != '-1')
+			// $this->db->where('user_id', $user_id);
+		// $this->db->where('pub_date >=', $begin_date);
+		// $this->db->where('pub_date <=', $end_date);
+		// $this->db->order_by("pub_date", "desc");
+		// $this->db->limit($limit, $offset);
+		// $query = $this->db->get();
+		// return $query->result();
+	// }
 }
