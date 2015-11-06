@@ -82,8 +82,24 @@ class Ingame_event extends CI_Controller
 		$default_event['default_value'] = '0';
 		$data['default_event'] = $default_event;
 		
-		$_event_list = $this->event_ingame_m->get_event_list();
+		$event_list = array();
+		
+		$this->load->library('pagination');
+		$offset = $this->uri->segment(4, 0);
+		$size = 10;
+		$max_rows = 1000;
+		
+		#$_event_list = $this->event_ingame_m->get_event_list();
+		$_event_list = $this->event_ingame_m->get_event_list_2($size, $offset);
+		
+		$config['base_url'] = '/game_management/ingame_event/load_event/';
+		$config['total_rows'] = $max_rows;
+		$config['per_page'] = $size;
+		$config['uri_segment'] = 4;
+		$this->pagination->initialize($config);
+		
 		$data['event_list'] = $this->make_view_data($_event_list);
+		$data['pagination'] = $this->pagination->create_links();
 		$this->load->view('/game_management/ingame_event_v', $data);
 	}
 	

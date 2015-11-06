@@ -556,6 +556,13 @@ $(document).ready(function(){
 			}
 			?>
 		</tbody>
+		</tfoot>
+			<tr>
+				<th colspan="9">
+					<?php echo $pagination; ?>
+				</th>
+			</tr>
+		<tfoot>
 	</table>
 	</p>
 	

@@ -33,6 +33,7 @@ $(document).ready(function(){
 <section id="content">
 	<fieldset>
 		<form method="post" action="/log/log_viewer/load_log">
+		<input type="submit" name="log_cash_error_button" value="log_cash_error" />
 		<input type="submit" name="log_connect_button" value="log_connect" />
 		<input type="submit" name="log_consume_item_button" value="log_consume_item" />
 		<input type="submit" name="log_consume_money_button" value="log_consume_money" />

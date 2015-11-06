@@ -21,6 +21,16 @@ class Event_ingame_m extends CI_Model
 		return $query->result();
 	}
 	
+	function get_event_list_2($limit, $offset)
+	{
+		$this->db->select('*');
+		$this->db->from('drag_globaldb.event_ingame');
+		$this->db->order_by("event_no", "desc");
+		$this->db->limit($limit, $offset);
+		$query = $this->db->get();
+		return $query->result();
+	}
+	
 	function get_event($event_no)
 	{
 		$this->db->select('*');
