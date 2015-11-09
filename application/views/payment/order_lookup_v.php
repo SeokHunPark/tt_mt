@@ -53,17 +53,13 @@ $(document).ready(function(){
 
 <section id="content">
 	<fieldset>
-		<form method="post" action="/payment/order_lookup/load_order/date_search">
+		<form method="post" action="/payment/order_lookup/load_order">
 		<div>
 			기간 설정
 			<input type="text" class="datepicker" name="begin_day">
 			~
 			<input type="text" class="datepicker" name="end_day">
-			<input type="submit" name="date_search" value="검색" />			
 		</div>
-		</form>
-		
-		<form method="post" action="/payment/order_lookup/load_order/user_search">
 		<div>
 			카카오톡 ID
 			<input type="text" name="kakao_id_text" />
@@ -71,16 +67,12 @@ $(document).ready(function(){
 			<input type="text" name="game_account_id_text" />
 			닉네임
 			<input type="text" name="nickname_text" />
-			<input type="submit" name="user_search" value="검색" />
 		</div>
-		</form>
-		
-		<form method="post" action="/payment/order_lookup/load_order/order_id_search">
 		<div>
 			주문 번호
 			<input type="text" name="order_id_text" />
-			<input type="submit" name="order_id_search" value="검색" />
 		</div>
+		<input type="submit" name="search_button" value="검색" />			
 		</form>
 	</fieldset>
 	

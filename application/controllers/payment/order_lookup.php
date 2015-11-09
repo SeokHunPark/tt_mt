@@ -60,166 +60,205 @@ class Order_lookup extends CI_Controller
 		$max_rows = 1000;
 		$order_list = array();
 
-		// if (isset($_POST['date_search']))
-		// {
-			// $begin_day = $this->input->post('begin_day', TRUE);
-			// $end_day = $this->input->post('end_day', TRUE);
-			
-			// $kakao_id = $this->input->post('kakao_id_text', TRUE);
-			// $user_id = $this->input->post('game_account_id_text', TRUE);
-			// $nickname = $this->input->post('nickname_text', TRUE);
-			// $order_id = $this->input->post('order_id_text', TRUE);
-			
-			// $is_date = False;
-			// if ($begin_day != "" && $end_day != "")
-			// {
-				// $is_date = True;
-			// }
-			
-			// if ($user_id != '')
-			// {
-			// }
-			// else if ($nickname != '')
-			// {
-				// $user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
-			// }
-			// else
-			// {
-				// $user_id = '-1';
-			// }
-			
-			// if ($order_id == '')
-			// {
-				// $order_id = '-1';
-			// }
-			
-			// $begin_date = '-1';
-			// $end_date = '-1';
-			// if ($begin_day != "" && $end_day != "")
-			// {
-				// $begin_date = $begin_day . " 00:00:00";
-				// $end_date = $end_day . " 23:59:59";
-			// }
-			
-			// $offset = $this->uri->segment(7, 0);
-			// $_order_list = $this->log_cash_m->search_order($user_id, $order_id, $begin_date, $end_date, $size, $offset);
-			
-			// print_r($_order_list);
-		// }
-		
-		if (isset($_POST['date_search']))
+		if (isset($_POST['search_button']))
 		{
 			$begin_day = $this->input->post('begin_day', TRUE);
 			$end_day = $this->input->post('end_day', TRUE);
 			
+			$kakao_id = $this->input->post('kakao_id_text', TRUE);
+			$user_id = $this->input->post('game_account_id_text', TRUE);
+			$nickname = $this->input->post('nickname_text', TRUE);
+			$order_id = $this->input->post('order_id_text', TRUE);
+			
+			$is_date = False;
+			if ($begin_day != "" && $end_day != "")
+			{
+				$is_date = True;
+			}
+			
+			if ($user_id != '')
+			{
+			}
+			else if ($nickname != '')
+			{
+				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+			}
+			else
+			{
+				$user_id = '-1';
+			}
+			
+			if ($order_id == '')
+			{
+				$order_id = '-1';
+			}
+			
+			$begin_date = '-1';
+			$end_date = '-1';
 			if ($begin_day != "" && $end_day != "")
 			{
 				$begin_date = $begin_day . " 00:00:00";
 				$end_date = $end_day . " 23:59:59";
-
-				$offset = $this->uri->segment(7, 0);
-				#$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
-				$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
-				
-				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $begin_day . '/' . $end_day . '/';
-				$config['total_rows'] = $max_rows;
-				$config['per_page'] = $size;
-				$config['uri_segment'] = 7;
-				$this->pagination->initialize($config);
-
-				$order_list = $this->make_view_data($_order_list);
 			}
 			else
 			{
-				alert("날짜를 입력하십시오.");
+				$begin_day = '-1';
+				$end_day = '-1';
 			}
-		}
-		else if (isset($_POST['user_search']))
-		{
-			$user_id = "";
-			if ($_POST['game_account_id_text'] != "")
-			{
-				$user_id = $this->input->post('game_account_id_text', TRUE);
-			}
-			else if ($_POST['nickname_text'] != "")
-			{
-				$nickname = $this->input->post('nickname_text', TRUE);
-				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
-			}
-			// else if ($_POST['kakao_id_text'] != "")
-			// {
-				// $kakao_id = $this->input->post('kakao_id_text', TRUE);
-				
-				// $sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
-				// $query = $this->db->query($sql, ($kakao_id));
-				// $result = $query->result();
-				// $pid = $result[0]->pid;
-				
-				// $user_id = $this->user_info_m->get_user_id_with_pid($pid);
-			// }
 			
-			$offset = $this->uri->segment(6, 0);
-			#$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
-			$_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
+			$offset = $this->uri->segment(8, 0);
+			$_order_list = $this->log_cash_m->search_order($user_id, $order_id, $begin_date, $end_date, $size, $offset);
 			
-			$config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
+			$config['base_url'] = '/payment/order_lookup/load_order/' . $user_id . '/' . $order_id . '/' . $begin_day . '/' . $end_day . '/';
 			$config['total_rows'] = $max_rows;
 			$config['per_page'] = $size;
-			$config['uri_segment'] = 6;
-			$this->pagination->initialize($config);
-			
-			$order_list = $this->make_view_data($_order_list);
-		}
-		else if (isset($_POST['order_id_search']))
-		{
-			$order_id = $this->input->post('order_id_text', TRUE);
-			
-			$offset = $this->uri->segment(6, 0);
-			$_order_list = $this->log_cash_m->find_order($order_id);
-			
-			$config['base_url'] = '/payment/order_lookup/load_order/order_id_search/' . $order_id . '/';
-			$config['total_rows'] = $max_rows;
-			$config['per_page'] = $size;
-			$config['uri_segment'] = 6;
+			$config['uri_segment'] = 8;
 			$this->pagination->initialize($config);
 			
 			$order_list = $this->make_view_data($_order_list);
 		}
 		else
 		{
-			if (strcmp($mode, "date_search") == 0)
+			print "ETC";
+			
+			$user_id= $this->uri->segment(4, 0);
+			$order_id = $this->uri->segment(5, 0);
+			$begin_day = $this->uri->segment(6, 0);
+			$end_day = $this->uri->segment(7, 0);
+			$begin_date = '-1';
+			$end_date = '-1';
+			if ($begin_day != "-1" && $end_day != "-1")
 			{
-				$offset = $this->uri->segment(7, 0);
-				$begin_date = $this->uri->segment(5, 0) . " 00:00:00";
-				$end_date = $this->uri->segment(6, 0) . " 23:59:59";
-				
-				#$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date);
-				$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
-				$config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $this->uri->segment(5, 0) . '/' . $this->uri->segment(6, 0) . '/';
-				$config['total_rows'] = $max_rows;
-				$config['per_page'] = $size;
-				$config['uri_segment'] = 7;
-				$this->pagination->initialize($config);
-				
-				$order_list = $this->make_view_data($_order_list);
+				$begin_date = $begin_day . " 00:00:00";
+				$end_date = $end_day . " 23:59:59";
 			}
-			else if (strcmp($mode, "user_search") == 0)
-			{
-				$offset = $this->uri->segment(6, 0);
-				$user_id = $this->uri->segment(5, 0);
-				
-				#$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
-				$_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
-				
-				$config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
-				$config['total_rows'] = $max_rows;
-				$config['per_page'] = $size;
-				$config['uri_segment'] = 6;
-				$this->pagination->initialize($config);
-				
-				$order_list = $this->make_view_data($_order_list);
-			}
+			$offset = $this->uri->segment(8, 0);
+			$_order_list = $this->log_cash_m->search_order($user_id, $order_id, $begin_date, $end_date, $size, $offset);
+			
+			$config['base_url'] = '/payment/order_lookup/load_order/' . $user_id . '/' . $order_id . '/' . $begin_day . '/' . $end_day . '/';
+			$config['total_rows'] = $max_rows;
+			$config['per_page'] = $size;
+			$config['uri_segment'] = 8;
+			$this->pagination->initialize($config);
+			
+			$_order_list = $this->log_cash_m->search_order($user_id, $order_id, $begin_date, $end_date, $size, $offset);
+			
+			$order_list = $this->make_view_data($_order_list);
 		}
+		
+		// if (isset($_POST['date_search']))
+		// {
+			// $begin_day = $this->input->post('begin_day', TRUE);
+			// $end_day = $this->input->post('end_day', TRUE);
+			
+			// if ($begin_day != "" && $end_day != "")
+			// {
+				// $begin_date = $begin_day . " 00:00:00";
+				// $end_date = $end_day . " 23:59:59";
+
+				// $offset = $this->uri->segment(7, 0);
+				// #$_order_list = $this->log_cash_m->get_list_with_date($begin_date, $end_date);
+				// $_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
+				
+				// $config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $begin_day . '/' . $end_day . '/';
+				// $config['total_rows'] = $max_rows;
+				// $config['per_page'] = $size;
+				// $config['uri_segment'] = 7;
+				// $this->pagination->initialize($config);
+
+				// $order_list = $this->make_view_data($_order_list);
+			// }
+			// else
+			// {
+				// alert("날짜를 입력하십시오.");
+			// }
+		// }
+		// else if (isset($_POST['user_search']))
+		// {
+			// $user_id = "";
+			// if ($_POST['game_account_id_text'] != "")
+			// {
+				// $user_id = $this->input->post('game_account_id_text', TRUE);
+			// }
+			// else if ($_POST['nickname_text'] != "")
+			// {
+				// $nickname = $this->input->post('nickname_text', TRUE);
+				// $user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
+			// }
+			// // else if ($_POST['kakao_id_text'] != "")
+			// // {
+				// // $kakao_id = $this->input->post('kakao_id_text', TRUE);
+				
+				// // $sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
+				// // $query = $this->db->query($sql, ($kakao_id));
+				// // $result = $query->result();
+				// // $pid = $result[0]->pid;
+				
+				// // $user_id = $this->user_info_m->get_user_id_with_pid($pid);
+			// // }
+			
+			// $offset = $this->uri->segment(6, 0);
+			// #$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+			// $_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
+			
+			// $config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
+			// $config['total_rows'] = $max_rows;
+			// $config['per_page'] = $size;
+			// $config['uri_segment'] = 6;
+			// $this->pagination->initialize($config);
+			
+			// $order_list = $this->make_view_data($_order_list);
+		// }
+		// else if (isset($_POST['order_id_search']))
+		// {
+			// $order_id = $this->input->post('order_id_text', TRUE);
+			
+			// $offset = $this->uri->segment(6, 0);
+			// $_order_list = $this->log_cash_m->find_order($order_id);
+			
+			// $config['base_url'] = '/payment/order_lookup/load_order/order_id_search/' . $order_id . '/';
+			// $config['total_rows'] = $max_rows;
+			// $config['per_page'] = $size;
+			// $config['uri_segment'] = 6;
+			// $this->pagination->initialize($config);
+			
+			// $order_list = $this->make_view_data($_order_list);
+		// }
+		// else
+		// {
+			// if (strcmp($mode, "date_search") == 0)
+			// {
+				// $offset = $this->uri->segment(7, 0);
+				// $begin_date = $this->uri->segment(5, 0) . " 00:00:00";
+				// $end_date = $this->uri->segment(6, 0) . " 23:59:59";
+				
+				// #$_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date);
+				// $_order_list = $this->log_cash_m->get_list_with_date_2($begin_date, $end_date, $size, $offset);
+				// $config['base_url'] = '/payment/order_lookup/load_order/date_search/' . $this->uri->segment(5, 0) . '/' . $this->uri->segment(6, 0) . '/';
+				// $config['total_rows'] = $max_rows;
+				// $config['per_page'] = $size;
+				// $config['uri_segment'] = 7;
+				// $this->pagination->initialize($config);
+				
+				// $order_list = $this->make_view_data($_order_list);
+			// }
+			// else if (strcmp($mode, "user_search") == 0)
+			// {
+				// $offset = $this->uri->segment(6, 0);
+				// $user_id = $this->uri->segment(5, 0);
+				
+				// #$_order_list = $this->log_cash_m->get_list_with_user_id($user_id);
+				// $_order_list = $this->log_cash_m->get_list_with_user_id_2($user_id, $size, $offset);
+				
+				// $config['base_url'] = '/payment/order_lookup/load_order/user_search/' . $user_id . '/';
+				// $config['total_rows'] = $max_rows;
+				// $config['per_page'] = $size;
+				// $config['uri_segment'] = 6;
+				// $this->pagination->initialize($config);
+				
+				// $order_list = $this->make_view_data($_order_list);
+			// }
+		// }
 		
 		$data['order_list'] = $order_list;
 		$data['pagination'] = $this->pagination->create_links();
