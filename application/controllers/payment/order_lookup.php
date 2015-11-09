@@ -83,6 +83,17 @@ class Order_lookup extends CI_Controller
 			{
 				$user_id = $this->user_info_m->get_user_id_with_nickname($nickname);
 			}
+			else if ($kakao_id != '')
+			{
+				$kakao_id = $this->input->post('kakao_id_text', TRUE);
+				
+				$sql = "select `drag_gamedb`.`usf_secure_data`('E', 'K', ?) as pid;";
+				$query = $this->db->query($sql, ($kakao_id));
+				$result = $query->result();
+				$pid = $result[0]->pid;
+				
+				$user_id = $this->user_info_m->get_user_id_with_pid($pid);
+			}
 			else
 			{
 				$user_id = '-1';
@@ -119,8 +130,6 @@ class Order_lookup extends CI_Controller
 		}
 		else
 		{
-			print "ETC";
-			
 			$user_id= $this->uri->segment(4, 0);
 			$order_id = $this->uri->segment(5, 0);
 			$begin_day = $this->uri->segment(6, 0);
