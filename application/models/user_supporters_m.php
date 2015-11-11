@@ -33,6 +33,13 @@ class User_supporters_m extends CI_Model
 	{
 		$this->db->where('user_id', $user_id);
 		$this->db->where('model_id', $model_id);
-		$this->db->delete('drag_gamedb.user_supporters');
+		return $this->db->delete('drag_gamedb.user_supporters');
+	}
+	
+	function insert_sup($user_id, $model_id)
+	{
+		$this->db->set('user_id', $user_id);
+		$this->db->set('model_id', $model_id);
+		return $this->db->insert('drag_gamedb.user_supporters');
 	}
 }

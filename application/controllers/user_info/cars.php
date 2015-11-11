@@ -50,22 +50,22 @@ class Cars extends CI_Controller
 		}
 		$admin_name = $this->session->userdata('username');
 		
-		$target_car['user_id'] = "";
-		$target_car['model_id'] = "";
-		$target_car['class'] = "";
-		$target_car['speed'] = "";
-		$target_car['accel'] = "";
-		$target_car['booster_charge'] = "";
-		$target_car['booster_power'] = "";
-		$target_car['upgrade'] = "";
-		$target_car['exp'] = "";
-		$target_car['point'] = "";
-		$target_car['atk'] = "";
-		$target_car['def'] = "";
-		$target_car['aero'] = "";
-		$target_car['decal'] = "";
-		$target_car['color'] = "";
-		$data['target_car'] = $target_car;
+		// $target_car['user_id'] = "";
+		// $target_car['model_id'] = "";
+		// $target_car['class'] = "";
+		// $target_car['speed'] = "";
+		// $target_car['accel'] = "";
+		// $target_car['booster_charge'] = "";
+		// $target_car['booster_power'] = "";
+		// $target_car['upgrade'] = "";
+		// $target_car['exp'] = "";
+		// $target_car['point'] = "";
+		// $target_car['atk'] = "";
+		// $target_car['def'] = "";
+		// $target_car['aero'] = "";
+		// $target_car['decal'] = "";
+		// $target_car['color'] = "";
+		// $data['target_car'] = $target_car;
 		
 		$user_id = "";
 		$user_id = $this->uri->segment(4, -1);
@@ -98,11 +98,11 @@ class Cars extends CI_Controller
 		$car_list = $this->make_load_data($_car_list);
 		$data['car_list'] = $car_list;
 		
-		$target_sup['user_id'] = "";
-		$target_sup['model_id'] = "";
-		$target_sup['ability'] = "";
-		$target_sup['count'] = "";
-		$data['target_sup'] = $target_sup;
+		// $target_sup['user_id'] = "";
+		// $target_sup['model_id'] = "";
+		// $target_sup['ability'] = "";
+		// $target_sup['count'] = "";
+		// $data['target_sup'] = $target_sup;
 		
 		$_sup_list = $this->user_supporters_m->get_list($user_id);
 		$sup_list = $this->make_load_sup_data($_sup_list);
@@ -175,15 +175,17 @@ class Cars extends CI_Controller
 			$car_list = $this->make_load_data($_car_list);
 			$data['car_list'] = $car_list;			
 			
-			$target_sup['user_id'] = "";
-			$target_sup['model_id'] = "";
-			$target_sup['ability'] = "";
-			$target_sup['count'] = "";
-			$data['target_sup'] = $target_sup;
+			// $target_sup['user_id'] = "";
+			// $target_sup['model_id'] = "";
+			// $target_sup['ability'] = "";
+			// $target_sup['count'] = "";
+			// $data['target_sup'] = $target_sup;
 			
 			$_sup_list = $this->user_supporters_m->get_list($target_car['user_id']);
 			$sup_list = $this->make_load_sup_data($_sup_list);
 			$data['sup_list'] = $sup_list;
+			
+			$data['user_id'] = $target_car['user_id'];
 			
 			$this->load->view('/user_info/cars_v', $data);
 		}
@@ -357,30 +359,13 @@ class Cars extends CI_Controller
 		}
 		$admin_name = $this->session->userdata('username');
 		
-		if (isset($_POST['modify_sup']))
+		if (isset($_POST))
 		{
 			$target_sup['user_id'] = $this->input->post('user_id', TRUE);
 			$target_sup['model_id'] = $this->input->post('model_id', TRUE);
 			$target_sup['ability'] = $this->input->post('ability', TRUE);
 			$target_sup['count'] = $this->input->post('count', TRUE);
 			$data['target_sup'] = $target_sup;
-			
-			$target_car['user_id'] = "";
-			$target_car['model_id'] = "";
-			$target_car['class'] = "";
-			$target_car['speed'] = "";
-			$target_car['accel'] = "";
-			$target_car['booster_charge'] = "";
-			$target_car['booster_power'] = "";
-			$target_car['upgrade'] = "";
-			$target_car['exp'] = "";
-			$target_car['point'] = "";
-			$target_car['atk'] = "";
-			$target_car['def'] = "";
-			$target_car['aero'] = "";
-			$target_car['decal'] = "";
-			$target_car['color'] = "";
-			$data['target_car'] = $target_car;
 			
 			$_car_list = $this->user_inven_m->get_list($target_sup['user_id']);
 			$car_list = $this->make_load_data($_car_list);
@@ -390,6 +375,8 @@ class Cars extends CI_Controller
 			$sup_list = $this->make_load_sup_data($_sup_list);
 			$data['sup_list'] = $sup_list;
 			
+			$data['user_id'] = $target_sup['user_id'];
+			
 			$this->load->view('/user_info/cars_v', $data);
 		}		
 	}
@@ -397,6 +384,13 @@ class Cars extends CI_Controller
 	public function modify_sup()
 	{
 		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
 		
 		if ($_POST)
 		{
@@ -411,7 +405,7 @@ class Cars extends CI_Controller
 				$date_string = "Y-m-d H:i:s";
 				$reg_date = date($date_string, $time);
 				$ip_address = $_SERVER['REMOTE_ADDR'];
-				$action = '서포터 정보 수정';
+				$action = '보유 서포터 정보 수정';
 				$item_id = NULL;
 				$item_count = NULL;
 				$memo = '';
@@ -419,39 +413,73 @@ class Cars extends CI_Controller
 				
 				alert('서포터 정보 변경이 완료 되었습니다.', '/user_info/cars/load_car_list/'. $user_id);
 			}
+		}
+	}
+	
+	public function delete_sup()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('delete_sup_user_id_text', TRUE);
+			$model_id = $this->input->post('delete_sup_model_id_text', TRUE);
 			
-			// $target_car['user_id'] = "";
-			// $target_car['model_id'] = "";
-			// $target_car['class'] = "";
-			// $target_car['speed'] = "";
-			// $target_car['accel'] = "";
-			// $target_car['booster_charge'] = "";
-			// $target_car['booster_power'] = "";
-			// $target_car['upgrade'] = "";
-			// $target_car['exp'] = "";
-			// $target_car['point'] = "";
-			// $target_car['atk'] = "";
-			// $target_car['def'] = "";
-			// $target_car['aero'] = "";
-			// $target_car['decal'] = "";
-			// $target_car['color'] = "";
-			// $data['target_car'] = $target_car;
+			$return = $this->user_supporters_m->delete_sup($user_id, $model_id);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$action = '보유 서포터 삭제';
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $model_id, $item_count, $memo);
+				
+				alert('서포터 삭제가 완료 되었습니다.', '/user_info/cars/load_car_list/'. $user_id);
+			}
+		}
+	}
+	
+	public function add_sup()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (@$this->session->userdata('logged_in') != TRUE)
+		{
+			alert('로그인 후 사용 가능합니다.', '/auth');
+			exit;
+		}
+		$admin_name = $this->session->userdata('username');
+		
+		if ($_POST)
+		{
+			$user_id = $this->input->post('user_id_text', TRUE);
+			$model_id = $this->input->post('model_id_text', TRUE);
 			
-			// $_car_list = $this->user_inven_m->get_list($user_id);
-			// $car_list = $this->make_load_data($_car_list);
-			// $data['car_list'] = $car_list;
-			
-			// $target_sup['user_id'] = "";
-			// $target_sup['model_id'] = "";
-			// $target_sup['ability'] = "";
-			// $target_sup['count'] = "";
-			// $data['target_sup'] = $target_sup;
-			
-			// $_sup_list = $this->user_supporters_m->get_list($user_id);
-			// $sup_list = $this->make_load_sup_data($_sup_list);
-			// $data['sup_list'] = $sup_list;
-			
-			// $this->load->view('/user_info/cars_v', $data);
+			$return = $this->user_supporters_m->insert_sup($user_id, $model_id);
+			if ($return)
+			{
+				$time = time();
+				$date_string = "Y-m-d H:i:s";
+				$reg_date = date($date_string, $time);
+				$ip_address = $_SERVER['REMOTE_ADDR'];
+				$action = '보유 서포터 추가';
+				$item_id = NULL;
+				$item_count = NULL;
+				$memo = '';
+				$this->log_cstool_m->insert_log($reg_date, $ip_address, $admin_name, $user_id, $action, $model_id, $item_count, $memo);
+				
+				alert('서포터 추가가 완료 되었습니다.', '/user_info/cars/load_car_list/'. $user_id);
+			}
 		}
 	}
 }

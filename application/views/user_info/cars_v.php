@@ -40,6 +40,28 @@ function open_delete_car_popup(user_id, model_id){
 	var model_id_text = document.getElementById("_delete_car_model_id_text");
 	model_id_text.value = model_id;
 }
+
+function open_delete_sup_popup(user_id, model_id){
+
+	var temp = $('#_delete_sup_popup');		//레이어의 id를 temp변수에 저장
+	temp.fadeIn();	//bg 클래스가 없으면 일반레이어로 실행한다.
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if (temp.outerHeight() < $(document).height() ) temp.css('margin-top', '-'+temp.outerHeight()/2+'px');
+	else temp.css('top', '0px');
+	if (temp.outerWidth() < $(document).width() ) temp.css('margin-left', '-'+temp.outerWidth()/2+'px');
+	else temp.css('left', '0px');
+
+	temp.find('#cancel_btn').click(function(e){
+		temp.fadeOut();		//'닫기'버튼을 클릭하면 레이어가 사라진다.
+		e.preventDefault();
+	});
+	
+	var user_id_text = document.getElementById("_delete_sup_user_id_text");
+	user_id_text.value = user_id;
+	var model_id_text = document.getElementById("_delete_sup_model_id_text");
+	model_id_text.value = model_id;
+}
 </script>
 
 <section id="content">	
@@ -170,6 +192,10 @@ function open_delete_car_popup(user_id, model_id){
 	}
 	?>
 	
+	<?php
+	if (isset($target_car))
+	{
+	?>
 	<p>
 	<table class="car_table">
 		<thead>
@@ -281,6 +307,9 @@ function open_delete_car_popup(user_id, model_id){
 		</tbody>
 	</table>
 	</p>
+	<?php
+	}
+	?>
 	
 	<table class="car_table">
 		<thead>
@@ -440,6 +469,10 @@ function open_delete_car_popup(user_id, model_id){
 	}
 	?>
 	
+	<?php
+	if (isset($target_sup))
+	{
+	?>
 	<p>
 	<table class="car_table">
 		<thead>
@@ -485,6 +518,9 @@ function open_delete_car_popup(user_id, model_id){
 		</tbody>
 	</table>
 	</p>
+	<?php
+	}
+	?>
 	
 	<p>
 	<table class="car_table">
@@ -498,6 +534,8 @@ function open_delete_car_popup(user_id, model_id){
 				</th>
 				<th scope="col">
 					호감도
+				</th>
+				<th scope="col">
 				</th>
 				<th scope="col">
 				</th>
@@ -524,6 +562,10 @@ function open_delete_car_popup(user_id, model_id){
 						<input type="submit" value="수정" />
 					</td>
 					</form>
+					<td>
+						<input type="submit" value="삭제" 
+							onclick="open_delete_sup_popup('<?php echo $sup['user_id']; ?>', '<?php echo $sup['model_id']; ?>'); return false;"/>
+					</td>
 				</tr>
 			<?php
 			}
