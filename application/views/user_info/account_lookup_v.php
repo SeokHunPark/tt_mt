@@ -400,7 +400,15 @@ function open_modify_rp_popup(user_id, rank_point){
 				</th>
 				<form id="_user_sanctions" method="post" action="/user_info/account_lookup/user_sanctions">
 				<td>
-					<input type="text" id="_sanctions_days" name="sanctions_days" />
+					<select name="sanctions_days">
+						<option value="1">1일 제재</option>
+						<option value="3">3일 제재</option>
+						<option value="5">5일 제재</option>
+						<option value="7">7일 제재</option>
+						<option value="15">15일 제재</option>
+						<option value="30">30일 제재</option>
+						<option value="1000">영구 제재</option>
+					</select>
 				</td>
 				<td>
 					<input type="hidden" name="sanction_user_id_text" value="<?php echo $account_info['user_id'] ?>" />

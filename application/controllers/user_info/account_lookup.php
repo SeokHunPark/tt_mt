@@ -201,7 +201,35 @@ class Account_lookup extends CI_Controller
 		}
 		else
 		{
-			$account_info['sanction_type'] = $sanctions_user['code'];
+			if ($sanctions_user['code'] == '1')
+			{
+				$account_info['sanction_type'] = "1일 제재";
+			}
+			else if ($sanctions_user['code'] == '3')
+			{
+				$account_info['sanction_type'] = "3일 제재";
+			}
+			else if ($sanctions_user['code'] == '5')
+			{
+				$account_info['sanction_type'] = "5일 제재";
+			}
+			else if ($sanctions_user['code'] == '7')
+			{
+				$account_info['sanction_type'] = "7일 제재";
+			}
+			else if ($sanctions_user['code'] == '15')
+			{
+				$account_info['sanction_type'] = "15일 제재";
+			}
+			else if ($sanctions_user['code'] == '30')
+			{
+				$account_info['sanction_type'] = "30일 제재";
+			}
+			else if ($sanctions_user['code'] == '1000')
+			{
+				$account_info['sanction_type'] = "영구 제재";
+			}
+			#$account_info['sanction_type'] = $sanctions_user['code'];
 			$account_info['sanction_date'] = $sanctions_user['s_date'];
 			$account_info['release_date'] = $sanctions_user['e_date'];
 		}
