@@ -221,8 +221,19 @@ a.pop-btn:hover {
 			
 			<form id="_modify_mission_status" method="post" action="/user_info/account_lookup/modify_mission_status">
 			<input type="hidden" id="_mission_status_user_id_text" name="mission_status_user_id_text" />
-			<input type="text" id="_mission_text" name="mission_text" />
-			<input type="text" id="_stage_text" name="stage_text" />
+			<select id="_mission_text" name="mission_text">
+				<option value="1">미션1</option>
+				<option value="2">미션2</option>
+				<option value="3">미션3</option>
+				<option value="4">미션4</option>
+			</select>
+			<select id="_stage_text" name="stage_text">
+				<option value="01">스테이지1</option>
+				<option value="02">스테이지2</option>
+				<option value="03">스테이지3</option>
+				<option value="04">스테이지4</option>
+				<option value="05">스테이지5</option>
+			</select>
 			<div class="btn-r">
 				<input type="submit" value="확인" name="button" />
 				<input type="button" id="cancel_btn" value="취소" />

@@ -229,7 +229,7 @@ class Account_lookup extends CI_Controller
 			{
 				$account_info['sanction_type'] = "영구 제재";
 			}
-			#$account_info['sanction_type'] = $sanctions_user['code'];
+			$account_info['sanction_type'] = $sanctions_user['code'];
 			$account_info['sanction_date'] = $sanctions_user['s_date'];
 			$account_info['release_date'] = $sanctions_user['e_date'];
 		}
@@ -600,7 +600,7 @@ class Account_lookup extends CI_Controller
 		}
 		$admin_name = $this->session->userdata('username');
 		
-		if ($_POST)
+		if ($_POST['sanction_user_id_text'])
 		{
 			#print_r($_POST);
 			$user_id = $this->input->post('sanction_user_id_text', TRUE);
