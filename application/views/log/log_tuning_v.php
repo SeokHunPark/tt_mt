@@ -70,6 +70,8 @@ $(document).ready(function(){
 		</form>
 	</fieldset>
 	
+	<h3>차량 튜닝 로그</h3>
+
 	<p>
 	<table class="log_list_table">
 		<thead>

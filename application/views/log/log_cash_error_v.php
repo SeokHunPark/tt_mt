@@ -49,7 +49,7 @@ $(document).ready(function(){
 	</fieldset>
 	
 	<fieldset>
-		<form method="post" action="/log/log_gain_money/load_log/date_search">
+		<form method="post" action="/log/log_cash_error/load_log/date_search">
 		<div>
 			기간 설정
 			<input type="text" class="datepicker" name="begin_day">
@@ -70,20 +70,22 @@ $(document).ready(function(){
 		</form>
 	</fieldset>
 	
-	<h3>재화 획득 로그</h3>
+	<h3>결제 오류 로그</h3>
 
 	<p>
 	<table class="log_list_table">
 		<thead>
 			<tr>
 				<th scope="col">사용자 아이디</th>
-				<th scope="col">라벨</th>
-				<th scope="col">카테고리</th>
-				<th scope="col">재화 타입</th>
-				<th scope="col">재화 수</th>
-				<th scope="col">게임 모드</th>
-				<th scope="col">쿠폰</th>
+				<th scope="col">오류 사유</th>
+				<th scope="col">영수증 토큰</th>
+				<th scope="col">영수증 토큰(json)</th>
+				<th scope="col">마켓</th>
+				<th scope="col">국가</th>
+				<th scope="col">통화 타입</th>
+				<th scope="col">메모</th>
 				<th scope="col">등록 일시</th>
+				<th scope="col">상태</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -96,25 +98,31 @@ $(document).ready(function(){
 						<?php echo $log['user_id']; ?>
 					</th>
 					<td>
-						<?php echo $log['label']; ?>
+						<?php echo $log['error_reason']; ?>
 					</td>
 					<td>
-						<?php echo $log['categ']; ?>
+						<?php echo $log['receipt_token']; ?>
 					</td>
 					<td>
-						<?php echo $log['money_type']; ?>
+						<?php echo $log['receipt_token_json']; ?>
 					</td>
 					<td>
-						<?php echo $log['money_count']; ?>
+						<?php echo $log['market']; ?>
 					</td>
 					<td>
-						<?php echo $log['game_mode']; ?>
+						<?php echo $log['country']; ?>
 					</td>
 					<td>
-						<?php echo $log['coupon']; ?>
+						<?php echo $log['currency_type']; ?>
+					</td>
+					<td>
+						<?php echo $log['memo']; ?>
 					</td>
 					<td>
 						<?php echo $log['reg_date']; ?>
+					</td>
+					<td>
+						<?php echo $log['status']; ?>
 					</td>
 				</tr>
 			<?php
@@ -123,7 +131,7 @@ $(document).ready(function(){
 		</tbody>
 		</tfoot>
 			<tr>
-				<th colspan="8">
+				<th colspan="10">
 					<?php echo $pagination; ?>
 				</th>
 			</tr>

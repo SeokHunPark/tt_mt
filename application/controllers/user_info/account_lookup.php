@@ -809,4 +809,25 @@ class Account_lookup extends CI_Controller
 			}
 		}
 	}
+
+	public function button_event()
+	{
+		$this->output->enable_profiler(TRUE);
+		
+		if (isset($_POST['mail_box_button']))
+		{
+			$user_id = $this->input->post('shortcut_user_id_text', TRUE);
+			redirect('/user_info/mail_box/load_mail_box/user_search/' . $user_id);
+		}
+		else if(isset($_POST['cars_button']))
+		{
+			$user_id = $this->input->post('shortcut_user_id_text', TRUE);
+			redirect('/user_info/cars/load_car_list/'. $user_id);
+		}
+		else if(isset($_POST['parts_button']))
+		{
+			$user_id = $this->input->post('shortcut_user_id_text', TRUE);
+			redirect('/user_info/parts/load_parts_list/'. $user_id);
+		}
+	}
 }

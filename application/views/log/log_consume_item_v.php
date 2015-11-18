@@ -69,6 +69,8 @@ $(document).ready(function(){
 		</div>
 		</form>
 	</fieldset>
+
+	<h3>아이템 소비 로그</h3>
 	
 	<p>
 	<table class="log_list_table">

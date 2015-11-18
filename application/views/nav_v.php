@@ -33,6 +33,9 @@ table.nav_table {
 			<tr>
 				<th scope="row"><a href="/admin/log_cstool">- 관리자 로그 조회</a></th>
 			</tr>
+			<tr>
+				<th scope="row"><a href="/admin/admins">- 관리자 관리</a></th>
+			</tr>
 		</tbody>
 		<tbody>
 			<tr>

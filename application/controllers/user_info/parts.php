@@ -84,6 +84,11 @@ class Parts extends CI_Controller
 			$_parts_list = $this->user_items_m->get_list($user_id);
 			$parts_list = $this->make_load_data($_parts_list);
 		}
+		else if ($user_id != "")
+		{
+			$_parts_list = $this->user_items_m->get_list($user_id);
+			$parts_list = $this->make_load_data($_parts_list);
+		}
 		$data['user_id'] = $user_id;
 		$data['parts_list'] = $parts_list;
 		

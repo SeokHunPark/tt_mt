@@ -70,6 +70,8 @@ $(document).ready(function(){
 		</form>
 	</fieldset>
 	
+	<h3>우편 수신 로그</h3>
+
 	<p>
 	<table class="log_list_table">
 		<thead>

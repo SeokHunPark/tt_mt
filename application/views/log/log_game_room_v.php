@@ -70,6 +70,8 @@ $(document).ready(function(){
 		</form>
 	</fieldset>
 	
+	<h3>게임 룸 로그</h3>
+
 	<p>
 	<table class="log_list_table">
 		<thead>

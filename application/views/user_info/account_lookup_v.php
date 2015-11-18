@@ -487,4 +487,17 @@ function open_modify_rp_popup(user_id, rank_point){
 			</tr>
 		</tbody>
 	</table>
+
+	<form id="search_user" method="post" action="/user_info/account_lookup/button_event">
+	<p>
+	<fieldset>
+		<div>
+			<input type="hidden" name="shortcut_user_id_text" value="<?php echo $account_info['user_id'] ?>" />
+			<input type="submit" value="우편함 / 선물함" name="mail_box_button" />
+			<input type="submit" value="보유차량 / 서포터즈" name="cars_button" />
+			<input type="submit" value="보유부품" name="parts_button" />
+		</div>
+	</fieldset>
+	</form>
+	</p>
 </section>
