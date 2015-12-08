@@ -230,6 +230,10 @@ a.pop-btn:hover {
 				<option value="6">미션6</option>
 				<option value="7">미션7</option>
 				<option value="8">미션8</option>
+				<option value="9">미션9</option>
+				<option value="10">미션10</option>
+				<option value="11">미션11</option>
+				<option value="12">미션12</option>
 			</select>
 			<select id="_stage_text" name="stage_text">
 				<option value="01">스테이지1</option>
