@@ -516,7 +516,7 @@ class Account_lookup extends CI_Controller
 			$mission_stage = "";
 			for ($i = 0; $i < (int)$mission - 1; $i++)
 			{
-				$mission_stage .= "05";
+				$mission_stage .= "10";
 			}
 			$mission_stage .= $stage;
 			#print "mission_stage : $mission_stage";
