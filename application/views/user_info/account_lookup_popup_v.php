@@ -240,7 +240,12 @@ a.pop-btn:hover {
 				<option value="02">스테이지2</option>
 				<option value="03">스테이지3</option>
 				<option value="04">스테이지4</option>
-				<option value="05">미션 클리어</option>
+				<option value="05">스테이지5</option>
+				<option value="06">스테이지6</option>
+				<option value="07">스테이지7</option>
+				<option value="08">스테이지8</option>
+				<option value="09">스테이지9</option>
+				<option value="10">스테이지10</option>
 			</select>
 			<div class="btn-r">
 				<input type="submit" value="확인" name="button" />
